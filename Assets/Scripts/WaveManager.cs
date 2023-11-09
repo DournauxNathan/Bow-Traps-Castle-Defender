@@ -16,6 +16,7 @@ public class WaveManager : MonoBehaviour
     public CritterFactory bossFactory;
 
     private bool isSpawning = true; // Flag to control spawning
+    private bool bossSpawned = false;
 
     private CritterFactory currentFactory;
 
@@ -27,37 +28,48 @@ public class WaveManager : MonoBehaviour
 
     void Update()
     {
-        if (countdown <= 0f)
+        if (isSpawning && !bossSpawned)
         {
-            // Start a new wave
-            StartCoroutine(SpawnWave());
-            countdown = timeBetweenWaves;
-        }
+            if (countdown <= 0f)
+            {
+                // Start a new wave
+                StartCoroutine(SpawnWave());
+                countdown = timeBetweenWaves;
+            }
 
-        countdown -= Time.deltaTime;
+            countdown -= Time.deltaTime;
+        }
+        else
+        {
+            StopCoroutine(SpawnWave());
+        }
     }
 
     IEnumerator SpawnWave()
     {
-        if (isSpawning)
+        if (!bossSpawned && currentFactory != null)
         {
             Debug.Log("Wave " + waveNumber + " Incoming!");
 
             for (int i = 0; i < waveNumber; i++)
             {
-                if (isSpawning)
-                {
-                    SpawnCritter();
-                }
+                SpawnCritter();
                 yield return new WaitForSeconds(1f); // Time between spawning critters in a wave
             }
 
             // After spawning regular critters, spawn the Boss on the last wave
-            if (waveNumber >= GetTotalWaves())
+            if (waveNumber >= GetTotalWaves() && isSpawning && !bossSpawned)
+            {
+                SetFactory(middlingFactory);
+                SpawnCritter();
+            }
+
+            if (waveNumber >= GetTotalWaves() + 10 && isSpawning && !bossSpawned)
             {
                 SetFactory(bossFactory);
-
-                SpawnCritter();
+                SpawnBoss();
+                bossSpawned = true; // Set the flag to indicate that the boss has been spawned
+                isSpawning = false; // Stop spawning regular waves after the boss is spawned
             }
 
             waveNumber++;
@@ -66,26 +78,41 @@ public class WaveManager : MonoBehaviour
 
     void SpawnCritter()
     {
-        GameObject critter = currentFactory.CreateCritter();
-        //GameObject spawnedCritter = Instantiate(critter, spawnPoint.position, spawnPoint.rotation);
-
-        // Set the PlayerController reference for the critter
-        Critter critterComponent = critter.GetComponent<Critter>();
-        if (critterComponent != null)
+        if (currentFactory != null)
         {
-            //Initialize Critter Data to Critter
-            critterComponent.Init(currentFactory.critterData);
+            GameObject critter = currentFactory.CreateCritter(spawnPoint);
 
-            // Subscribe to the OnDestinationReached event
-            critterComponent.OnDestinationReached += OnCritterDestinationReached;
+            // Set the PlayerController reference for the critter
+            Critter critterComponent = critter.GetComponent<Critter>();
+            if (critterComponent != null)
+            {
+                //Initialize Critter Data to Critter
+                critterComponent.Init(currentFactory.critterData);
+
+                // Subscribe to the OnDestinationReached event
+                critterComponent.OnDestinationReached += OnCritterDestinationReached;
+            }
         }
+    }
+
+    void SpawnBoss()
+    {
+        bossSpawned = true;
+        Debug.Log("The boss has appeared");
+        
+        if (currentFactory != null)
+        {
+            GameObject critter = currentFactory.CreateCritter(spawnPoint);
+        }
+        
+        currentFactory = null;
     }
 
     // Event handler for critter reaching its destination
     void OnCritterDestinationReached()
     {
         // Handle any logic when a critter reaches its destination
-        Debug.Log("Your survive during " + waveNumber + "waves");
+        Debug.Log("Your survive during " + (waveNumber - 1) + "waves");
 
         // Stop spawning and movement
         isSpawning = false;
@@ -101,7 +128,7 @@ public class WaveManager : MonoBehaviour
     int GetTotalWaves()
     {
         // You can customize how the total number of waves is determined
-        return 10; // Example: 10 waves in total
+        return 2; // Example: 10 waves in total
     }
 
     void SetFactory(CritterFactory factory)

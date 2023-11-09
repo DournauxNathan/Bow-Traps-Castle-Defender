@@ -100,11 +100,12 @@ public class Critter : MonoBehaviour
         health -= damage;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.CompareTag("Goal"))
+        if (collision.collider.CompareTag("Goal"))
         {
             OnDestinationReached?.Invoke();
+            StopMovement();
         }
     }
 }
