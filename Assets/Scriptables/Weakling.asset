@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e01113eab7b32c64592b9fe7dd769d85, type: 3}
+  m_Name: Weakling
+  m_EditorClassIdentifier: 
+  critterName: Weakling
+  health: 2
+  speed: 5
+  prefab: {fileID: 5314122090689357588, guid: 93fa4000d732ba64e9b221e7a3d4ad63, type: 3}
