@@ -49,7 +49,7 @@ public class WaveManager : MonoBehaviour
     {
         if (!bossSpawned && currentFactory != null)
         {
-            Debug.Log("Wave " + waveNumber + " Incoming!");
+            //Debug.Log("Wave " + waveNumber + " Incoming!");
 
             for (int i = 0; i < waveNumber; i++)
             {
@@ -98,7 +98,7 @@ public class WaveManager : MonoBehaviour
     void SpawnBoss()
     {
         bossSpawned = true;
-        Debug.Log("The boss has appeared");
+        //Debug.Log("The boss has appeared");
         
         if (currentFactory != null)
         {
@@ -112,7 +112,7 @@ public class WaveManager : MonoBehaviour
     void OnCritterDestinationReached()
     {
         // Handle any logic when a critter reaches its destination
-        Debug.Log("Your survive during " + (waveNumber - 1) + "waves");
+        //Debug.Log("Your survive during " + (waveNumber - 1) + "waves");
 
         // Stop spawning and movement
         isSpawning = false;

@@ -9,8 +9,8 @@ public class Arrow : MonoBehaviour
     public Transform tip;
 
     private Rigidbody m_Rigidbody;
-    private ParticleSystem m_ParticleSystem;
-    private TrailRenderer m_TrailRenderer;
+    [SerializeField] private ParticleSystem m_ParticleSystem;
+    [SerializeField] private TrailRenderer m_TrailRenderer;
 
     private bool isInAir = false;
     private Vector3 lastPos = Vector3.zero;
@@ -19,8 +19,6 @@ public class Arrow : MonoBehaviour
     private void Awake()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
-        m_ParticleSystem = GetComponent<ParticleSystem>();
-        m_TrailRenderer = GetComponent<TrailRenderer>();
 
         PullInteraction.PullActionReleased += Release;
 
@@ -63,14 +61,22 @@ public class Arrow : MonoBehaviour
         
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.gameObject.layer != 0)
+        if (collision.collider.CompareTag("Critter"))
         {
-            if (collision.transform.TryGetComponent<Rigidbody>(out Rigidbody rb))
+            if (collision.collider.TryGetComponent<Critter>(out Critter critter))
             {
-                rb.interpolation = RigidbodyInterpolation.None;
-                transform.parent = collision.transform;
-                rb.AddForce(m_Rigidbody.velocity, ForceMode.Impulse);
+                Debug.Log(critter.health);
+                critter.health -= 5;
+                Debug.Log(critter.health);
             }
+
+            if (collision.collider.TryGetComponent<Rigidbody>(out Rigidbody rb))
+            {
+                //rb.interpolation = RigidbodyInterpolation.None;
+                transform.parent = collision.transform;
+                //rb.AddForce(m_Rigidbody.velocity, ForceMode.Impulse);
+            }
+           
             Stop();
         }
     }
