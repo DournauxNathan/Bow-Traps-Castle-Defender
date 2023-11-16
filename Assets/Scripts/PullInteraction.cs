@@ -13,7 +13,7 @@ public class PullInteraction : XRBaseInteractable
     private IXRSelectInteractor pullingInteractor = null;
 
     private AudioSource m_AudioSource;
-    public AudioClip onRelease;
+    public AudioClip onLoading, onRelease;
 
     protected override void Awake()
     {
@@ -57,6 +57,8 @@ public class PullInteraction : XRBaseInteractable
                 }
 
                 UpdateString();
+
+                m_AudioSource.Play();
             }
         }
     }
@@ -76,7 +78,22 @@ public class PullInteraction : XRBaseInteractable
     private void UpdateString()
     {
         Vector3 linePos = Vector3.forward * Mathf.Lerp(start.localPosition.z, end.localPosition.z, pullAmount);
-        notch.transform.localPosition = new Vector3(notch.transform.localPosition.z, notch.transform.localPosition.y, linePos.z + 0.2f);
+        notch.transform.localPosition = new Vector3(notch.transform.localPosition.x, notch.transform.localPosition.y, linePos.z + 0.2f);
         m_LineRenderer.SetPosition(1, linePos);
+    }
+
+    private void OnDrawGizmos()
+    {
+        // Draw a sphere at the position of the 'start' transform
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(start.position, 0.015f);
+
+        // Draw a sphere at the position of the 'end' transform
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(end.position, 0.015f);
+
+        // Draw a line between 'start' and 'end' for better visualization
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(start.position, end.position);
     }
 }

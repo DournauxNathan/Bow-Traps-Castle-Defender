@@ -9,7 +9,7 @@ public class ArrowSpawner : MonoBehaviour
     public GameObject notch;
 
     private XRGrabInteractable _bow;
-    private bool isArrowNotched = false;
+    [SerializeField] private bool isArrowNotched = false;
     private GameObject currentArrow;
 
     // Start is called before the first frame update
@@ -30,9 +30,9 @@ public class ArrowSpawner : MonoBehaviour
     {
         if (_bow.isSelected && !isArrowNotched)
         {
-            StartCoroutine("DelayedSpawn");
+            StartCoroutine(DelayedSpawn());
         }
-        if (_bow.isSelected)
+        if (!_bow.isSelected)
         {
             Destroy(currentArrow);
         }
@@ -43,7 +43,7 @@ public class ArrowSpawner : MonoBehaviour
         isArrowNotched = false;
     }
 
-    IEnumerable DelayedSpawn()
+    IEnumerator DelayedSpawn()
     {
         isArrowNotched = true;
         yield return new WaitForSeconds(1f);
