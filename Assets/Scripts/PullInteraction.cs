@@ -54,11 +54,10 @@ public class PullInteraction : XRBaseInteractable
                 {
                     ActionBasedController controller = pullingInteractor.transform.gameObject.GetComponent<ActionBasedController>();
                     controller.SendHapticImpulse(pullAmount, .1f);
+                    
                 }
 
                 UpdateString();
-
-                m_AudioSource.Play();
             }
         }
     }
