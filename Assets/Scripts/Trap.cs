@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.InputSystem;
 
 public class Trap : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class Trap : MonoBehaviour
 
     public Mode enableMode;
     public bool IsActive { get; private set; }
+    public bool RunDebug;
 
     public Activator activator;
 
@@ -27,12 +29,23 @@ public class Trap : MonoBehaviour
 
     public bool CanActivate()
     {
-        return !IsActive && !activator.IsBroken && !activator.GetRandomVazlue();
+        return !IsActive && !activator.IsBroken;
+    }
+
+    private void FixedUpdate()
+    {
+        // Check if the space key is pressed
+        if (Keyboard.current.spaceKey.isPressed)
+        {
+            RunDebug = !RunDebug;
+        }
     }
 
     public virtual void Activate()
     {
-        if (CanActivate())
+        activator.GetRandomValue();
+
+        if (CanActivate() || RunDebug)
         {
             // Activate the trap effect (example: damage critters, apply status)
             StartCoroutine(ActivateTrapEffect());

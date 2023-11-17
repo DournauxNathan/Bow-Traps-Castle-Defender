@@ -615,6 +615,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableMode: 1
+  RunDebug: 0
   activator: {fileID: 1357847463}
   trapEffectDuration: 25
   fireDamage: 20

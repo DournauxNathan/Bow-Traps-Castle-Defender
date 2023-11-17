@@ -8,7 +8,6 @@ public class Activator : MonoBehaviour, IActivatable
     public bool Repairable { get; protected set; }
     public float RepairTime { get; protected set; }
 
-
     public float breakChance = 0.35f; // Chance of the trap breaking (e.g., 10%)
 
     public ParticleSystem m_particles;
@@ -23,21 +22,22 @@ public class Activator : MonoBehaviour, IActivatable
         RepairTime = 3f; // Example: Time it takes to repair the trap
     }
 
-    public bool GetRandomVazlue()
+    public void GetRandomValue()
     {
         float value = Random.value;
+
         Debug.Log(value);
+
         if (value < breakChance)
         {
             Break();
-            return true;
         }
-
-        return false;
     }
 
     public void Break()
     {
+        Debug.Log("Broken");
+
         IsBroken = true;
 
         // Additional logic for when the trap is broken
