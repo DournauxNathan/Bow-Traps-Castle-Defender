@@ -1,11 +1,9 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEditor;
-using UnityEngine.InputSystem;
 
 public class Trap : MonoBehaviour
-{
+{    
     public enum Mode
     {
         Toogle,
@@ -14,7 +12,6 @@ public class Trap : MonoBehaviour
 
     public Mode enableMode;
     public bool IsActive { get; private set; }
-    public bool RunDebug;
 
     public Activator activator;
 
@@ -32,20 +29,11 @@ public class Trap : MonoBehaviour
         return !IsActive && !activator.IsBroken;
     }
 
-    private void FixedUpdate()
-    {
-        // Check if the space key is pressed
-        if (Keyboard.current.spaceKey.isPressed)
-        {
-            RunDebug = !RunDebug;
-        }
-    }
-
     public virtual void Activate()
     {
         activator.GetRandomValue();
 
-        if (CanActivate() || RunDebug)
+        /*if (CanActivate())
         {
             // Activate the trap effect (example: damage critters, apply status)
             StartCoroutine(ActivateTrapEffect());
@@ -59,7 +47,7 @@ public class Trap : MonoBehaviour
         {
             // Handle broken state
             Debug.LogWarning("Cannot activate a broken trap!");
-        }
+        }*/
     }
 
     protected virtual IEnumerator ActivateTrapEffect()

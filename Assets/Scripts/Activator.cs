@@ -26,8 +26,6 @@ public class Activator : MonoBehaviour, IActivatable
     {
         float value = Random.value;
 
-        Debug.Log(value);
-
         if (value < breakChance)
         {
             Break();

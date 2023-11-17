@@ -21,6 +21,8 @@ public class FlameEmitter : Trap
     // Override the Activate method to implement FireWall-specific activation
     public override void Activate()
     {
+        base.Activate();
+
         if (CanActivate())
         {
             // Activate the FireWall effect
@@ -29,11 +31,11 @@ public class FlameEmitter : Trap
             // Set a cooldown or duration for the FireWall effect
             StartCoroutine(DeactivateTrapEffectAfterDelay());
         }
-        else
+        /*else
         {
             // Handle broken state specific to FireWall
             Debug.LogWarning("Cannot activate a broken FireWall!");
-        }
+        }*/
     }
 
     // Override the ActivateTrapEffect method to implement FireWall-specific effect
