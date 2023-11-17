@@ -65,9 +65,7 @@ public class Arrow : MonoBehaviour
         {
             if (collision.collider.TryGetComponent<Critter>(out Critter critter))
             {
-                Debug.Log(critter.health);
                 critter.health -= 5;
-                Debug.Log(critter.health);
             }
 
             if (collision.collider.TryGetComponent<Rigidbody>(out Rigidbody rb))

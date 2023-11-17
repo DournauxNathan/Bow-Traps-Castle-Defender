@@ -73,5 +73,7 @@ public class FlameEmitter : Trap
         {
             emitter.Deactivate();
         }
+
+        yield return new WaitForSeconds(0.8f);
     }
 }

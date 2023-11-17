@@ -31,7 +31,7 @@ public class Trap : MonoBehaviour
 
     public virtual void Activate()
     {
-        activator.GetRandomValue();
+        
 
         /*if (CanActivate())
         {
@@ -52,19 +52,16 @@ public class Trap : MonoBehaviour
 
     protected virtual IEnumerator ActivateTrapEffect()
     {
-        // Placeholder logic for trap effect
-        Debug.Log("Trap effect activated!");
         IsActive = true;
+        activator.GetRandomValue();
 
-        yield return null; // Add your trap effect logic here
+        yield return null; 
     }
 
     protected virtual IEnumerator DeactivateTrapEffectAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
 
-        // Deactivate the trap effect (example: stop damaging critters)
-        Debug.Log("Trap effect deactivated!");
         IsActive = false;
     }
         

@@ -15,6 +15,7 @@ public class Emitter : MonoBehaviour
 
     private void Start()
     {
+        m_Collider.enabled = false;
         isActive = false;
     }
 
@@ -22,8 +23,8 @@ public class Emitter : MonoBehaviour
     {
         isActive = true;
         m_Collider.enabled = true;
-        m_particles.Play();
-        m_audioSource.PlayOneShot(onActivate);
+        m_particles?.Play();
+        m_audioSource?.PlayOneShot(onActivate);
         
         SwitchAudio(true);
     }
@@ -34,8 +35,8 @@ public class Emitter : MonoBehaviour
         SwitchAudio(false);
         
         m_Collider.enabled = false;
-        m_particles.Stop();
-        m_audioSource.PlayOneShot(onDeactivate);
+        m_particles?.Stop();
+        m_audioSource?.PlayOneShot(onDeactivate);
     }
 
     public void Toogle()
@@ -54,7 +55,7 @@ public class Emitter : MonoBehaviour
         {
             m_audioSource.loop = true;
             m_audioSource.clip = onStay;
-            m_audioSource.Play();
+            m_audioSource?.Play();
         }
         else
         {
@@ -63,12 +64,10 @@ public class Emitter : MonoBehaviour
         }
     }
     
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<Critter>(out Critter _critter))
         {
-            // Additional logic specific to FireWall effect
-            Debug.Log("FireWall effect activated, dealing " + damage + " fire damage to critters!");
             _critter.health -= damage;
         }
     }

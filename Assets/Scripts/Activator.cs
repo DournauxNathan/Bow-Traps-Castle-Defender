@@ -1,17 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Activator : MonoBehaviour, IActivatable
 {
     public bool IsBroken { get; private set; }
     public bool Repairable { get; protected set; }
     public float RepairTime { get; protected set; }
+    public float _repairTime;
 
     public float breakChance = 0.35f; // Chance of the trap breaking (e.g., 10%)
-
+    
+    public BoxCollider m_Collider;
     public ParticleSystem m_particles;
     public AudioSource m_audioSource;
+
+    public UnityEvent onBreak, onRepair;
 
     // Start is called before the first frame update
     void Start()
@@ -24,9 +29,9 @@ public class Activator : MonoBehaviour, IActivatable
 
     public void GetRandomValue()
     {
-        float value = Random.value;
+        float randomProbability = Random.value;
 
-        if (value < breakChance)
+        if (randomProbability < breakChance)
         {
             Break();
         }
@@ -34,23 +39,40 @@ public class Activator : MonoBehaviour, IActivatable
 
     public void Break()
     {
-        Debug.Log("Broken");
-
         IsBroken = true;
 
         // Additional logic for when the trap is broken
-        m_particles.Play();
-        //m_audioSource.Stop();
+        onBreak?.Invoke();
 
-        // Additional logic for when the trap is broken
-        Debug.Log("Trap is broken!");
+        m_Collider.enabled = true;
+        m_particles?.Play();
+        m_audioSource?.Play();
     }
 
-    public void Repair()
+    public void Repair(float amount)
     {
-        IsBroken = false;
-        // Additional logic for when the trap is repaired
-        Debug.Log("Trap repaired!");       
+        if (IsBroken)
+        {
+            RepairTime -= amount;  // Decrease repair progress
 
+            _repairTime = RepairTime;
+
+            if (RepairTime <= 0f)
+            {
+                IsBroken = false;
+                RepairTime = 3f; // Reset repair time for the next repair
+                _repairTime = RepairTime;
+
+                onRepair?.Invoke();
+
+                m_Collider.enabled = false;
+                m_particles?.Stop();
+                m_audioSource?.Play();
+            }
+        }
+
+        // If the trap is not broken, you can choose to handle this case separately or ignore it.
+        //MAYBE UPDATE ACTIVATOR ? 
     }
+
 }

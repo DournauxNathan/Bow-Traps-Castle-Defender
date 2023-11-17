@@ -5,6 +5,6 @@ public interface IActivatable
     float RepairTime { get; }
 
     void Break();
-    void Repair();
+    void Repair(float amount);
 
 }
