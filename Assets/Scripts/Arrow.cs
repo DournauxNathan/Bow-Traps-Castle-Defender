@@ -8,7 +8,8 @@ public class Arrow : MonoBehaviour
     public float speed = 10f;
     public Transform tip;
 
-    private Rigidbody m_Rigidbody;
+    public Rigidbody m_Rigidbody { get; private set; }
+
     [SerializeField] private ParticleSystem m_ParticleSystem;
     [SerializeField] private TrailRenderer m_TrailRenderer;
 

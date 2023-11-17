@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class FlameEmitter : Trap
+public class FlameEmitter : BreakableTrap
 {
     // Additional properties specific to FireWall
     public int fireDamage = 20; // Example: Fire damage specific to FireWall
@@ -22,20 +21,6 @@ public class FlameEmitter : Trap
     public override void Activate()
     {
         base.Activate();
-
-        if (CanActivate())
-        {
-            // Activate the FireWall effect
-            StartCoroutine(ActivateTrapEffect());
-
-            // Set a cooldown or duration for the FireWall effect
-            StartCoroutine(DeactivateTrapEffectAfterDelay());
-        }
-        /*else
-        {
-            // Handle broken state specific to FireWall
-            Debug.LogWarning("Cannot activate a broken FireWall!");
-        }*/
     }
 
     // Override the ActivateTrapEffect method to implement FireWall-specific effect
@@ -63,7 +48,7 @@ public class FlameEmitter : Trap
         }
     }
 
-    protected IEnumerator DeactivateTrapEffectAfterDelay()
+    protected override IEnumerator DeactivateTrapEffectAfterDelay(float delay)
     {
         // Placeholder logic for common trap effect
         yield return base.DeactivateTrapEffectAfterDelay(trapEffectDuration);
@@ -72,8 +57,9 @@ public class FlameEmitter : Trap
         foreach (Emitter emitter in emitters)
         {
             emitter.Deactivate();
+
+            yield return new WaitForSeconds(0.8f);
         }
 
-        yield return new WaitForSeconds(0.8f);
     }
 }

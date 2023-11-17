@@ -15,7 +15,7 @@ public class Hammer : XRGrabInteractable
     // OnTriggerEnter is called when the Collider other enters the trigger.
     private void OnTriggerEnter(Collider other)
     {
-        Activator activator = other.GetComponent<Activator>();
+        BreakableActivator activator = other.GetComponent<BreakableActivator>();
 
         if (activator != null && activator.IsBroken) 
         {
@@ -33,7 +33,7 @@ public class Hammer : XRGrabInteractable
         }
     }
 
-    private void Repair(Activator activator)
+    private void Repair(BreakableActivator activator)
     {
         if (activator.Repairable && activator.IsBroken)
         {

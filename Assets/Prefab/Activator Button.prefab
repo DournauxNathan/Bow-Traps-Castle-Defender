@@ -483,7 +483,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2214
+  m_VersionIndex: 2232
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -5797,9 +5797,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2228204360112585020}
-  - component: {fileID: 919543750440500653}
-  - component: {fileID: 4007197596053898861}
+  - component: {fileID: 804425886715280878}
   - component: {fileID: 5239390682786487658}
+  - component: {fileID: 4007197596053898861}
   m_Layer: 0
   m_Name: Activator Button
   m_TagString: Untagged
@@ -5825,7 +5825,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &919543750440500653
+--- !u!114 &804425886715280878
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5834,11 +5834,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5652900731229895995}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7adf83d2ee57e845ae2b7dc887c2d22, type: 3}
+  m_Script: {fileID: 11500000, guid: d98cb4c00ac36f04291bbc92b61852e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _repairTime: 0
-  breakChance: 0.7
+  breakChance: 0.35
   m_Collider: {fileID: 5239390682786487658}
   m_particles: {fileID: 5239390683037730857}
   m_audioSource: {fileID: 4007197596053898861}
@@ -5857,18 +5856,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 5239390684113651397}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   onRepair:
     m_PersistentCalls:
       m_Calls:
@@ -5882,20 +5869,21 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 5239390684113651397}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+--- !u!65 &5239390682786487658
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5652900731229895995}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2, y: 0.2, z: 0.2}
+  m_Center: {x: 0, y: 1.11, z: 0}
 --- !u!82 &4007197596053898861
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5992,16 +5980,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!65 &5239390682786487658
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5652900731229895995}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.2, y: 0.2, z: 0.2}
-  m_Center: {x: 0, y: 1.11, z: 0}
