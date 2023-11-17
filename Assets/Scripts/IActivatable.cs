@@ -6,4 +6,5 @@ public interface IActivatable
 
     void Break();
     void Repair();
+
 }

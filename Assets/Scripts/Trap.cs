@@ -1,46 +1,39 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
+using UnityEditor;
 
-public class Trap : XRSimpleInteractable, IActivatable
+public class Trap : MonoBehaviour
 {
-    public bool IsBroken { get; private set; }
-    public bool Repairable { get; protected set; }
-    public float RepairTime { get; protected set; }
+    public enum Mode
+    {
+        Toogle,
+        Activate
+    }
+
+    public Mode enableMode;
+    public bool IsActive { get; private set; }
+
+    public Activator activator;
 
     // Additional properties specific to Trap
-    public float activationDelay = 2f; // Example: Activation delay in seconds
     public float trapEffectDuration = 5f; // Example: How long the trap effect lasts
-
-    // Placeholder references for visual/audio effects
-    public GameObject activationEffect;
-    public AudioSource activationSound;
 
     void Start()
     {
         // Initialize properties and setup
-        IsBroken = false;
-        Repairable = true; // Example: Assume traps are repairable by default
-        RepairTime = 3f; // Example: Time it takes to repair the trap
+        IsActive = false;
     }
 
-    public void Activate()
+    public bool CanActivate()
     {
-        if (!IsBroken)
+        return !IsActive && !activator.IsBroken && !activator.GetRandomVazlue();
+    }
+
+    public virtual void Activate()
+    {
+        if (CanActivate())
         {
-            // Trigger activation effect
-            if (activationEffect != null)
-            {
-                Instantiate(activationEffect, transform.position, Quaternion.identity);
-            }
-
-            // Play activation sound
-            if (activationSound != null)
-            {
-                activationSound.Play();
-            }
-
             // Activate the trap effect (example: damage critters, apply status)
             StartCoroutine(ActivateTrapEffect());
 
@@ -56,32 +49,32 @@ public class Trap : XRSimpleInteractable, IActivatable
         }
     }
 
-    IEnumerator ActivateTrapEffect()
+    protected virtual IEnumerator ActivateTrapEffect()
     {
         // Placeholder logic for trap effect
         Debug.Log("Trap effect activated!");
+        IsActive = true;
 
         yield return null; // Add your trap effect logic here
     }
 
-    IEnumerator DeactivateTrapEffectAfterDelay(float delay)
+    protected virtual IEnumerator DeactivateTrapEffectAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
 
         // Deactivate the trap effect (example: stop damaging critters)
         Debug.Log("Trap effect deactivated!");
+        IsActive = false;
     }
-
-    public void Break()
+        
+    // Draw a line between the trap and its activator in the Scene view
+    private void OnDrawGizmos()
     {
-        IsBroken = true;
-        // Additional logic for when the trap is broken
-    }
-
-    public void Repair()
-    {
-        IsBroken = false;
-        // Additional logic for when the trap is repaired
-        Debug.Log("Trap repaired!");
+        if (activator != null)
+        {
+            // Draw the first line segment
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, activator.transform.position);
+        }
     }
 }
