@@ -14,5 +14,10 @@ public class TrapEditor : Editor
         {
             trap.Activate();
         }
+
+        if (GUILayout.Button("Toggle Trap"))
+        {
+            trap.Toggle();
+        }
     }
 }

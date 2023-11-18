@@ -36,9 +36,30 @@ public class TrapData : MonoBehaviour
         }
     }
 
+    public virtual void Toggle()
+    {
+        IsActive = !IsActive;
+
+        if (IsActive)
+        {
+            StartCoroutine(ActivateTrapEffect());
+        }
+        else
+        {
+            StartCoroutine(DeactivateTrapEffect());
+        }
+    }
+
     protected virtual IEnumerator ActivateTrapEffect()
     {
         IsActive = true;
+
+        yield return null;
+    }
+
+    protected virtual IEnumerator DeactivateTrapEffect()
+    {
+        IsActive = false;
 
         yield return null;
     }

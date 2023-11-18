@@ -2382,7 +2382,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 049e6aae2d1213e478101c1eaabea52c, type: 2}
+  - {fileID: 2100000, guid: 606ad7b738820bd4d863188374b68859, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -18451,6 +18451,7 @@ MonoBehaviour:
   trapEffectDuration: 2
   breakActivator: {fileID: 7103972579174302951}
   boulders: []
+  spawnBoulderDuration: 2
 --- !u!82 &1103500238
 AudioSource:
   m_ObjectHideFlags: 0
@@ -19980,10 +19981,34 @@ MonoBehaviour:
   maxThreshold: 0.9
   onPulled:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1103500237}
+        m_TargetAssemblyTypeName: TrapData, Assembly-CSharp
+        m_MethodName: Toggle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onReleased:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1103500237}
+        m_TargetAssemblyTypeName: TrapData, Assembly-CSharp
+        m_MethodName: Toggle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   smoothFactor: 5
 --- !u!54 &1529708258
 Rigidbody:
@@ -20266,7 +20291,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 25a9fb42d361f46ad89221f6d301e96e, type: 2}
+  - {fileID: 2100000, guid: be1c6645625facf479bebe0416b3e795, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -30082,7 +30107,7 @@ PrefabInstance:
       objectReference: {fileID: 245361036}
     - target: {fileID: 5239390683558890232, guid: e46437191ba291647af3d23a401fb2bc, type: 3}
       propertyPath: m_VersionIndex
-      value: 2244
+      value: 2247
       objectReference: {fileID: 0}
     - target: {fileID: 5239390684113651397, guid: e46437191ba291647af3d23a401fb2bc, type: 3}
       propertyPath: m_InteractionManager

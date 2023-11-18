@@ -44,6 +44,8 @@ public class Boulder : MonoBehaviour
 
         m_Rigibody.isKinematic = true;
         m_Rigibody.useGravity = false;
+
+        this.gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
