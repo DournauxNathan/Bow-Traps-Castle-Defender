@@ -33,6 +33,8 @@ public class Lever : XRBaseInteractable
 
         initialRotation = transform.rotation;
         initialGrabLocalPosition = pullingInteractor.transform.localPosition;
+
+        pullingInteractor.transform.position = leverCap.position ;
     }
 
 
@@ -51,23 +53,6 @@ public class Lever : XRBaseInteractable
 
                 if (distance <= maxDistance)
                 {
-                    // Calculate the rotation based on the change in position of the grab point
-                    Vector3 pullDirection = pullingInteractor.transform.localPosition - initialGrabLocalPosition;
-                    float pullAmount = Mathf.Clamp(pullDirection.x, -rotationThreshold, rotationThreshold);
-
-                    // Update Rotation
-                    float angle = pullAmount;
-                    Quaternion newRotation = initialRotation * Quaternion.AngleAxis(angle, transform.right);
-                    transform.rotation = newRotation;
-
-
-
-                    /*// Calculate the rotation based on the change in position of the grab point
-                    float angle = Vector3.Dot(pullingInteractor.transform.localPosition - initialGrabLocalPosition, leverCap.forward) * 500f;
-
-                    // Apply the rotation to the lever
-                    transform.rotation = initialRotation * Quaternion.AngleAxis(angle, transform.right);*/
-
                     /* Joytsick movement
                     // Get the rotation of the controller
                     Quaternion controllerRotation = pullingInteractor.transform.rotation;
@@ -76,21 +61,38 @@ public class Lever : XRBaseInteractable
                     leverHandle.rotation = Quaternion.Euler(Vector3.forward) * controllerRotation * initialRotation;
                     */
 
-                    /*
                     float angle = GetLeverAngle(pullingInteractor);
                     angle = Mathf.Clamp(angle, -rotationThreshold, rotationThreshold);
 
-                    Quaternion newRotation = Quaternion.Euler(0f, 0f, angle);
+                    Debug.Log(angle);
 
+                    /* Joytsick movement
+                   // Get the rotation of the controller
+                   Quaternion controllerRotation = pullingInteractor.transform.rotation;
+
+                   // Apply the controller rotation to the lever with the initial rotation offset
+                   leverHandle.rotation = Quaternion.Euler(Vector3.forward) * controllerRotation * initialRotation;
+                   */
+
+                    ActionBasedController controller = pullingInteractor.transform.gameObject.GetComponent<ActionBasedController>();
+                    
+                    Quaternion.Euler(angle, 0f, 0f);
+
+                    // Calculate the target rotation based on the desired angle
+                    Quaternion targetRotation = Quaternion.Euler(angle, 0f, 0f);
+
+                    // Use Quaternion.Lerp to smoothly interpolate between the current rotation and the target rotation
+                    Quaternion newRotation = Quaternion.Lerp(leverHandle.localRotation, targetRotation, Time.deltaTime * 5f);
+
+                    // Assign the interpolated rotation to the leverHandle
                     leverHandle.localRotation = newRotation;
 
                     float normalizedLeverPosition = Mathf.InverseLerp(-rotationThreshold, rotationThreshold, angle);
-                    Debug.Log(normalizedLeverPosition);
+                    //Debug.Log(normalizedLeverPosition);
 
                     // Haptic Feedback
                     if (normalizedLeverPosition <= 0.55f && normalizedLeverPosition >= 0.45f)
                     {
-                        ActionBasedController controller = pullingInteractor.transform.gameObject.GetComponent<ActionBasedController>();
                         controller.SendHapticImpulse(angle, 0.1f);
                     }
 
@@ -102,24 +104,21 @@ public class Lever : XRBaseInteractable
                     {
                         onReleased?.Invoke();
                     }
-                    */
                 }
             }
         }
     }
 
+
     private float GetLeverAngle(IXRSelectInteractor interactor)
     {
-        // Get the local position of the lever relative to its parent
-        Vector3 deltaPosition = leverHandle.localPosition - interactor.transform.position;
+        // Convert controller's position to lever's local space
+        Vector3 localPosition = leverHandle.InverseTransformPoint(interactor.transform.position);
 
-        // Apply the inverse of the lever's rotation to the delta position
-        Vector3 rotatedDeltaPosition = Quaternion.Inverse(leverHandle.localRotation) * deltaPosition * smoothFactor;
+        // Calculate the angle based on the projected position
+        float angle = Vector3.Angle(interactor.transform.position, localPosition) * Mathf.Sign(Vector3.Dot(interactor.transform.position, localPosition));
 
-        // Calculate the angle using the rotated delta position
-        float angle = Mathf.Atan(rotatedDeltaPosition.x) * Mathf.Rad2Deg * smoothFactor;
-
-        return angle;
+        return angle * smoothFactor;
     }
 
     private void OnDrawGizmosSelected()
