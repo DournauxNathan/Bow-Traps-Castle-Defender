@@ -18,7 +18,9 @@ public class BreakableTrap : TrapData
         {
             // Draw the first line segment
             Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position, breakActivator.transform.position);
+            Gizmos.DrawLine(transform.position, breakActivator.transform.position + new Vector3(0f,1f,0f));
+            Gizmos.DrawWireSphere(breakActivator.transform.position + new Vector3(0f, 1f, 0f), .15f);
+
         }
     }
 }

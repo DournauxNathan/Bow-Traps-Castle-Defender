@@ -68,7 +68,7 @@ public class Emitter : MonoBehaviour
     {
         if (other.TryGetComponent<Critter>(out Critter _critter))
         {
-            _critter.health -= damage;
+            _critter.TakeDamage(damage);
         }
     }
 }

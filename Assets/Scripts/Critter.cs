@@ -24,6 +24,7 @@ public class Critter : MonoBehaviour
     public event Action OnDestinationReached;
     
     private NavMeshAgent m_NavMeshAgent;
+    private Rigidbody m_Rigidbody;
 
     private bool isMoving = true; // Flag to control movement
 
@@ -36,6 +37,8 @@ public class Critter : MonoBehaviour
     void Start()
     {
         m_NavMeshAgent = GetComponent<NavMeshAgent>();
+        m_Rigidbody = GetComponent<Rigidbody>();
+
         if (m_NavMeshAgent == null)
         {
             Debug.LogError("NavMeshAgent component not found on Critter GameObject.");
@@ -94,11 +97,11 @@ public class Critter : MonoBehaviour
         // Handle Boss defeat logic, e.g., transition to the second phase
     }
 
-    // Called when the critter is hit by an arrow
     public void TakeDamage(int damage)
     {
         health -= damage;
     }
+
 
     private void OnCollisionEnter(Collision collision)
     {
