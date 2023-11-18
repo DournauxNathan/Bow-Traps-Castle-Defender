@@ -47,7 +47,6 @@ public class PullInteraction : XRBaseInteractable
             if (isSelected)
             {
                 Vector3 pullPosition = pullingInteractor.transform.position;
-                Debug.Log("", pullingInteractor.transform.gameObject);
                 pullAmount = CaculatePull(pullPosition);
 
                 // Haptic Feedback

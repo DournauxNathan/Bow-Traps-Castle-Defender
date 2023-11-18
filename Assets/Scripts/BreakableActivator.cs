@@ -20,25 +20,20 @@ public class BreakableActivator : MonoBehaviour, IBreakable
     // Start is called before the first frame update
     void Start()
     {
-        if (Repairable)
-        {
-            // Initialize properties and setup
-            IsBroken = false;
-            Repairable = true;
-            RepairTime = 3f; // Example: Time it takes to repair the trap
-        }
+        // Initialize properties and setup
+        IsBroken = false;
+        Repairable = true;
+        RepairTime = 3f; // Example: Time it takes to repair the trap
     }
 
-    public bool HasBroken()
+    public void RandomChanceToBreak()
     {
         float randomProbability = Random.value;
 
         if (randomProbability < breakChance && Repairable)
         {
             Break();
-            return true;
         }
-        return false;
     }
 
     public void Break()
