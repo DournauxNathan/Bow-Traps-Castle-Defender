@@ -68,7 +68,11 @@ public class Arrow : MonoBehaviour
             if (collision.collider.TryGetComponent<Critter>(out Critter critter))
             {
                 // Apply base damage
-                critter.health -= damage;
+                critter.TakeDamage(damage);
+
+                m_Rigidbody.interpolation = RigidbodyInterpolation.None;
+                transform.parent = critter.transform;
+                //rb.AddForce(m_Rigidbody.velocity, ForceMode.Impulse);
             }
         }
     }
@@ -99,6 +103,7 @@ public class Arrow : MonoBehaviour
     {
         isInAir = false;
         SetPhysics(false);
+
         m_ParticleSystem.Stop();
         m_TrailRenderer.emitting = false;
     }

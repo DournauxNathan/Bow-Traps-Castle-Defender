@@ -37,3 +37,4 @@ public class TornadoArrow : MonoBehaviour
         critter.GetComponent<Rigidbody>().AddForce(Vector3.up * tornadoForce, ForceMode.Impulse);
     }
 }
+z
