@@ -8,6 +8,7 @@ TagManager:
   - Critter
   - Hand
   - Detector
+  - Arrow
   layers:
   - Default
   - TransparentFX

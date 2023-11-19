@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3740019913092135770}
   m_Layer: 0
   m_Name: Arrow
-  m_TagString: Untagged
+  m_TagString: Arrow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49,10 +49,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc3334c25a0fa204da14bb8a79de11cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 5
+  damageOverTimeDuration: 3
   speed: 30
   tip: {fileID: 1769337598482281036}
+  m_Rigidbody: {fileID: 0}
   m_ParticleSystem: {fileID: 2262844333746262942}
   m_TrailRenderer: {fileID: 8729613411870003894}
+  m_AudioSource: {fileID: 0}
+  onShootSound: {fileID: 0}
+  onHitSound: {fileID: 0}
 --- !u!54 &3739455031483572838
 Rigidbody:
   m_ObjectHideFlags: 0
