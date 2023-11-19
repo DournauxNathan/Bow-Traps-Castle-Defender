@@ -26,7 +26,7 @@ public class Target : MonoBehaviour
         if (collision.collider.TryGetComponent<Arrow>(out Arrow arrow))
         {
             IsActivate = true;
-            Rotate(arrow.m_Rigidbody.velocity);
+            Rotate(arrow.GetComponent<Rigidbody>().velocity);
 
             manager.IsTargetsActivated();
         }

@@ -1,28 +1,30 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
+    // Common properties and methods for all arrows
+    public int damage = 5; // Base damage of the arrow
+    public float damageOverTimeDuration = 3f; // Duration of damage over time effect
+
     public float speed = 10f;
     public Transform tip;
 
-    public Rigidbody m_Rigidbody { get; private set; }
+    [SerializeField] protected Rigidbody m_Rigidbody;
+    [SerializeField] protected ParticleSystem m_ParticleSystem;
+    [SerializeField] protected TrailRenderer m_TrailRenderer;
 
-    [SerializeField] private ParticleSystem m_ParticleSystem;
-    [SerializeField] private TrailRenderer m_TrailRenderer;
+    [SerializeField] protected AudioSource m_AudioSource;
+    [SerializeField] protected AudioClip onShootSound, onHitSound;
 
-    private bool isInAir = false;
-    private Vector3 lastPos = Vector3.zero;
-
+    protected bool isInAir = false;
+    protected Vector3 lastPos = Vector3.zero;
 
     private void Awake()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
-
         PullInteraction.PullActionReleased += Release;
-
         Stop();
     }
 
@@ -31,7 +33,7 @@ public class Arrow : MonoBehaviour
         PullInteraction.PullActionReleased -= Release;
     }
 
-    private void Release(float value)
+    protected virtual void Release(float value)
     {
         PullInteraction.PullActionReleased -= Release;
         gameObject.transform.parent = null;
@@ -45,11 +47,44 @@ public class Arrow : MonoBehaviour
 
         lastPos = tip.position;
 
+        m_AudioSource.PlayOneShot(onShootSound);
         m_ParticleSystem.Play();
         m_TrailRenderer.emitting = true;
     }
 
-    private IEnumerator RotateWithVelocity()
+    protected virtual void OnCollisionEnter(Collision collision)
+    {
+        // Common collision logic for all arrows
+        Stop();
+
+        // Deal damage to the target
+        DealDamage(collision);
+    }
+
+    protected virtual void DealDamage(Collision collision)
+    {
+        if (collision.collider.CompareTag("Critter"))
+        {
+            if (collision.collider.TryGetComponent<Critter>(out Critter critter))
+            {
+                // Apply base damage
+                critter.health -= damage;
+            }
+        }
+    }
+
+    protected virtual IEnumerator ApplyDamageOverTime(Critter critter)
+    {
+        float timer = 0f;
+        while (timer < damageOverTimeDuration)
+        {
+            critter.health -= 1; // Example: Apply 1 damage per second
+            timer += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    protected IEnumerator RotateWithVelocity()
     {
         yield return new WaitForFixedUpdate();
         while (isInAir)
@@ -59,37 +94,16 @@ public class Arrow : MonoBehaviour
             yield return null;
         }
     }
-        
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.collider.CompareTag("Critter"))
-        {
-            if (collision.collider.TryGetComponent<Critter>(out Critter critter))
-            {
-                critter.health -= 5;
-            }
 
-            if (collision.collider.TryGetComponent<Rigidbody>(out Rigidbody rb))
-            {
-                //rb.interpolation = RigidbodyInterpolation.None;
-                transform.parent = collision.transform;
-                //rb.AddForce(m_Rigidbody.velocity, ForceMode.Impulse);
-            }
-           
-            Stop();
-        }
-    }
-
-    private void Stop()
+    protected void Stop()
     {
         isInAir = false;
         SetPhysics(false);
-
         m_ParticleSystem.Stop();
         m_TrailRenderer.emitting = false;
     }
 
-    private void SetPhysics(bool usePhysics)
+    protected void SetPhysics(bool usePhysics)
     {
         m_Rigidbody.useGravity = usePhysics;
         m_Rigidbody.isKinematic = !usePhysics;

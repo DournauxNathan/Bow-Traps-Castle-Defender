@@ -20,14 +20,17 @@ public class Critter : MonoBehaviour
     public int health = 1; // Initial health
     public int maxHealth = 1; // Maximum health
     public float speed = 5f; // Critter movement speed
+    private bool isGravityInverted = false;
+    private Vector3 originalGravity;
 
     public event Action OnDestinationReached;
     
     private NavMeshAgent m_NavMeshAgent;
     private Rigidbody m_Rigidbody;
 
-    private bool isMoving = true; // Flag to control movement
-
+    private bool isMoving = true; 
+    private bool isEffectOn = false;
+    
     public void Init(CritterData data)
     {
         this.health = data.health;
@@ -38,6 +41,7 @@ public class Critter : MonoBehaviour
     {
         m_NavMeshAgent = GetComponent<NavMeshAgent>();
         m_Rigidbody = GetComponent<Rigidbody>();
+        originalGravity = Physics.gravity;
 
         if (m_NavMeshAgent == null)
         {
@@ -50,10 +54,10 @@ public class Critter : MonoBehaviour
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         // Check if the critter is defeated
-        if (health <= 0)
+        if (health <= 0 || transform.position.y >= 30f)
         {
             Defeat();
         }
@@ -71,6 +75,61 @@ public class Critter : MonoBehaviour
         m_NavMeshAgent.isStopped = true;
     }
 
+    public void InverseGravity()
+    {
+        if (!isGravityInverted)
+        {
+            // Store the original gravity
+            originalGravity = Physics.gravity;
+
+            // Invert the gravity
+            Physics.gravity = -originalGravity;
+
+            // Disable the rigidbody's useGravity while gravity is inverted
+            m_Rigidbody.useGravity = false;
+
+            isGravityInverted = true;
+        }
+    }
+
+    public void StartEffect(float force, float effectDuration, System.Action<float, Critter> effectAction)
+    {
+        if (!isEffectOn)
+        {
+            isEffectOn = true;
+
+            // Start the effect
+            StartCoroutine(ApplyEffectOverTime(effectDuration, effectAction));
+        }
+    }
+
+    private IEnumerator ApplyEffectOverTime(float effectDuration, System.Action<float, Critter> effectAction)
+    {
+        float timer = 0f;
+
+        while (timer < effectDuration)
+        {
+            // Apply the effect
+            effectAction?.Invoke(Time.deltaTime, this);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        // Stop the effect after the specified duration
+        StopEffect();
+    }
+
+    private void StopEffect()
+    {
+        isEffectOn = false;
+        // Implement any logic needed when the effect stops
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+    }
+
     void Defeat()
     {
         // Handle defeat based on critter type
@@ -82,26 +141,10 @@ public class Critter : MonoBehaviour
             case CritterType.Middling:
                 // Handle Middling defeat
                 break;
-            case CritterType.Boss:
-                // Handle Boss defeat
-                BossDefeat();
-                break;
         }
 
-        Destroy(gameObject); // Destroy the critter
+        Destroy(gameObject);
     }
-
-
-    void BossDefeat()
-    {
-        // Handle Boss defeat logic, e.g., transition to the second phase
-    }
-
-    public void TakeDamage(int damage)
-    {
-        health -= damage;
-    }
-
 
     private void OnCollisionEnter(Collision collision)
     {
