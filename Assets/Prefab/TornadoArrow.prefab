@@ -9,13 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1769337597633466026}
-  - component: {fileID: 2533801704286438682}
+  - component: {fileID: 2808283684261709391}
   - component: {fileID: 3739455031483572838}
   - component: {fileID: 3740019913092135770}
   - component: {fileID: -186369532834339837}
-  - component: {fileID: -4887395517100110485}
+  - component: {fileID: -82971992060928665}
   m_Layer: 0
-  m_Name: Arrow
+  m_Name: TornadoArrow
   m_TagString: Arrow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39,7 +39,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2533801704286438682
+--- !u!114 &2808283684261709391
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -48,10 +48,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1769337597633466025}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc3334c25a0fa204da14bb8a79de11cd, type: 3}
+  m_Script: {fileID: 11500000, guid: 97c645566cde07a49b4ea01f2f795140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
+  damage: 5
   damageOverTimeDuration: 3
   speed: 30
   tip: {fileID: 1769337598482281036}
@@ -59,8 +59,14 @@ MonoBehaviour:
   m_ParticleSystem: {fileID: 2262844333746262942}
   m_TrailRenderer: {fileID: 8729613411870003894}
   m_AudioSource: {fileID: -186369532834339837}
-  onShootSound: {fileID: 8300000, guid: a07552ad320928d4ba7156637002eb6e, type: 3}
-  onHitSound: {fileID: 8300000, guid: 7cc4bcde16677e24da17fb247d32036a, type: 3}
+  onShootSound: {fileID: 0}
+  onHitSound: {fileID: 0}
+  tornadoRadius: 5
+  tornadoForce: 10
+  effectDuration: 5
+  critterLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!54 &3739455031483572838
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -186,7 +192,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &-4887395517100110485
+--- !u!114 &-82971992060928665
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -200,7 +206,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
   m_Colliders:
-  - {fileID: 3817572321378677644}
+  - {fileID: 1049842299}
   m_InteractionLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -5323,7 +5329,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9adcc415b5da0ed4798af128fa47dcd3, type: 3}
   m_PrefabInstance: {fileID: 258617463687783894}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &3817572321378677644
+--- !u!65 &1049842299
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

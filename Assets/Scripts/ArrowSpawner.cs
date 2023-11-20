@@ -49,4 +49,9 @@ public class ArrowSpawner : MonoBehaviour
         yield return new WaitForSeconds(1f);
         currentArrow = Instantiate(arrow, notch.transform);
     }
+
+    public void UpdateArrowPregav(GameObject newArrow)
+    {
+        arrow = newArrow;
+    }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Arrow : MonoBehaviour
 {
     // Common properties and methods for all arrows
-    public int damage = 5; // Base damage of the arrow
+    public float damage = 1; // Base damage of the arrow
     public float damageOverTimeDuration = 3f; // Duration of damage over time effect
 
     public float speed = 10f;
@@ -26,6 +26,11 @@ public class Arrow : MonoBehaviour
         m_Rigidbody = GetComponent<Rigidbody>();
         PullInteraction.PullActionReleased += Release;
         Stop();
+
+        if (m_AudioSource.clip != null)
+        {
+            m_AudioSource.Play();
+        }
     }
 
     private void OnDestroy()
@@ -47,7 +52,7 @@ public class Arrow : MonoBehaviour
 
         lastPos = tip.position;
 
-        m_AudioSource.PlayOneShot(onShootSound);
+        m_AudioSource?.PlayOneShot(onShootSound);
         m_ParticleSystem.Play();
         m_TrailRenderer.emitting = true;
     }
@@ -70,11 +75,14 @@ public class Arrow : MonoBehaviour
                 // Apply base damage
                 critter.TakeDamage(damage);
 
-                m_Rigidbody.interpolation = RigidbodyInterpolation.None;
+                //m_Rigidbody.interpolation = RigidbodyInterpolation.None;
                 transform.parent = critter.transform;
                 //rb.AddForce(m_Rigidbody.velocity, ForceMode.Impulse);
             }
         }
+
+        m_AudioSource?.PlayOneShot(onHitSound);
+
     }
 
     protected virtual IEnumerator ApplyDamageOverTime(Critter critter)
@@ -82,7 +90,7 @@ public class Arrow : MonoBehaviour
         float timer = 0f;
         while (timer < damageOverTimeDuration)
         {
-            critter.health -= 1; // Example: Apply 1 damage per second
+            critter.TakeDamage(1); 
             timer += Time.deltaTime;
             yield return null;
         }

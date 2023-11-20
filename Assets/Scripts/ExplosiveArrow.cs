@@ -5,6 +5,8 @@ public class ExplosiveArrow : Arrow
     public float explosionRadius = 5f;
     public int explosionDamage = 15;
 
+    public AudioClip onExplosionSound;
+
     protected override void DealDamage(Collision collision)
     {
         base.DealDamage(collision);
@@ -19,7 +21,7 @@ public class ExplosiveArrow : Arrow
                 if (hitCollider.TryGetComponent<Critter>(out Critter critter))
                 {
                     // Apply damage to critters within the explosion radius
-                    critter.health -= explosionDamage;
+                    critter.TakeDamage(explosionDamage);
                 }
             }
         }
@@ -31,6 +33,6 @@ public class ExplosiveArrow : Arrow
     private void PlayExplosionEffects()
     {
         m_ParticleSystem.Play();
-        m_AudioSource.PlayOneShot(onHitSound);
+        m_AudioSource.PlayOneShot(onExplosionSound);
     }
 }

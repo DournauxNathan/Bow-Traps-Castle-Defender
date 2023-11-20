@@ -14,7 +14,7 @@ public class LightningArrow : Arrow
             if (collision.collider.TryGetComponent<Critter>(out Critter critter))
             {
                 // Apply additional powerful damage
-                critter.health -= 10;
+                critter.TakeDamage(10);
 
                 // Raycast forward to hit other critters
                 RaycastHit[] hits = RaycastForCritters(transform.position, transform.forward);
@@ -27,7 +27,7 @@ public class LightningArrow : Arrow
                         if (hit.collider.TryGetComponent<Critter>(out Critter hitCritter))
                         {
                             // Apply additional damage to other critters
-                            hitCritter.health -= 10;
+                            hitCritter.TakeDamage(10);
                         }
                     }
                 }

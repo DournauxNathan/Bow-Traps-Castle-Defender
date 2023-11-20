@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -250671824035428668}
   - component: {fileID: 3059768226620337201}
   - component: {fileID: 855723583190601402}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BossPrefab
   m_TagString: Critter
   m_Icon: {fileID: 0}

@@ -1,7 +1,7 @@
 // InverseGravity.cs
 using UnityEngine;
 
-public class InverseGravity : MonoBehaviour
+public class GravityArrow : Arrow
 {
     public float inverseGravityForce = 10f;
     public float effectDuration = 5f;
@@ -12,28 +12,11 @@ public class InverseGravity : MonoBehaviour
     {
         if (other.CompareTag("Critter"))
         {
-            ApplyInverseGravity(other.transform.position);
-            Destroy(gameObject);
-        }
-    }
-
-    private void ApplyInverseGravity(Vector3 center)
-    {
-        Collider[] colliders = Physics.OverlapSphere(center, inverseGravityForce, critterLayer);
-
-        foreach (Collider collider in colliders)
-        {
-            Critter critter = collider.GetComponent<Critter>();
-            if (critter != null)
+            if (other.TryGetComponent<Critter>(out Critter critter))
             {
-                // Pass the inverse gravity effect parameters
-                critter.StartEffect(inverseGravityForce, effectDuration, ApplyInverseGravityEffect);
+                critter.StopMovement();
+                critter.InverseGravity();
             }
         }
-    }
-
-    private void ApplyInverseGravityEffect(float deltaTime, Critter critter)
-    {
-        critter.InverseGravity();
     }
 }

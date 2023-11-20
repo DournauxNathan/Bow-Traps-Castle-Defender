@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   critterName: Middling
   health: 10
-  speed: 2
+  speed: 1
   prefab: {fileID: 2502839749601187513, guid: 5097bbcac73350e4092a481367ff4194, type: 3}

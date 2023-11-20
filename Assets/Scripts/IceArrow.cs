@@ -22,11 +22,8 @@ public class IceArrow : Arrow
 
     private IEnumerator FreezeCritter(Critter critter, float duration)
     {
-        float originalSpeed = critter.speed;
-        critter.speed = 0f; // Stop critter movement
-
+        critter.StopMovement();
         yield return new WaitForSeconds(duration);
-
-        critter.speed = originalSpeed; // Restore critter movement
+        critter.StartMovement();
     }
 }

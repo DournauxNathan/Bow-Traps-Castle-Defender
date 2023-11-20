@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -3096695800820860932}
   - component: {fileID: 8400003916009907737}
   - component: {fileID: 2456367039537419983}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WeaklingPrefab
   m_TagString: Critter
   m_Icon: {fileID: 0}

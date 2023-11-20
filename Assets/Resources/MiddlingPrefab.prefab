@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -5892611487001369641}
   - component: {fileID: 7374744918063905387}
   - component: {fileID: -3039687373940735958}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MiddlingPrefab
   m_TagString: Critter
   m_Icon: {fileID: 0}

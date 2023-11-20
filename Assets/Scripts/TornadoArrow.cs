@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TornadoArrow : MonoBehaviour
+public class TornadoArrow : Arrow
 {
     public float tornadoRadius = 5f;
     public float tornadoForce = 10f;

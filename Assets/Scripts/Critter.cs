@@ -17,11 +17,9 @@ public class Critter : MonoBehaviour
     }
 
     public CritterType type; // Type of the critter
-    public int health = 1; // Initial health
-    public int maxHealth = 1; // Maximum health
+    public float health = 1; // Initial health
+    public float maxHealth = 1; // Maximum health
     public float speed = 5f; // Critter movement speed
-    private bool isGravityInverted = false;
-    private Vector3 originalGravity;
 
     public event Action OnDestinationReached;
     
@@ -33,7 +31,8 @@ public class Critter : MonoBehaviour
     
     public void Init(CritterData data)
     {
-        this.health = data.health;
+        maxHealth = data.health;
+        this.health = maxHealth;
         this.speed = data.speed;
     }
 
@@ -41,13 +40,8 @@ public class Critter : MonoBehaviour
     {
         m_NavMeshAgent = GetComponent<NavMeshAgent>();
         m_Rigidbody = GetComponent<Rigidbody>();
-        originalGravity = Physics.gravity;
 
-        if (m_NavMeshAgent == null)
-        {
-            Debug.LogError("NavMeshAgent component not found on Critter GameObject.");
-        }
-        else
+        if (m_NavMeshAgent != null && m_NavMeshAgent.isActiveAndEnabled)
         {
             // Set initial destination on start
             SetDestination(GameManager.Instance.goal.position);
@@ -75,21 +69,20 @@ public class Critter : MonoBehaviour
         m_NavMeshAgent.isStopped = true;
     }
 
+    public void StartMovement()
+    {
+        // Stop the movement of the critter
+        isMoving = true;
+        m_NavMeshAgent.isStopped = false;
+    }
+
     public void InverseGravity()
     {
-        if (!isGravityInverted)
-        {
-            // Store the original gravity
-            originalGravity = Physics.gravity;
+        // Disable the rigidbody's useGravity while gravity is inverted
+        m_Rigidbody.useGravity = false;
+        m_Rigidbody.isKinematic = true;
 
-            // Invert the gravity
-            Physics.gravity = -originalGravity;
-
-            // Disable the rigidbody's useGravity while gravity is inverted
-            m_Rigidbody.useGravity = false;
-
-            isGravityInverted = true;
-        }
+        m_Rigidbody.AddForce(Vector3.up * 5f);
     }
 
     public void StartEffect(float force, float effectDuration, System.Action<float, Critter> effectAction)
@@ -125,7 +118,7 @@ public class Critter : MonoBehaviour
         // Implement any logic needed when the effect stops
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         health -= damage;
     }
