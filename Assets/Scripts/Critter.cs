@@ -16,10 +16,11 @@ public class Critter : MonoBehaviour
         Boss
     }
 
-    [Header("DATA")]
+    [Header("PROPERTIES")]
     public CritterType type; // Type of the critter
     public float health = 1; // Initial health
     public float maxHealth = 1; // Maximum health
+    public bool goBackAndForth = false;
 
     [Header("MOVEMENT SETTINGS")]
     public float speed = 5f; // Critter movement speed
@@ -30,6 +31,8 @@ public class Critter : MonoBehaviour
 
     private bool isMoving = true; 
     private bool isEffectOn = false;
+    private Vector3 startPosition;
+    private Vector3 goalPosition;
     private NavMeshAgent m_NavMeshAgent;
     private Rigidbody m_Rigidbody;
     
@@ -42,14 +45,19 @@ public class Critter : MonoBehaviour
 
     void Start()
     {
+        startPosition = transform.position;
+        goalPosition = GameManager.Instance.goal.position;
+
         m_NavMeshAgent = GetComponent<NavMeshAgent>();
         m_Rigidbody = GetComponent<Rigidbody>();
         onFireEffect.Stop();
 
+
+
         if (m_NavMeshAgent != null && m_NavMeshAgent.isActiveAndEnabled)
         {
             // Set initial destination on start
-            SetDestination(GameManager.Instance.goal.position);
+            SetDestination(goalPosition);
         }
     }
 
@@ -60,6 +68,11 @@ public class Critter : MonoBehaviour
         {
             Defeat();
         }
+
+        if (m_NavMeshAgent != null && m_NavMeshAgent.remainingDistance < 1f)
+        {
+            SetDestination(GameManager.Instance.goal.position);
+        }
     }
 
     public void SetDestination(Vector3 position)
@@ -69,16 +82,16 @@ public class Critter : MonoBehaviour
 
     public void StopMovement()
     {
-        // Stop the movement of the critter
         isMoving = false;
         m_NavMeshAgent.isStopped = true;
     }
 
     public void StartMovement()
     {
-        // Stop the movement of the critter
         isMoving = true;
         m_NavMeshAgent.isStopped = false;
+
+        m_NavMeshAgent.SetDestination(goalPosition);
     }
 
     public void InverseGravity()
@@ -122,7 +135,7 @@ public class Critter : MonoBehaviour
         effectVFX.Stop();
     }
 
-    public void VFX(ParticleSystem currentEffect, bool playEffect)
+    public void ToggleEffect(ParticleSystem currentEffect, bool playEffect)
     {
         if (playEffect)
         {
@@ -155,18 +168,19 @@ public class Critter : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void SetPhysics(bool usePhysics)
-    {
-        m_Rigidbody.useGravity = usePhysics;
-        m_Rigidbody.isKinematic = !usePhysics;
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag("Goal"))
         {
-            OnDestinationReached?.Invoke();
-            StopMovement();
+            if (!goBackAndForth)
+            {
+                OnDestinationReached?.Invoke();
+                StopMovement();
+            }
+            else
+            {
+                SetDestination(startPosition);
+            }
         }
     }
 }

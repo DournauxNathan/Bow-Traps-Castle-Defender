@@ -12,7 +12,6 @@ public class FireArrow : Arrow
         {
             if (collision.collider.TryGetComponent<Critter>(out Critter critter))
             {
-                // Apply additional damage over time
                 critter.StartEffect(damageOverEffectDuration, effectDuration, critter.onFireEffect);
             }
         }

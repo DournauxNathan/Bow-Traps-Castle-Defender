@@ -79,14 +79,15 @@ public class Arrow : MonoBehaviour
             {
                 // Apply base damage
                 critter.TakeDamage(damage);
-
+                
                 transform.parent = critter.transform;
+                critter.transform.eulerAngles = Vector3.zero;
             }
         }
 
         m_AudioSource?.PlayOneShot(onHitSound);
 
-        Invoke("Destroy", 3f);
+        Invoke("Destroy", 10f);
     }
 
     public void Destroy()
