@@ -52,8 +52,6 @@ public class Critter : MonoBehaviour
         m_Rigidbody = GetComponent<Rigidbody>();
         onFireEffect.Stop();
 
-
-
         if (m_NavMeshAgent != null && m_NavMeshAgent.isActiveAndEnabled)
         {
             // Set initial destination on start
@@ -69,7 +67,7 @@ public class Critter : MonoBehaviour
             Defeat();
         }
 
-        if (m_NavMeshAgent != null && m_NavMeshAgent.remainingDistance < 1f)
+        if (m_NavMeshAgent.isActiveAndEnabled && m_NavMeshAgent != null && m_NavMeshAgent.remainingDistance < 1f)
         {
             SetDestination(GameManager.Instance.goal.position);
         }

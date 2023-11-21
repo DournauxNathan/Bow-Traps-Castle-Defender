@@ -12,6 +12,7 @@ public class Arrow : MonoBehaviour
     [SerializeField] protected AudioSource m_AudioSource;
     
     [Header("PROPERTIES")]
+    public LayerMask layerMask;
     public float speed = 10f;
     [Tooltip("Base damage of the arrow")] public float damage = 1; 
     [Tooltip("Base damage of the effect")] public float damageOverEffectDuration = 3f;

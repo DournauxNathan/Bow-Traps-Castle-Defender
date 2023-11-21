@@ -1,44 +1,61 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LightningArrow : Arrow
 {
-    [SerializeField] private float maxDistance;
+    public float raycastDistance = 10f;
+    public int maxChainCount = 3;
 
     protected override void DealDamage(Collision collision)
     {
         base.DealDamage(collision);
 
-        // Lightning arrow-specific logic
-        if (collision.collider.CompareTag("Critter"))
+        FireLightningArrow();
+    }
+
+    private void FireLightningArrow()
+    {
+        // Raycast forward to hit other critters
+        RaycastHit[] hits = RaycastForCritters(transform.position, -transform.forward);
+
+        // Apply damage to the first critter hit by the ray
+        if (hits.Length > 0 && hits[0].collider.CompareTag("Critter"))
         {
-            if (collision.collider.TryGetComponent<Critter>(out Critter critter))
+            if (hits[0].collider.TryGetComponent<Critter>(out Critter firstCritter))
             {
-                // Apply additional powerful damage
-                critter.TakeDamage(10);
+                Debug.DrawRay(hits[0].transform.position, -hits[0].transform.forward * raycastDistance, Color.green, 55f);
+                
+                // Apply initial damage to the first critter
+                firstCritter.TakeDamage(10);
+            }
 
-                // Raycast forward to hit other critters
-                RaycastHit[] hits = RaycastForCritters(transform.position, transform.forward);
-
-                // Apply damage to all critters hit by the ray
-                foreach (RaycastHit hit in hits)
+            // Propagate the lightning effect to subsequent critters
+            int chainCount = Mathf.Min(maxChainCount, hits.Length - 1);
+            for (int i = 1; i <= chainCount; i++)
+            {
+                if (hits[i].collider.CompareTag("Critter"))
                 {
-                    if (hit.collider.CompareTag("Critter"))
+                    if (hits[i].collider.TryGetComponent<Critter>(out Critter hitCritter))
                     {
-                        if (hit.collider.TryGetComponent<Critter>(out Critter hitCritter))
-                        {
-                            // Apply additional damage to other critters
-                            hitCritter.TakeDamage(10);
-                        }
+                        // Apply damage to subsequent critters
+                        hitCritter.TakeDamage(5); // Adjust the damage as needed
                     }
                 }
             }
         }
+
+        // Draw the rays for debugging
+        foreach (RaycastHit hit in hits)
+        {
+            Debug.DrawRay(hit.transform.position, -hit.transform.forward * raycastDistance, Color.black, 55f);
+        }
+
     }
 
     private RaycastHit[] RaycastForCritters(Vector3 origin, Vector3 direction)
     {
-        Ray ray = new Ray(origin, direction);
-        RaycastHit[] hits = Physics.RaycastAll(ray, maxDistance); // You can adjust maxDistance as needed
-        return hits;
+        // Perform raycast and return hits
+        return Physics.RaycastAll(origin, direction, raycastDistance);
     }
 }
