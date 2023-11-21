@@ -16,18 +16,22 @@ public class Critter : MonoBehaviour
         Boss
     }
 
+    [Header("DATA")]
     public CritterType type; // Type of the critter
     public float health = 1; // Initial health
     public float maxHealth = 1; // Maximum health
-    public float speed = 5f; // Critter movement speed
 
+    [Header("MOVEMENT SETTINGS")]
+    public float speed = 5f; // Critter movement speed
     public event Action OnDestinationReached;
-    
-    private NavMeshAgent m_NavMeshAgent;
-    private Rigidbody m_Rigidbody;
+
+    [Header("VFX")]
+    public ParticleSystem onFireEffect;
 
     private bool isMoving = true; 
     private bool isEffectOn = false;
+    private NavMeshAgent m_NavMeshAgent;
+    private Rigidbody m_Rigidbody;
     
     public void Init(CritterData data)
     {
@@ -40,6 +44,7 @@ public class Critter : MonoBehaviour
     {
         m_NavMeshAgent = GetComponent<NavMeshAgent>();
         m_Rigidbody = GetComponent<Rigidbody>();
+        onFireEffect.Stop();
 
         if (m_NavMeshAgent != null && m_NavMeshAgent.isActiveAndEnabled)
         {
@@ -85,37 +90,48 @@ public class Critter : MonoBehaviour
         m_Rigidbody.AddForce(Vector3.up * 5f);
     }
 
-    public void StartEffect(float force, float effectDuration, System.Action<float, Critter> effectAction)
+    public void StartEffect(float damage, float effectDuration, ParticleSystem effectVFX)
     {
         if (!isEffectOn)
         {
             isEffectOn = true;
 
-            // Start the effect
-            StartCoroutine(ApplyEffectOverTime(effectDuration, effectAction));
+            effectVFX.Play();
+
+            StartCoroutine(ApplyEffectOverTime(damage, effectDuration, effectVFX));
         }
     }
 
-    private IEnumerator ApplyEffectOverTime(float effectDuration, System.Action<float, Critter> effectAction)
+    private IEnumerator ApplyEffectOverTime(float damage, float effectDuration, ParticleSystem effectVFX)
     {
-        float timer = 0f;
-
-        while (timer < effectDuration)
+        while (effectDuration > 0)
         {
             // Apply the effect
-            effectAction?.Invoke(Time.deltaTime, this);
-            timer += Time.deltaTime;
+            TakeDamage(damage);
+            effectDuration -= Time.deltaTime;
             yield return null;
         }
 
-        // Stop the effect after the specified duration
-        StopEffect();
+        StopEffect(effectVFX);
     }
 
-    private void StopEffect()
+    private void StopEffect(ParticleSystem effectVFX)
     {
         isEffectOn = false;
-        // Implement any logic needed when the effect stops
+
+        effectVFX.Stop();
+    }
+
+    public void VFX(ParticleSystem currentEffect, bool playEffect)
+    {
+        if (playEffect)
+        {
+            currentEffect.Play();
+        }
+        else
+        {
+            currentEffect.Stop();
+        }
     }
 
     public void TakeDamage(float damage)
@@ -137,6 +153,12 @@ public class Critter : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    public void SetPhysics(bool usePhysics)
+    {
+        m_Rigidbody.useGravity = usePhysics;
+        m_Rigidbody.isKinematic = !usePhysics;
     }
 
     private void OnCollisionEnter(Collision collision)

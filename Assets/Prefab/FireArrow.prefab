@@ -51,14 +51,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e2f225bb6cd54247a6bf6f5246b998c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 2
-  damageOverTimeDuration: 3
-  speed: 30
   tip: {fileID: 1769337598482281036}
   m_Rigidbody: {fileID: 3739455031483572838}
   m_ParticleSystem: {fileID: 2262844333746262942}
   m_TrailRenderer: {fileID: 8729613411870003894}
   m_AudioSource: {fileID: -186369532834339837}
+  speed: 30
+  damage: 1
+  damageOverEffectDuration: 0.2
+  effectDuration: 4
   onShootSound: {fileID: 8300000, guid: 6a49bc0df83fd79409c31d67a3496456, type: 3}
   onHitSound: {fileID: 8300000, guid: 5d6ec2123a9a7f44babb56716a4677dd, type: 3}
 --- !u!54 &3739455031483572838

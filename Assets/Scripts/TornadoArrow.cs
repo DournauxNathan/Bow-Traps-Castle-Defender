@@ -27,7 +27,7 @@ public class TornadoArrow : Arrow
             if (critter != null)
             {
                 // Pass the tornado effect parameters
-                critter.StartEffect(tornadoForce, effectDuration, ApplyTornadoEffect);
+                //critter.StartEffect(effectDuration, ApplyTornadoEffect);
             }
         }
     }

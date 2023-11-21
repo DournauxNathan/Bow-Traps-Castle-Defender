@@ -4,19 +4,24 @@ using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
-    // Common properties and methods for all arrows
-    public float damage = 1; // Base damage of the arrow
-    public float damageOverTimeDuration = 3f; // Duration of damage over time effect
-
-    public float speed = 10f;
-    public Transform tip;
-
+    [Header("REFERENCES")]
+    [SerializeField] protected Transform tip;
     [SerializeField] protected Rigidbody m_Rigidbody;
     [SerializeField] protected ParticleSystem m_ParticleSystem;
     [SerializeField] protected TrailRenderer m_TrailRenderer;
-
     [SerializeField] protected AudioSource m_AudioSource;
-    [SerializeField] protected AudioClip onShootSound, onHitSound;
+    
+    [Header("PROPERTIES")]
+    public float speed = 10f;
+    [Tooltip("Base damage of the arrow")] public float damage = 1; 
+    [Tooltip("Base damage of the effect")] public float damageOverEffectDuration = 3f;
+    [Tooltip("Duration of damage over time effect")] public float effectDuration = 3f;
+
+    [Header("SFX")]
+    [SerializeField] protected AudioClip onShootSound;
+    [SerializeField] protected AudioClip onHitSound;
+
+    [Header("SFX")]
 
     protected bool isInAir = false;
     protected Vector3 lastPos = Vector3.zero;
@@ -75,25 +80,18 @@ public class Arrow : MonoBehaviour
                 // Apply base damage
                 critter.TakeDamage(damage);
 
-                //m_Rigidbody.interpolation = RigidbodyInterpolation.None;
                 transform.parent = critter.transform;
-                //rb.AddForce(m_Rigidbody.velocity, ForceMode.Impulse);
             }
         }
 
         m_AudioSource?.PlayOneShot(onHitSound);
 
+        Invoke("Destroy", 3f);
     }
 
-    protected virtual IEnumerator ApplyDamageOverTime(Critter critter)
+    public void Destroy()
     {
-        float timer = 0f;
-        while (timer < damageOverTimeDuration)
-        {
-            critter.TakeDamage(1); 
-            timer += Time.deltaTime;
-            yield return null;
-        }
+        Destroy(this.gameObject);
     }
 
     protected IEnumerator RotateWithVelocity()
