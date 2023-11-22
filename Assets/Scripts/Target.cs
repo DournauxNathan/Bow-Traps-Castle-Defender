@@ -16,18 +16,11 @@ public class Target : MonoBehaviour
         manager.SubscribeTarget(this);
     }
 
-    public void Rotate(Vector3 force)
-    {
-        m_Rigidbody.AddTorque(Vector3.up + force);
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.TryGetComponent<Arrow>(out Arrow arrow))
+        if (!IsActivate && collision.collider.TryGetComponent<Arrow>(out Arrow arrow))
         {
             IsActivate = true;
-            Rotate(arrow.GetComponent<Rigidbody>().velocity);
-
             manager.IsTargetsActivated();
         }
     }

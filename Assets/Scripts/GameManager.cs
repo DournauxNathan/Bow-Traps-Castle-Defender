@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public Transform goal;
+    public Gate gate;
 
     private void Awake()
     {

@@ -7,6 +7,8 @@ public class WaveManager : MonoBehaviour
 {
     public Transform spawnPoint; // Where critters will spawn
     public float timeBetweenWaves = 10f; // Time between waves
+    public float startTimer = 3f;
+    private float timer;
     private float countdown = 2f; // Initial countdown before the first wave
 
     private int waveNumber = 1; // Current wave number
@@ -15,15 +17,48 @@ public class WaveManager : MonoBehaviour
     public CritterFactory middlingFactory;
     public CritterFactory bossFactory;
 
-    private bool isSpawning = true; // Flag to control spawning
+    private bool isSpawning = false;
     private bool bossSpawned = false;
 
     private CritterFactory currentFactory;
 
     void Start()
     {
+        timer = startTimer;
         // Set the initial factory (Weakling)
         SetFactory(weaklingFactory);
+    }
+
+    public void StartTimer()
+    {
+        StartCoroutine(Timer());
+    }
+
+    IEnumerator Timer()
+    {
+        while (timer >= 0)
+        {
+            timer -= Time.deltaTime;
+            yield return null;
+
+        }
+
+        StartWave();
+    }
+
+    public void StartWave()
+    {
+        timer = startTimer;
+
+        isSpawning = true;
+        bossSpawned = false;
+    }
+
+    public void StopWave()
+    {
+        // Stop spawning and movement
+        isSpawning = false;
+        GameManager.Instance.gate.Close();
     }
 
     void Update()
@@ -73,6 +108,7 @@ public class WaveManager : MonoBehaviour
             }
 
             waveNumber++;
+            StopWave();
         }
     }
 

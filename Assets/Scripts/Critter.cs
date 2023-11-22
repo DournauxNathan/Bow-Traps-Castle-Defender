@@ -49,6 +49,8 @@ public class Critter : MonoBehaviour
         goalPosition = GameManager.Instance.goal.position;
 
         m_NavMeshAgent = GetComponent<NavMeshAgent>();
+        m_NavMeshAgent.speed = speed;
+
         m_Rigidbody = GetComponent<Rigidbody>();
         onFireEffect.Stop();
 

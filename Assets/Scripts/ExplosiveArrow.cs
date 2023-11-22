@@ -2,17 +2,18 @@ using UnityEngine;
 
 public class ExplosiveArrow : Arrow
 {
+    public AudioClip onExplosionSound;
+    [Header("EXPLOSION PARAMS")]
     public float explosionRadius = 5f;
     public int explosionDamage = 15;
 
-    public AudioClip onExplosionSound;
 
     protected override void DealDamage(Collision collision)
     {
         base.DealDamage(collision);
 
         // Explosive arrow-specific logic
-        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+        Collider[] colliders = Physics.OverlapSphere(tip.position, explosionRadius, layerMask);
 
         foreach (Collider hitCollider in colliders)
         {
@@ -34,5 +35,11 @@ public class ExplosiveArrow : Arrow
     {
         m_ParticleSystem.Play();
         m_AudioSource.PlayOneShot(onExplosionSound);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = new Color(1, 1, 1, 0.35f);
+        Gizmos.DrawSphere(tip.position, explosionRadius);
     }
 }

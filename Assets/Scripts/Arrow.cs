@@ -58,7 +58,7 @@ public class Arrow : MonoBehaviour
 
         lastPos = tip.position;
 
-        m_AudioSource?.PlayOneShot(onShootSound);
+        m_AudioSource.PlayOneShot(onShootSound);
         m_ParticleSystem.Play();
         m_TrailRenderer.emitting = true;
     }
