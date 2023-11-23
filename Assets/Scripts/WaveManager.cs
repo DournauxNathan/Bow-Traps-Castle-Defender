@@ -29,6 +29,45 @@ public class WaveManager : MonoBehaviour
         // Set the initial factory (Weakling)
         SetFactory(weaklingFactory);
     }
+
+    public void StartTimer()
+    {
+        StartCoroutine(Countdown(startTimer));
+    }
+
+    IEnumerator Countdown(int seconds)
+    {
+        int counter = seconds;
+        while (counter > 0)
+        {
+            yield return new WaitForSeconds(1);
+            counter--;
+
+            if (counter <= 3 && counter != 0)
+            {
+                Debug.Log("Wabe begin : " + counter);
+            }
+        }
+        StartWave();
+    }
+    
+    public void StartWave()
+    {
+        Debug.Log("Wave " + waveNumber + " Incoming!");
+        if (!isSpawning)
+        {
+            waveNumberCrittersKilled = 0;
+
+            isSpawning = true;
+            bossSpawned = false;
+        }
+        else
+        {
+            Debug.LogWarning("Can't Start Wave ! Wave already started");
+        }
+    }
+
+
     void Update()
     {
         if (isSpawning)
@@ -48,44 +87,6 @@ public class WaveManager : MonoBehaviour
         }
     }
 
-    public void StartTimer()
-    {
-        StartCoroutine(Countdown(startTimer));
-    }
-
-    int counter;
-    IEnumerator Countdown(int seconds)
-    {
-        counter = seconds;
-        while (counter > 0)
-        {
-            yield return new WaitForSeconds(1);
-            counter--;
-
-            if (counter <= 3 && counter != 0)
-            {
-                Debug.Log("Wabe begin : " + counter);
-            }
-        }
-        Debug.Log("Go!");
-        StartWave();
-    }
-    
-    public void StartWave()
-    {
-        if (!isSpawning)
-        {
-            waveNumberCrittersKilled = 0;
-
-            isSpawning = true;
-            bossSpawned = false;
-        }
-        else
-        {
-            Debug.LogWarning("Can't Start Wave ! Wave already started");
-        }
-    }
-
     public void StopWave()
     {
         // Stop spawning and movement
@@ -99,30 +100,34 @@ public class WaveManager : MonoBehaviour
     {
         if (!bossSpawned && currentFactory != null)
         {
-            //Debug.Log("Wave " + waveNumber + " Incoming!");
-
-            for (int i = 0; i < waveNumber; i++)
+            if (waveNumberCrittersKilled < critterSpawned)
             {
-                SpawnCritter();
-                yield return new WaitForSeconds(1f); // Time between spawning critters in a wave
-            }
+                for (int i = 0; i < waveNumber; i++)
+                {
+                    SpawnCritter();
+                    yield return new WaitForSeconds(1f); // Time between spawning critters in a wave
+                }
 
-            // After spawning regular critters, spawn the Boss on the last wave
-            if (waveNumber >= GetTotalWaves() && isSpawning && !bossSpawned)
+                if (waveNumber >= GetTotalWaves() && isSpawning && !bossSpawned)
+                {
+                    SetFactory(middlingFactory);
+                    SpawnCritter();
+                }
+
+                // After spawning regular critters, spawn the Boss on the last wave
+                if (waveNumber >= GetTotalWaves() + 10 && isSpawning && !bossSpawned)
+                {
+                    bossSpawned = true;
+                    isSpawning = false;
+
+                    SetFactory(bossFactory);
+                    SpawnBoss();
+                }
+            }
+            else if (waveNumberCrittersKilled >= critterSpawned)
             {
-                SetFactory(middlingFactory);
-                SpawnCritter();
+                waveNumber++;
             }
-
-            if (waveNumber >= GetTotalWaves() + 10 && isSpawning && !bossSpawned)
-            {
-                SetFactory(bossFactory);
-                SpawnBoss();
-                bossSpawned = true; // Set the flag to indicate that the boss has been spawned
-                isSpawning = false; // Stop spawning regular waves after the boss is spawned
-            }
-
-            waveNumber++;
         }
     }
 
