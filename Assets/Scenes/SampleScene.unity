@@ -8343,7 +8343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 916583239}
   timeBetweenWaves: 5
-  startTimer: 3
+  startTimer: 10
   weaklingFactory: {fileID: 11400000, guid: fcab3231a9398c94da4f1d6350f77426, type: 2}
   middlingFactory: {fileID: 11400000, guid: f75cce23367afb74d8e32c863f97399a, type: 2}
   bossFactory: {fileID: 11400000, guid: 89ab255bcea13a943995a4720345955b, type: 2}

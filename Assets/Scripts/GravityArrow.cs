@@ -4,7 +4,6 @@ using UnityEngine;
 public class GravityArrow : Arrow
 {
     public float inverseGravityForce = 10f;
-    public float effectDuration = 5f;
 
     public LayerMask critterLayer;
 

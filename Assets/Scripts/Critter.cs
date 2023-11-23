@@ -24,12 +24,11 @@ public class Critter : MonoBehaviour
 
     [Header("MOVEMENT SETTINGS")]
     public float speed = 5f; // Critter movement speed
-    public event Action OnDestinationReached;
+    public event Action OnDestinationReached, OnKilled;
 
     [Header("VFX")]
     public ParticleSystem onFireEffect;
 
-    private bool isMoving = true; 
     private bool isEffectOn = false;
     private Vector3 startPosition;
     private Vector3 goalPosition;
@@ -82,13 +81,11 @@ public class Critter : MonoBehaviour
 
     public void StopMovement()
     {
-        isMoving = false;
         m_NavMeshAgent.isStopped = true;
     }
 
     public void StartMovement()
     {
-        isMoving = true;
         m_NavMeshAgent.isStopped = false;
 
         m_NavMeshAgent.SetDestination(goalPosition);
@@ -165,6 +162,7 @@ public class Critter : MonoBehaviour
                 break;
         }
 
+        OnKilled?.Invoke();
         Destroy(gameObject);
     }
 

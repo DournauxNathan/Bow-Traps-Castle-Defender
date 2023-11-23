@@ -7,8 +7,7 @@ public class WaveManager : MonoBehaviour
 {
     public Transform spawnPoint; // Where critters will spawn
     public float timeBetweenWaves = 10f; // Time between waves
-    public float startTimer = 3f;
-    private float timer;
+    public int startTimer = 3;
     private float countdown = 2f; // Initial countdown before the first wave
 
     private int waveNumber = 1; // Current wave number
@@ -21,49 +20,18 @@ public class WaveManager : MonoBehaviour
     private bool bossSpawned = false;
 
     private CritterFactory currentFactory;
+    
+    private int critterSpawned;
+    private int waveNumberCrittersKilled;
 
     void Start()
     {
-        timer = startTimer;
         // Set the initial factory (Weakling)
         SetFactory(weaklingFactory);
     }
-
-    public void StartTimer()
-    {
-        StartCoroutine(Timer());
-    }
-
-    IEnumerator Timer()
-    {
-        while (timer >= 0)
-        {
-            timer -= Time.deltaTime;
-            yield return null;
-
-        }
-
-        StartWave();
-    }
-
-    public void StartWave()
-    {
-        timer = startTimer;
-
-        isSpawning = true;
-        bossSpawned = false;
-    }
-
-    public void StopWave()
-    {
-        // Stop spawning and movement
-        isSpawning = false;
-        GameManager.Instance.gate.Close();
-    }
-
     void Update()
     {
-        if (isSpawning && !bossSpawned)
+        if (isSpawning)
         {
             if (countdown <= 0f)
             {
@@ -79,6 +47,53 @@ public class WaveManager : MonoBehaviour
             StopCoroutine(SpawnWave());
         }
     }
+
+    public void StartTimer()
+    {
+        StartCoroutine(Countdown(startTimer));
+    }
+
+    int counter;
+    IEnumerator Countdown(int seconds)
+    {
+        counter = seconds;
+        while (counter > 0)
+        {
+            yield return new WaitForSeconds(1);
+            counter--;
+
+            if (counter <= 3 && counter != 0)
+            {
+                Debug.Log("Wabe begin : " + counter);
+            }
+        }
+        Debug.Log("Go!");
+        StartWave();
+    }
+    
+    public void StartWave()
+    {
+        if (!isSpawning)
+        {
+            waveNumberCrittersKilled = 0;
+
+            isSpawning = true;
+            bossSpawned = false;
+        }
+        else
+        {
+            Debug.LogWarning("Can't Start Wave ! Wave already started");
+        }
+    }
+
+    public void StopWave()
+    {
+        // Stop spawning and movement
+        isSpawning = false;
+        GameManager.Instance.gate.Close();
+    }
+
+    
 
     IEnumerator SpawnWave()
     {
@@ -108,12 +123,13 @@ public class WaveManager : MonoBehaviour
             }
 
             waveNumber++;
-            StopWave();
         }
     }
 
     void SpawnCritter()
     {
+        critterSpawned++;
+
         if (currentFactory != null)
         {
             GameObject critter = currentFactory.CreateCritter(spawnPoint);
@@ -127,6 +143,7 @@ public class WaveManager : MonoBehaviour
 
                 // Subscribe to the OnDestinationReached event
                 critterComponent.OnDestinationReached += OnCritterDestinationReached;
+                critterComponent.OnKilled += OnCritterKilled;
             }
         }
     }
@@ -142,6 +159,19 @@ public class WaveManager : MonoBehaviour
         }
         
         currentFactory = null;
+    }
+
+
+    void OnCritterKilled()
+    {
+        waveNumberCrittersKilled++;
+
+        // Check if all critters of the current wave are killed
+        if (waveNumberCrittersKilled >= critterSpawned)
+        {
+            StopWave();
+            waveNumber++;
+        }
     }
 
     // Event handler for critter reaching its destination

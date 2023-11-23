@@ -16,6 +16,15 @@ public class Target : MonoBehaviour
         manager.SubscribeTarget(this);
     }
 
+    private void LateUpdate()
+    {
+        if (IsActivate)
+        {
+            manager.IsTargetsActivated(); 
+            IsActivate = false;
+        }
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (!IsActivate && collision.collider.TryGetComponent<Arrow>(out Arrow arrow))

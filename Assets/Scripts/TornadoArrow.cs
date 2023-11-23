@@ -4,8 +4,6 @@ public class TornadoArrow : Arrow
 {
     public float tornadoRadius = 5f;
     public float tornadoForce = 10f;
-    public float effectDuration = 5f;
-
     public LayerMask critterLayer;
 
     private void OnTriggerEnter(Collider other)

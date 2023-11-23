@@ -16,8 +16,6 @@ public class Lever : XRBaseInteractable
     private float maxDistance = 0.5f; // Maximum distance for the lever interaction
     public float smoothFactor = 5f; // Maximum distance for the lever interaction
 
-    private bool isInteracting = false;
-
     private Vector3 initialToInteractor;
     private IXRSelectInteractor pullingInteractor = null;
 
