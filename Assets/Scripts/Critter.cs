@@ -20,7 +20,6 @@ public class Critter : MonoBehaviour
     public CritterType type; // Type of the critter
     public float health = 1; // Initial health
     public float maxHealth = 1; // Maximum health
-    public bool goBackAndForth = false;
 
     [Header("MOVEMENT SETTINGS")]
     public float speed = 5f; // Critter movement speed
@@ -28,6 +27,10 @@ public class Critter : MonoBehaviour
 
     [Header("VFX")]
     public ParticleSystem onFireEffect;
+
+    [Header("DEBUG")]
+    public bool goBackAndForth = false;
+    public bool isKilled = false;
 
     private bool isEffectOn = false;
     private Vector3 startPosition;
@@ -63,7 +66,7 @@ public class Critter : MonoBehaviour
     void FixedUpdate()
     {
         // Check if the critter is defeated
-        if (health <= 0 || transform.position.y >= 30f)
+        if (health <= 0 || transform.position.y >= 30f || isKilled)
         {
             Defeat();
         }
