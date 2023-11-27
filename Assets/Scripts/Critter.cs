@@ -20,6 +20,7 @@ public class Critter : MonoBehaviour
     public CritterType type; // Type of the critter
     public float health = 1; // Initial health
     public float maxHealth = 1; // Maximum health
+    public int currencyValue;
 
     [Header("MOVEMENT SETTINGS")]
     public float speed = 5f; // Critter movement speed
@@ -43,6 +44,7 @@ public class Critter : MonoBehaviour
         maxHealth = data.health;
         this.health = maxHealth;
         this.speed = data.speed;
+        this.currencyValue = data.currencyValue;
     }
 
     void Start()
@@ -165,6 +167,7 @@ public class Critter : MonoBehaviour
                 break;
         }
 
+        GameManager.Instance.AddCurency(currencyValue);
         OnKilled?.Invoke();
         Destroy(gameObject);
     }

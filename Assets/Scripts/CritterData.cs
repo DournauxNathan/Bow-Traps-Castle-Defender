@@ -8,5 +8,6 @@ public class CritterData : ScriptableObject
     public string critterName;
     public int health;
     public float speed;
+    public int currencyValue;
     public GameObject prefab;
 }
