@@ -15,4 +15,5 @@ MonoBehaviour:
   critterName: Middling
   health: 10
   speed: 1
+  currencyValue: 4
   prefab: {fileID: 2502839749601187513, guid: 5097bbcac73350e4092a481367ff4194, type: 3}

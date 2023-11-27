@@ -121,12 +121,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59e5d9106b1489d4883bc3abe3f50e95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
-  health: 1
-  maxHealth: 1
-  goBackAndForth: 0
-  speed: 5
+  type: 2
+  health: 0
+  maxHealth: 0
+  currencyValue: 0
+  speed: 0
   onFireEffect: {fileID: 0}
+  goBackAndForth: 0
+  isKilled: 0
 --- !u!136 &3059768226620337201
 CapsuleCollider:
   m_ObjectHideFlags: 0

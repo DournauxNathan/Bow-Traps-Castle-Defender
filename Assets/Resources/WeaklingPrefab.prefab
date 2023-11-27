@@ -4935,11 +4935,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  health: 1
-  maxHealth: 1
-  goBackAndForth: 0
-  speed: 5
+  health: 0
+  maxHealth: 0
+  currencyValue: 0
+  speed: 0
   onFireEffect: {fileID: 5042768451802748135}
+  goBackAndForth: 0
+  isKilled: 0
 --- !u!65 &8400003916009907737
 BoxCollider:
   m_ObjectHideFlags: 0
