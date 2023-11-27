@@ -16,6 +16,9 @@ public class WaveManager : MonoBehaviour
     public CritterFactory middlingFactory;
     public CritterFactory bossFactory;
 
+    public int baseWaveCompletionBonus = 10; // Base bonus amount
+    public float waveCompletionMultiplier = 1.2f; // Multiplier for each completed wave
+
     private bool isSpawning = false;
     private bool bossSpawned = false;
 
@@ -189,6 +192,13 @@ public class WaveManager : MonoBehaviour
         if (waveNumberCrittersKilled >= critterSpawned)
         {
             StopWave();
+
+            // Calculate wave completion bonus based on the multiplier and the number of completed waves
+            int waveBonus = Mathf.RoundToInt(baseWaveCompletionBonus * Mathf.Pow(waveCompletionMultiplier, waveNumber - 1));
+
+            // Award wave completion bonus
+            GameManager.Instance.currentCurrency += waveBonus;
+
             waveNumber++;
         }
     }

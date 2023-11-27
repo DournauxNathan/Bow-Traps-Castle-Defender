@@ -6,16 +6,14 @@ using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.AI;
-
+public enum CritterType
+{
+    Weakling,
+    Middling,
+    Boss
+}
 public class Critter : MonoBehaviour
 {
-    public enum CritterType
-    {
-        Weakling,
-        Middling,
-        Boss
-    }
-
     [Header("PROPERTIES")]
     public CritterType type; // Type of the critter
     public float health = 1; // Initial health
