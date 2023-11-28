@@ -13,10 +13,17 @@ public class Item : MonoBehaviour
     private MeshCollider m_Collider;
 
     [Header("PROPERTIES")]
+    public Type type;
     public int iD;
     public new string name;
     public int value;
     public bool isSold = false;
+
+    public enum Type
+    {
+        Consumable,
+        Upgrade
+    }
 
     private void Awake()
     {

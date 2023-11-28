@@ -8,27 +8,28 @@ public class UpgradeStation : MonoBehaviour
     public GameObject baseArrow;
     public Item currentUpgrade;
 
-    public XRSocketInteractor socket;
-
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Hammer"))
+        if (other.TryGetComponent<Item>(out Item item))
         {
-            CombineUpgrade();
+            currentUpgrade = item;
         }
     }
 
-    public void GetCurrentUpgrade(Item upgrade)
+    private void OnTriggerExit(Collider other)
     {
-        currentUpgrade = upgrade;
+        if (other.TryGetComponent<Item>(out Item item))
+        {
+            currentUpgrade = null;
+        }
     }
 
-    private void CombineUpgrade()
+    public void CombineUpgrade()
     {
         // Implement logic to check the combination and create a new arrow type
         if (CheckCombination())
         {
-            CreateNewArrowArrow();
+            CreateNewArrow();
         }
     }
 
@@ -36,12 +37,24 @@ public class UpgradeStation : MonoBehaviour
     {
         // Implement logic to check the combination of arrows and items in sockets
         // Return true if the combination is valid for creating a new arrow
+        if (currentUpgrade.type == Item.Type.Upgrade)
+        {
+            switch (currentUpgrade.name)
+            {
+                case "Bomb":
+                    return true;
+                case "Fire Shard":
+                    Debug.Log("You've made a Fire Arrow !");
+                    return true;
+                case "Electric Shard":
+                    return true;
+            }
+        }
 
-
-        return true; // Placeholder, replace with actual logic
+        return false; 
     }
 
-    private void CreateNewArrowArrow()
+    private void CreateNewArrow()
     {
         // Instantiate the explosive arrow prefab at the arrowSpawnPoint
     }

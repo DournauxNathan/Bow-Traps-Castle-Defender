@@ -15,22 +15,31 @@ public class Hammer : XRGrabInteractable
     // OnTriggerEnter is called when the Collider other enters the trigger.
     private void OnTriggerEnter(Collider other)
     {
-        BreakableActivator activator = other.GetComponent<BreakableActivator>();
+        if (other.TryGetComponent<BreakableActivator>(out BreakableActivator activator))
+        {
+            if (activator != null && activator.IsBroken)
+            {
+                m_AudioSource.PlayOneShot(onHitSound);
 
-        if (activator != null && activator.IsBroken) 
+                // Haptic Feedback
+                if (pullingInteractor != null)
+                {
+                    ActionBasedController controller = pullingInteractor.transform.gameObject.GetComponent<ActionBasedController>();
+                    controller.SendHapticImpulse(5, .1f);
+
+                }
+
+                Repair(activator);
+            }
+        }
+
+        if (other.TryGetComponent<UpgradeStation>(out UpgradeStation station))
         {
             m_AudioSource.PlayOneShot(onHitSound);
 
-            // Haptic Feedback
-            if (pullingInteractor != null)
-            {
-                ActionBasedController controller = pullingInteractor.transform.gameObject.GetComponent<ActionBasedController>();
-                controller.SendHapticImpulse(5, .1f);
-
-            }
-
-            Repair(activator);
+            station.CombineUpgrade();
         }
+        
     }
 
     private void Repair(BreakableActivator activator)
