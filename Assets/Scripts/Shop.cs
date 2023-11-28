@@ -6,68 +6,92 @@ using TMPro;
 
 public class Shop : MonoBehaviour
 {
+    public Transform sellSpot;
+    public TextMeshProUGUI pouchValue;
+
     public List<ItemSlot> slots;
     public List<Item> itemsToDisplay;
 
-    private int[] itemPrices = { 50, 100, 150 }; // Prices for the three items
-
-    private int currentItemIndex = 0; // Index to track the current displayed item
+    private bool isPouchPutDown = false;
 
     void Start()
     {
         UpdateItemDisplay();
     }
 
-    // Function to buy the currently displayed item
-    public void BuyItem()
+    public void DisplayPouchValue()
     {
-        int currentPrice = GetCurrentItemPrice(0);
+        pouchValue.text = GameManager.Instance.currentCurrency.ToString();
+    }
 
-        // Check if player has enough currency to buy the item
-        if (GameManager.Instance.SpendCurrency(currentPrice))
+    // Function to buy the currently displayed item
+    public void BuyItem(int iD)
+    {
+        int currentPrice = GetCurrentItemPrice(iD);
+
+        if (isPouchPutDown)
         {
-            // Implement logic to apply the purchased item's effect or upgrade
-            // ...
+            Debug.Log(currentPrice +","+ GameManager.Instance.currentCurrency);
 
-            // Move to the next item
-            currentItemIndex = (currentItemIndex + 1) % itemPrices.Length;
+            // Check if player has enough currency to buy the item
+            if (GameManager.Instance.SpendCurrency(currentPrice))
+            {
+                Debug.Log("SOLD !");
 
-            // Update the item display
-            UpdateItemDisplay();
+                //Update the Panel at current item
+                slots[iD].itemNameText.text = $"SOLD";
+                slots[iD].itemPriceText.text = string.Empty;
+                slots[iD].background.color = ClearFeedback();
+
+                itemsToDisplay[iD].Sold();
+
+                DisplayPouchValue();
+                UpdateItemBuyable();
+
+                itemsToDisplay[iD].transform.position = sellSpot.position;
+            }
+            else
+            {
+                Debug.Log("Insufficient funds to buy the item!");
+            }
         }
         else
         {
-            Debug.Log("Insufficient funds to buy the item!");
+            Debug.Log("You need to put your purse down ! ");
         }
+        
     }
-
-    // Function to get the price of the currently displayed item
-    private int GetCurrentItemPrice(int index)
-    {
-        return itemsToDisplay[index].value;
-    }
+       
 
     // Function to update the UI with the current item's information
     private void UpdateItemDisplay()
     {
         for (int slotIndex = 0; slotIndex < slots.Count; slotIndex++)
         {
-            slots[slotIndex].itemNameText.text = GetItemName(slotIndex);
-            slots[slotIndex].itemPriceText.text = GetCurrentItemPrice(slotIndex).ToString();
+            if (!itemsToDisplay[slotIndex].isSold)
+            {
+                slots[slotIndex].itemNameText.text = GetItemName(slotIndex);
+                slots[slotIndex].itemPriceText.text = GetCurrentItemPrice(slotIndex).ToString();
+            }
         }
     }
 
     public void UpdateItemBuyable()
     {
+        isPouchPutDown = true;
+
         for (int slotIndex = 0; slotIndex < slots.Count; slotIndex++)
         {
-            if (GameManager.Instance.currentCurrency >= itemsToDisplay[slotIndex].value)
+            if (!itemsToDisplay[slotIndex].isSold)
             {
-                slots[slotIndex].background.color = ShowItemBuyable(true);
-            }
-            else
-            {
-                slots[slotIndex].background.color = ShowItemBuyable(false);
+                if (GameManager.Instance.currentCurrency >= itemsToDisplay[slotIndex].value)
+                {
+                    slots[slotIndex].background.color = ShowItemBuyable(true);
+                }
+                else
+                {
+                    slots[slotIndex].background.color = ShowItemBuyable(false);
+                }
             }
         }
     }
@@ -78,6 +102,16 @@ public class Shop : MonoBehaviour
         return itemsToDisplay[index].name;
     }
 
+    public bool IsItemEnable()
+    {
+        return isPouchPutDown;
+    }
+
+    // Function to get the price of the currently displayed item
+    private int GetCurrentItemPrice(int index)
+    {
+        return itemsToDisplay[index].value;
+    }
 
     // Function to show feedback with a specified color
     private Color ShowItemBuyable(bool isBuyable)
@@ -97,6 +131,10 @@ public class Shop : MonoBehaviour
 
     public void ClearShop()
     {
+        isPouchPutDown = false;
+
+        pouchValue.text = string.Empty;
+
         foreach (ItemSlot slots in slots)
         {
             slots.background.color = ClearFeedback();

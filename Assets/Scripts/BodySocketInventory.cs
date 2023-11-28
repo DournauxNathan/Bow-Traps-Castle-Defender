@@ -14,6 +14,8 @@ public class BodySocket
 public class BodySocketInventory : MonoBehaviour
 {
     public GameObject HMD;
+    public GameObject secondCamera;
+    public float speed;
     public List<BodySocket> bodySockets;
 
     private Vector3 _currentHMDPosition;
@@ -25,11 +27,26 @@ public class BodySocketInventory : MonoBehaviour
         _currentHMDPosition = HMD.transform.position;
         _currentHMDRotation = HMD.transform.rotation;
 
+        
+
         foreach (var bodySocket in bodySockets)
         {
             UpdateBodySocketHeight(bodySocket);
         }
         UpdateSocketinventory();
+    }
+
+    public void SmoothCameraFollow()
+    {
+        float interpolation = speed * Time.deltaTime;
+
+        Vector3 position = HMD.transform.position;
+        position.y = Mathf.Lerp(HMD.transform.position.y, secondCamera.transform.position.y, interpolation);
+        position.x = Mathf.Lerp(HMD.transform.position.x, secondCamera.transform.position.x, interpolation);
+
+        transform.position = position;
+
+        transform.rotation = Quaternion.Slerp(transform.rotation, secondCamera.transform.rotation, interpolation);
     }
 
     private void UpdateBodySocketHeight(BodySocket bodySocket)
