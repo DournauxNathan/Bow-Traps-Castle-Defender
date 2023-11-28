@@ -6,7 +6,7 @@ using TMPro;
 
 public class Shop : MonoBehaviour
 {
-    public Transform sellSpot;
+    public Transform counter;
     public TextMeshProUGUI pouchValue;
 
     public List<ItemSlot> slots;
@@ -48,7 +48,7 @@ public class Shop : MonoBehaviour
                 DisplayPouchValue();
                 UpdateItemBuyable();
 
-                itemsToDisplay[iD].transform.position = sellSpot.position;
+                itemsToDisplay[iD].transform.position = counter.position;
             }
             else
             {
