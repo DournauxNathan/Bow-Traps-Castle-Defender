@@ -6,7 +6,13 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class UpgradeStation : MonoBehaviour
 {
     public GameObject baseArrow;
-    public Item currentUpgrade;
+    public Transform newArrow;
+
+    private Item currentUpgrade;
+
+    public List<GameObject> upgrades;
+
+    private int hitCount = 0;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -26,29 +32,36 @@ public class UpgradeStation : MonoBehaviour
 
     public void CombineUpgrade()
     {
+        hitCount++;
+
         // Implement logic to check the combination and create a new arrow type
-        if (CheckCombination())
+        if (CheckCombination() && hitCount >= 3)
         {
+            hitCount = 0;
             CreateNewArrow();
         }
     }
 
     private bool CheckCombination()
     {
-        // Implement logic to check the combination of arrows and items in sockets
-        // Return true if the combination is valid for creating a new arrow
         if (currentUpgrade.type == Item.Type.Upgrade)
         {
             switch (currentUpgrade.name)
             {
                 case "Bomb":
-                    return true;
+                    SetNewArrowPosition("Explosive Arrow");
+                    Debug.Log("You've made a Explosive Arrow !");
+                    break;
                 case "Fire Shard":
+                    SetNewArrowPosition("Fire Arrow");
                     Debug.Log("You've made a Fire Arrow !");
-                    return true;
+                    break;
                 case "Electric Shard":
-                    return true;
+                    SetNewArrowPosition("Lightning Arrow");
+                    Debug.Log("You've made a Lightning Arrow !");
+                    break;
             }
+            return true;
         }
 
         return false; 
@@ -56,6 +69,27 @@ public class UpgradeStation : MonoBehaviour
 
     private void CreateNewArrow()
     {
+        baseArrow.SetActive(false);
+        currentUpgrade.gameObject.SetActive(false);
         // Instantiate the explosive arrow prefab at the arrowSpawnPoint
+    }
+
+    public void SetNewArrowPosition(string arrowName)
+    {
+        // Your logic when the arrow is in the list
+        GameObject foundArrow = upgrades.Find(a => a.name == arrowName);
+
+        Debug.Log("", foundArrow);
+
+        if (foundArrow != null)
+        {
+            foundArrow.SetActive(true);
+            // Do something with the found arrow, for example, set its position
+            foundArrow.transform.position = newArrow.position;
+        }
+        else
+        {
+            Debug.Log("Arrow was not found");
+        }
     }
 }
