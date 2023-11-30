@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public Contract[] availableContracts; // List of available contracts
     public int activeContractIndex = -1; // Index of the active contract
 
+    public Transform XRRig;
 
     private void Awake()
     {
