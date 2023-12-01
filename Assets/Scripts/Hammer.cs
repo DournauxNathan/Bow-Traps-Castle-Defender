@@ -35,11 +35,13 @@ public class Hammer : XRGrabInteractable
 
         if (other.TryGetComponent<UpgradeStation>(out UpgradeStation station))
         {
-            m_AudioSource.PlayOneShot(onHitSound);
+            if (station != null)
+            {
+                m_AudioSource.PlayOneShot(onHitSound);
 
-            station.CombineUpgrade();
-        }
-        
+                station.OnHit();
+            }
+        }        
     }
 
     private void Repair(BreakableActivator activator)

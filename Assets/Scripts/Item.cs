@@ -18,6 +18,7 @@ public class Item : MonoBehaviour
     public new string name;
     public int value;
     public bool isSold = false;
+    public int hitCount;
 
     public enum Type
     {

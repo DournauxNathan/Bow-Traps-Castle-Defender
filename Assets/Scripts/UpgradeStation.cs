@@ -5,20 +5,27 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class UpgradeStation : MonoBehaviour
 {
+    [Header("REFS")]
     public GameObject baseArrow;
     public Transform newArrow;
 
-    private Item currentUpgrade;
-
     public List<GameObject> upgrades;
-
+    [Header("PROPERTIES")]
+    public int maxHit = 3;
     private int hitCount = 0;
+
+    [Header("SFX")]
+    public AudioClip upgradeSoundEffect;
+
+    private Item currentUpgrade;
+    private AudioSource m_AudioSource;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<Item>(out Item item))
         {
             currentUpgrade = item;
+            maxHit = item.hitCount;
         }
     }
 
@@ -26,16 +33,25 @@ public class UpgradeStation : MonoBehaviour
     {
         if (other.TryGetComponent<Item>(out Item item))
         {
+            maxHit = 3;
             currentUpgrade = null;
         }
     }
 
-    public void CombineUpgrade()
+    public void OnHit()
     {
         hitCount++;
 
-        // Implement logic to check the combination and create a new arrow type
-        if (CheckCombination() && hitCount >= 3)
+        if (hitCount >= maxHit)
+        {
+            CombineUpgrade();
+        }
+    }
+
+    private void CombineUpgrade()
+    {
+        // Check the combination and create a new arrow type
+        if (hitCount >= maxHit && CheckCombination())
         {
             hitCount = 0;
             CreateNewArrow();
@@ -71,7 +87,6 @@ public class UpgradeStation : MonoBehaviour
     {
         baseArrow.SetActive(false);
         currentUpgrade.gameObject.SetActive(false);
-        // Instantiate the explosive arrow prefab at the arrowSpawnPoint
     }
 
     public void SetNewArrowPosition(string arrowName)

@@ -19,6 +19,7 @@ public class Critter : MonoBehaviour
     public float health = 1; // Initial health
     public float maxHealth = 1; // Maximum health
     public int currencyValue;
+    public Animator m_Animator;
 
     [Header("MOVEMENT SETTINGS")]
     public float speed = 5f; // Critter movement speed
@@ -80,6 +81,16 @@ public class Critter : MonoBehaviour
     public void SetDestination(Vector3 position)
     {
         m_NavMeshAgent.SetDestination(position);
+
+        switch (type)
+        {
+            case CritterType.Weakling:
+                m_Animator.SetBool("Run Forward", true);
+                break;
+            case CritterType.Middling:
+                m_Animator.SetBool("Walk Forward", true);
+                break;
+        }
     }
 
     public void StopMovement()
@@ -149,25 +160,32 @@ public class Critter : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        m_Animator.SetTrigger("Take Damage");
         health -= damage;
     }
 
     void Defeat()
     {
+        StopMovement();
+
         // Handle defeat based on critter type
         switch (type)
         {
             case CritterType.Weakling:
+                m_Animator.SetBool("Run Forward", false);
                 // Handle Weakling defeat
                 break;
             case CritterType.Middling:
+                m_Animator.SetBool("Walk Forward", false);
                 // Handle Middling defeat
                 break;
         }
 
+        m_Animator.SetTrigger("Die");
+
         GameManager.Instance.AddCurency(currencyValue);
         OnKilled?.Invoke();
-        Destroy(gameObject);
+        Destroy(this.gameObject, 3f);
     }
 
     private void OnCollisionEnter(Collision collision)

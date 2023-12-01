@@ -105,8 +105,11 @@ public class WaveManager : MonoBehaviour
         // Stop spawning
         isSpawning = false;
         GameManager.Instance.gate.Close();
-        m_AudioSource.PlayOneShot(onWaveEnd);
 
+        if (!m_AudioSource.isPlaying)
+        {
+            m_AudioSource.PlayOneShot(onWaveEnd);
+        }
     }
 
     IEnumerator SpawnWave()

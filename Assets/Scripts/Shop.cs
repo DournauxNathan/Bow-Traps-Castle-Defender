@@ -12,10 +12,14 @@ public class Shop : MonoBehaviour
     public List<ItemSlot> slots;
     public List<Item> itemsToDisplay;
 
+    public AudioClip onSoldSoundEffect;
+    
+    private AudioSource m_audioSource;
     private bool isPouchPutDown = false;
 
     void Start()
     {
+        m_audioSource = GetComponent<AudioSource>();
         UpdateItemDisplay();
     }
 
@@ -44,6 +48,7 @@ public class Shop : MonoBehaviour
                 slots[iD].background.color = ClearFeedback();
 
                 itemsToDisplay[iD].Sold();
+                m_audioSource.PlayOneShot(onSoldSoundEffect);
 
                 DisplayPouchValue();
                 UpdateItemBuyable();
