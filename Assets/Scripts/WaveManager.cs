@@ -29,9 +29,9 @@ public class WaveManager : MonoBehaviour
     private int waveNumberCrittersKilled;
 
     public AudioSource m_AudioSource;
-    public AudioClip onWaveStart, onWaveEnd;
+    public AudioClip onWaveStartSFX, onWaveEndSFX;
 
-    public UnityEvent onFinalWave, onBossAppear, OnBossDead;
+    public UnityEvent onWaveStart, onWaveEnd,onFinalWave, onBossAppear, OnBossDead;
 
     void Start()
     {
@@ -44,6 +44,7 @@ public class WaveManager : MonoBehaviour
     public void StartTimer()
     {
         StartCoroutine(Countdown(startTimer));
+
     }
 
     IEnumerator Countdown(int seconds)
@@ -56,8 +57,9 @@ public class WaveManager : MonoBehaviour
 
             if (counter <= 3 && counter != 0)
             {
-                Debug.Log("Wabe begin : " + counter);
-                
+                Debug.Log("Wave begin : " + counter);
+
+
                 if (waveNumber == GetTotalWaves())
                 {
                     onBossAppear?.Invoke();
@@ -65,8 +67,9 @@ public class WaveManager : MonoBehaviour
             }
         }
 
-        m_AudioSource.PlayOneShot(onWaveStart);
-        yield return new WaitForSeconds(onWaveEnd.length);
+        onWaveStart?.Invoke();
+        m_AudioSource.PlayOneShot(onWaveStartSFX);
+        yield return new WaitForSeconds(onWaveEndSFX.length);
         StartWave();
     }
     
@@ -117,6 +120,8 @@ public class WaveManager : MonoBehaviour
         isSpawning = false;
         GameManager.Instance.gate.Close();
 
+        onWaveEnd?.Invoke();
+
         if (waveNumber == GetTotalWaves() - 1)
         {
             onFinalWave?.Invoke();
@@ -124,7 +129,7 @@ public class WaveManager : MonoBehaviour
 
         if (!m_AudioSource.isPlaying)
         {
-            m_AudioSource.PlayOneShot(onWaveEnd);
+            m_AudioSource.PlayOneShot(onWaveEndSFX);
         }
     }
 

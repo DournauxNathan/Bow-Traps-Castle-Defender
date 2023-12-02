@@ -10,6 +10,7 @@ public class VFXManager : MonoBehaviour
 
     [Header("CRITTER VFX")]
     public MeshRenderer critterPortal;
+    public MeshRenderer critterPortalBackground;
 
     [Header("BOSS VFX")]
     public ParticleSystem rainParticles;
@@ -21,7 +22,8 @@ public class VFXManager : MonoBehaviour
 
     private void Start()
     {
-        //critterPortal.materials[0].SetFloat("_Dissolve", 0);
+        critterPortal.materials[0].SetFloat("_Dissolve", 0);
+        critterPortalBackground.materials[0].SetFloat("_Dissolve", 0);
         bossPortal.materials[0].SetFloat("_Dissolve", 0);
         bossPortalBackground.materials[0].SetFloat("_Dissolve", 0);
 
@@ -41,6 +43,21 @@ public class VFXManager : MonoBehaviour
         else
         {
             rainParticles.Stop();
+        }
+    }
+
+    public void ToggleCritterPortal(bool enable)
+    {
+        if (enable)
+        {
+            StartCoroutine(IncreaseFloatOverTime(critterPortal, 0.9f));
+            StartCoroutine(IncreaseFloatOverTime(critterPortalBackground, 1f));
+        }
+        else
+        {
+            
+            StartCoroutine(DecreaseFloatOverTime(critterPortal));
+            StartCoroutine(DecreaseFloatOverTime(critterPortalBackground));
         }
     }
 
@@ -69,7 +86,7 @@ public class VFXManager : MonoBehaviour
 
     private IEnumerator IncreaseFloatOverTime(MeshRenderer renderer, float max)
     {
-        float duration = 5f; // Adjust the duration as needed
+        float duration = 2.5f; // Adjust the duration as needed
         float startTime = Time.time;
 
         while (renderer.materials[0].GetFloat("_Dissolve") <= max)
@@ -86,13 +103,13 @@ public class VFXManager : MonoBehaviour
 
     private IEnumerator DecreaseFloatOverTime(MeshRenderer renderer)
     {
-        float duration = 5f; // Adjust the duration as needed
+        float duration = 5; // Adjust the duration as needed
         float startTime = Time.time;
 
         while (renderer.materials[0].GetFloat("_Dissolve") >= 0f)
         {
             float progress = (Time.time - startTime) / duration;
-            floatPropertyValue = Mathf.Lerp(floatPropertyValue, 0f, progress);
+            floatPropertyValue = Mathf.Lerp(renderer.materials[0].GetFloat("_Dissolve"), 0f, progress);
 
             // Pass the updated float value to the shader
             renderer.materials[0].SetFloat("_Dissolve", floatPropertyValue);
