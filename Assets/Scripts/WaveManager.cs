@@ -57,6 +57,11 @@ public class WaveManager : MonoBehaviour
             if (counter <= 3 && counter != 0)
             {
                 Debug.Log("Wabe begin : " + counter);
+                
+                if (waveNumber == GetTotalWaves())
+                {
+                    onBossAppear?.Invoke();
+                }
             }
         }
 
@@ -68,11 +73,7 @@ public class WaveManager : MonoBehaviour
     public void StartWave()
     {
         Debug.Log("Wave " + waveNumber + " Incoming!");
-
-        if (waveNumber == GetTotalWaves())
-        {
-            onBossAppear?.Invoke();
-        }
+               
 
         if (!isSpawning)
         {

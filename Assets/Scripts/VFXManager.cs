@@ -25,6 +25,8 @@ public class VFXManager : MonoBehaviour
         bossPortal.materials[0].SetFloat("_Dissolve", 0);
         bossPortalBackground.materials[0].SetFloat("_Dissolve", 0);
 
+        ToggleStorm(false);
+        TogglePortal(false);
     }
 
     public void ToggleStorm(bool enable)
@@ -46,12 +48,18 @@ public class VFXManager : MonoBehaviour
     {
         if (enable)
         {
-            StartCoroutine(IncreaseFloatOverTime(bossPortal, .85f));
+            bossPortal.gameObject.SetActive(true);
+            bossPortalBackground.gameObject.SetActive(true);
+
+            StartCoroutine(IncreaseFloatOverTime(bossPortal, 0.85f));
             StartCoroutine(IncreaseFloatOverTime(bossPortalBackground, 1f));
             cloudParticles.Play();
         }
         else
         {
+            bossPortal.gameObject.SetActive(false);
+            bossPortalBackground.gameObject.SetActive(false);
+
             StartCoroutine(DecreaseFloatOverTime(bossPortal));
             StartCoroutine(DecreaseFloatOverTime(bossPortalBackground));
             cloudParticles.Stop();
@@ -67,7 +75,7 @@ public class VFXManager : MonoBehaviour
         while (renderer.materials[0].GetFloat("_Dissolve") <= max)
         {
             float progress = (Time.time - startTime) / duration;
-            floatPropertyValue = Mathf.Lerp(0f, 1f, progress);
+            floatPropertyValue = Mathf.Lerp(0f, max, progress);
 
             // Pass the updated float value to the shader
             renderer.materials[0].SetFloat("_Dissolve", floatPropertyValue);
