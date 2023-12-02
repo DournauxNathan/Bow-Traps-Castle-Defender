@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e01113eab7b32c64592b9fe7dd769d85, type: 3}
-  m_Name: Boss
+  m_Script: {fileID: 11500000, guid: ddf32a16596372648b4efd55a35a3617, type: 3}
+  m_Name: Basic_Boss
   m_EditorClassIdentifier: 
-  critterName: Boss
-  health: 30
-  speed: 1
-  prefab: {fileID: 7187201013898565389, guid: 696915bf8225ba44087839b7b3746d1b, type: 3}
+  BossName: 
+  health: 50
+  maxCritterWaves: 2
+  critterToSpawn: 50
+  prefab: {fileID: 3004480842227857765, guid: a11b36ca843202d4fadb7aed64e9dfeb, type: 3}
+  phase: 2

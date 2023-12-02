@@ -1,11 +1,11 @@
-// WavesManager.cs
-
 using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 
 public class WaveManager : MonoBehaviour
 {
     public Transform spawnPoint; // Where critters will spawn
+    public Transform bossSpawnPoint; // Where critters will spawn
     public float timeBetweenWaves = 10f; // Time between waves
     public int startTimer = 3;
     private float countdown = 2f; // Initial countdown before the first wave
@@ -23,12 +23,15 @@ public class WaveManager : MonoBehaviour
     private bool bossSpawned = false;
 
     private CritterFactory currentFactory;
+    private Boss currentBoss;
     
     private int critterSpawned;
     private int waveNumberCrittersKilled;
 
     public AudioSource m_AudioSource;
     public AudioClip onWaveStart, onWaveEnd;
+
+    public UnityEvent onFinalWave, onBossAppear, OnBossDead;
 
     void Start()
     {
@@ -65,6 +68,12 @@ public class WaveManager : MonoBehaviour
     public void StartWave()
     {
         Debug.Log("Wave " + waveNumber + " Incoming!");
+
+        if (waveNumber == GetTotalWaves())
+        {
+            onBossAppear?.Invoke();
+        }
+
         if (!isSpawning)
         {
             waveNumberCrittersKilled = 0;
@@ -84,10 +93,11 @@ public class WaveManager : MonoBehaviour
 
     void Update()
     {
-        if (isSpawning)
+        if (bossSpawned)
         {
             if (countdown <= 0f)
             {
+                StopCoroutine(SpawnWave());
                 // Start a new wave
                 countdown = timeBetweenWaves;
             }
@@ -106,6 +116,11 @@ public class WaveManager : MonoBehaviour
         isSpawning = false;
         GameManager.Instance.gate.Close();
 
+        if (waveNumber == GetTotalWaves() - 1)
+        {
+            onFinalWave?.Invoke();
+        }
+
         if (!m_AudioSource.isPlaying)
         {
             m_AudioSource.PlayOneShot(onWaveEnd);
@@ -117,7 +132,7 @@ public class WaveManager : MonoBehaviour
         if (currentFactory != null)
         {
             //Spawn Boss at the final Wave
-            if (waveNumber == GetTotalWaves())
+            if (!bossSpawned && waveNumber == GetTotalWaves())
             {
                 bossSpawned = true;
                 isSpawning = false;
@@ -180,7 +195,18 @@ public class WaveManager : MonoBehaviour
         
         if (currentFactory != null)
         {
-            GameObject critter = currentFactory.CreateCritter(spawnPoint);
+            GameObject boss = currentFactory.SpawnBoss(bossSpawnPoint);
+
+            // Set the PlayerController reference for the critter
+            Boss bossComponent = boss.GetComponent<Boss>();
+
+            if (bossComponent != null)
+            {
+                //Initialize Critter Data to Critter
+                bossComponent.Init(currentFactory.bossData);
+                bossComponent.waveManager = this;
+            }
+            currentBoss = bossComponent;
         }
         
         currentFactory = null;
@@ -192,17 +218,27 @@ public class WaveManager : MonoBehaviour
         waveNumberCrittersKilled++;
 
         // Check if all critters of the current wave are killed
-        if (waveNumberCrittersKilled >= critterSpawned)
+        if (waveNumberCrittersKilled >= critterSpawned )
         {
-            StopWave();
+            if (!bossSpawned)
+            {
+                StopWave();
 
-            // Calculate wave completion bonus based on the multiplier and the number of completed waves
-            int waveBonus = Mathf.RoundToInt(baseWaveCompletionBonus * Mathf.Pow(waveCompletionMultiplier, waveNumber - 1));
+                // Calculate wave completion bonus based on the multiplier and the number of completed waves
+                int waveBonus = Mathf.RoundToInt(baseWaveCompletionBonus * Mathf.Pow(waveCompletionMultiplier, waveNumber - 1));
 
-            // Award wave completion bonus
-            GameManager.Instance.currentCurrency += waveBonus;
+                // Award wave completion bonus
+                GameManager.Instance.currentCurrency += waveBonus;
 
-            waveNumber++;
+                waveNumber++;
+            }
+            else
+            {
+                // Update Boss Phase
+                currentBoss.UpdatePhase(2);
+
+            }
+            
         }
     }
 
@@ -226,7 +262,7 @@ public class WaveManager : MonoBehaviour
     int GetTotalWaves()
     {
         // You can customize how the total number of waves is determined
-        return 10; // Example: 10 waves in total
+        return 2; // Example: 10 waves in total
     }
 
     void SetFactory(CritterFactory factory)

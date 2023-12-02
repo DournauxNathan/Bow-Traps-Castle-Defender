@@ -69,6 +69,7 @@ public class Critter : MonoBehaviour
         // Check if the critter is defeated
         if (health <= 0 || transform.position.y >= 30f || isKilled)
         {
+            isKilled = false;
             Defeat();
         }
 

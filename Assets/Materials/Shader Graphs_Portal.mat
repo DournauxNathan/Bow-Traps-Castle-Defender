@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_Tornado
+  m_Name: Shader Graphs_Portal
   m_Shader: {fileID: -6465566751694194690, guid: 234e51a6e51687b47b33e7f86381ceb4, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -34,17 +34,17 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Dissolve: 0.189
-    - _NoisePower: 0.16
+    - _Dissolve: 0
+    - _NoisePower: 0.05
     - _NoiseScale: 20
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _TwirlAmount: 1
+    - _TwirlAmount: 20
     m_Colors:
-    - _Color: {r: 0, g: 1, b: 0.88834953, a: 1}
+    - _Color: {r: 0.08627451, g: 0.9882353, b: 0.36862746, a: 1}
     - _NoiseSpeed: {r: 0.41, g: -0.5, b: 0, a: 0}
     - _TwirlCenter: {r: 0.5, g: 0.5, b: 0, a: 0}
-    - _TwirlSpeed: {r: 2, g: 2, b: 0, a: 0}
+    - _TwirlSpeed: {r: 0.5, g: 0.5, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &5629405427835690524
 MonoBehaviour:

@@ -2,6 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ArrowType
+{
+    Base,
+    Fire,
+    Ice,
+    Lightning,
+    Explosive,
+    Gravity,
+    Tornado
+}
+
 public class Arrow : MonoBehaviour
 {
     [Header("REFERENCES")]
@@ -81,6 +92,14 @@ public class Arrow : MonoBehaviour
                 // Apply base damage
                 critter.TakeDamage(damage);
                 
+                transform.parent = critter.transform;
+                critter.transform.eulerAngles = Vector3.zero;
+            }
+            if (collision.collider.TryGetComponent<Weakness>(out Weakness boss))
+            {
+                // Apply base damage
+                boss.TakeDamage(damage);
+
                 transform.parent = critter.transform;
                 critter.transform.eulerAngles = Vector3.zero;
             }

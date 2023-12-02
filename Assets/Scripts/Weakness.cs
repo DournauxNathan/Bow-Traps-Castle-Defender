@@ -1,0 +1,47 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Weakness : MonoBehaviour
+{
+    public ArrowType arrowWeakness;
+    private int health = 0;
+    private  bool isDown;
+    private Boss bossData;
+
+    internal bool isEnable;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        if (GetComponentInParent<Boss>() != null)
+        {
+            bossData = GetComponentInParent<Boss>();
+            health = bossData.maxHealth / bossData.weaknesses.Count;
+        }
+        else
+        {
+            Debug.LogWarning("No Boss Component found in Parent ! ");
+        }        
+    }
+
+    void FixedUpdate()
+    {
+        // Check if the critter is defeated
+        if (health <= 0 || transform.position.y >= 30f || isDown)
+        {
+            OnWeaknessDown();
+        }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        health -= (int) damage;
+    }
+
+    public void OnWeaknessDown()
+    {
+        isDown = true;
+        bossData.UpdateWeaknessCount();
+    }
+}
