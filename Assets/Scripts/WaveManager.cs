@@ -44,7 +44,6 @@ public class WaveManager : MonoBehaviour
     public void StartTimer()
     {
         StartCoroutine(Countdown(startTimer));
-
     }
 
     IEnumerator Countdown(int seconds)
@@ -52,32 +51,20 @@ public class WaveManager : MonoBehaviour
         int counter = seconds;
         while (counter > 0)
         {
+            Debug.Log("Wave begin : " + counter);
             yield return new WaitForSeconds(1);
             counter--;
-
-            if (counter <= 3 && counter != 0)
-            {
-                Debug.Log("Wave begin : " + counter);
-
-
-                if (waveNumber == GetTotalWaves())
-                {
-                    onBossAppear?.Invoke();
-                }
-            }
         }
 
         onWaveStart?.Invoke();
         m_AudioSource.PlayOneShot(onWaveStartSFX);
+        Debug.Log("Wave " + waveNumber + " Incoming!");
         yield return new WaitForSeconds(onWaveEndSFX.length);
         StartWave();
     }
     
     public void StartWave()
     {
-        Debug.Log("Wave " + waveNumber + " Incoming!");
-               
-
         if (!isSpawning)
         {
             waveNumberCrittersKilled = 0;
@@ -86,7 +73,11 @@ public class WaveManager : MonoBehaviour
             StartCoroutine(SpawnWave());
 
             isSpawning = true;
-            bossSpawned = false;
+
+            if (bossSpawned)
+            {
+                onBossAppear?.Invoke();
+            }
         }
         else
         {
@@ -97,7 +88,7 @@ public class WaveManager : MonoBehaviour
 
     void Update()
     {
-        if (bossSpawned)
+        /*if (bossSpawned)
         {
             if (countdown <= 0f)
             {
@@ -111,7 +102,7 @@ public class WaveManager : MonoBehaviour
         else
         {
             StopCoroutine(SpawnWave());
-        }
+        }*/
     }
 
     public void StopWave()
@@ -127,6 +118,7 @@ public class WaveManager : MonoBehaviour
             onFinalWave?.Invoke();
         }
 
+
         if (!m_AudioSource.isPlaying)
         {
             m_AudioSource.PlayOneShot(onWaveEndSFX);
@@ -137,16 +129,6 @@ public class WaveManager : MonoBehaviour
     {
         if (currentFactory != null)
         {
-            //Spawn Boss at the final Wave
-            if (!bossSpawned && waveNumber == GetTotalWaves())
-            {
-                bossSpawned = true;
-                isSpawning = false;
-
-                SetFactory(bossFactory);
-                SpawnBoss();
-            }
-
             while (critterSpawned != waveNumber)
             {
                 if (waveNumber >= 3)
@@ -237,14 +219,24 @@ public class WaveManager : MonoBehaviour
                 GameManager.Instance.currentCurrency += waveBonus;
 
                 waveNumber++;
+
+                //Spawn Boss at the final Wave
+                if (waveNumber == GetTotalWaves())
+                {
+                    Debug.Log("Active boss");
+                    bossSpawned = true;
+                }
             }
             else
             {
+                // Spawn boss After Killing the all critter
+                SetFactory(bossFactory);
+                SpawnBoss();
+                //Enter Boss Made + Manage Wave from it
                 // Update Boss Phase
-                currentBoss.UpdatePhase(2);
-
+                //currentBoss.UpdatePhase(2);
             }
-            
+
         }
     }
 

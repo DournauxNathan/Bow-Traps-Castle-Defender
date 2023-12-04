@@ -38,6 +38,7 @@ public class VFXManager : MonoBehaviour
 
         if (enable)
         {
+            StartCoroutine(IncreaseAlphaOverTime(stormSky.GetComponent<MeshRenderer>(), 0.85f));
             rainParticles.Play();
         }
         else
@@ -83,6 +84,25 @@ public class VFXManager : MonoBehaviour
         }
     }
 
+    private IEnumerator IncreaseAlphaOverTime(MeshRenderer renderer, float maxAlpha)
+    {
+        float duration = 10f; // Adjust the duration as needed
+        float startTime = Time.time;
+
+        while (renderer.materials[0].color.a <= maxAlpha)
+        {
+            float progress = (Time.time - startTime) / duration;
+            Color currentColor = renderer.materials[0].color;
+
+            // Interpolate alpha value
+            float newAlpha = Mathf.Lerp(currentColor.a, maxAlpha, progress);
+
+            // Update the color with the new alpha value
+            renderer.materials[0].color = new Color(currentColor.r, currentColor.g, currentColor.b, newAlpha);
+
+            yield return null;
+        }
+    }
 
     private IEnumerator IncreaseFloatOverTime(MeshRenderer renderer, float max)
     {
