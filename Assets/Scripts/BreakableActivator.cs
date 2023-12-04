@@ -20,6 +20,8 @@ public class BreakableActivator : MonoBehaviour, IBreakable
     // Start is called before the first frame update
     void Start()
     {
+        GameManager.Instance.SubscribeActivators(this);
+
         // Initialize properties and setup
         IsBroken = false;
         Repairable = true;

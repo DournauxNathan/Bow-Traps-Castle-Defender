@@ -11,10 +11,17 @@ public class Boss : MonoBehaviour
     public int maxHealth = 1;
     private int phase;
 
+    public int damagePerHit;
+
     public List<Weakness> weaknesses;
 
     public Animator m_Animator;
     internal WaveManager waveManager;
+
+    public GameObject projectilePrefab;
+    public Transform firePoint; // The position where the projectile will be spawned
+    public float projectileSpeed = 10f;
+    private float growthSpeed;
 
     public void Init(BossData data)
     {
@@ -36,10 +43,57 @@ public class Boss : MonoBehaviour
         switch (phase)
         {
             case 1:
+
                 break;
             case 2:
                 StartNewWave();
                 break;
+        }
+    }
+
+    void PrepareCast()
+    {
+        int rand = UnityEngine.Random.Range(0, GameManager.Instance.activators.Count);
+        Vector3 targetPosition = GameManager.Instance.activators[rand].transform.position;
+
+        // Instantiate the growing projectile prefab
+        GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+
+        // Calculate the direction towards the target position
+        Vector3 direction = (targetPosition - firePoint.position).normalized;
+
+        // Set the rotation of the growing projectile to face the target position
+        projectile.transform.rotation = Quaternion.LookRotation(direction);
+
+        // Set the initial scale to be very small
+        projectile.transform.localScale = Vector3.one * 0.01f;
+
+        m_Animator.SetTrigger("Cast");
+
+        // Start the growth coroutine
+        StartCoroutine(CastProjectile(projectile));
+    }
+
+
+    IEnumerator CastProjectile(GameObject projectile)
+    {
+        // Continue growing the projectile until it reaches its maximum scale
+        while (projectile.transform.localScale.x < 1.5f)
+        {
+            float growthAmount = growthSpeed * Time.deltaTime;
+            projectile.transform.localScale += Vector3.one * growthAmount;
+
+            yield return null;
+        }
+
+
+        m_Animator.SetTrigger("Release");
+
+        // Once the projectile has grown, throw it
+        Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
+        if (projectileRb != null)
+        {
+            projectileRb.velocity = projectile.transform.forward * projectileSpeed;
         }
     }
 
@@ -55,7 +109,7 @@ public class Boss : MonoBehaviour
             weakness.isEnable = false;
         }
 
-        waveManager.StartWave();
+        //waveManager.StartWave();
 
         //Call Wave Manager
     }

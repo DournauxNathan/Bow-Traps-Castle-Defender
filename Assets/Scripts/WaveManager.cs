@@ -118,7 +118,6 @@ public class WaveManager : MonoBehaviour
             onFinalWave?.Invoke();
         }
 
-
         if (!m_AudioSource.isPlaying)
         {
             m_AudioSource.PlayOneShot(onWaveEndSFX);
@@ -232,11 +231,12 @@ public class WaveManager : MonoBehaviour
                 // Spawn boss After Killing the all critter
                 SetFactory(bossFactory);
                 SpawnBoss();
+                isSpawning = false;
+
                 //Enter Boss Made + Manage Wave from it
                 // Update Boss Phase
                 //currentBoss.UpdatePhase(2);
             }
-
         }
     }
 

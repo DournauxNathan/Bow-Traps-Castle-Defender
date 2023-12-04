@@ -28,15 +28,15 @@ public class Weakness : MonoBehaviour
     void FixedUpdate()
     {
         // Check if the critter is defeated
-        if (health <= 0 || transform.position.y >= 30f || isDown)
+        if (health <= 0 || isDown)
         {
             OnWeaknessDown();
         }
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage()
     {
-        health -= (int) damage;
+        health -= bossData.damagePerHit;
     }
 
     public void OnWeaknessDown()

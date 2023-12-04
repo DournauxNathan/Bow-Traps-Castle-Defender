@@ -95,13 +95,10 @@ public class Arrow : MonoBehaviour
                 transform.parent = critter.transform;
                 critter.transform.eulerAngles = Vector3.zero;
             }
-            if (collision.collider.TryGetComponent<Weakness>(out Weakness boss))
-            {
-                // Apply base damage
-                boss.TakeDamage(damage);
 
+            if (collision.collider.TryGetComponent<Target>(out Target weakness))
+            {
                 transform.parent = critter.transform;
-                critter.transform.eulerAngles = Vector3.zero;
             }
         }
 

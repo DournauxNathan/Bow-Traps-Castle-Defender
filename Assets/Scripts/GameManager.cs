@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
 
     public Transform XRRig;
 
+    public List<BreakableActivator> activators;
+
     private void Awake()
     {
         Instance = this;
@@ -81,4 +83,9 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
+
+    public void SubscribeActivators(BreakableActivator activator)
+    {
+        activators.Add(activator);
+    }
 }
