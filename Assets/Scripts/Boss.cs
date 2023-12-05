@@ -16,6 +16,8 @@ public class Boss : MonoBehaviour
 
     public List<Weakness> weaknesses;
 
+    private Vector3 targetPosition;
+
     public Animator m_Animator;
     internal WaveManager waveManager;
 
@@ -62,7 +64,7 @@ public class Boss : MonoBehaviour
             switch (phase)
             {
                 case 1:
-                    PrepareCast();
+                    PrepareCast();                    
                     break;
                 case 2:
                     StartNewWave();
@@ -71,34 +73,57 @@ public class Boss : MonoBehaviour
         }
     }
 
-    void PrepareCast()
+    public bool GetRandomActivatorPosition()
     {
-        int rand = UnityEngine.Random.Range(0, GameManager.Instance.activators.Count);
-        foreach (BreakableActivator activator in GameManager.Instance.activators)
-        {
-            if (!activator.IsBroken)
-            {
+        // Pick a random active activator
+        List<BreakableActivator> activators = GameManager.Instance.activators;
 
+        if (activators.Count > 0)
+        {
+            int maxAttempts = 50; // Set a maximum number of attempts to avoid an infinite loop
+            int rand = -1;
+
+            // Try to find an active activator within a limited number of attempts
+            for (int i = 0; i < maxAttempts; i++)
+            {
+                rand = UnityEngine.Random.Range(0, activators.Count);
+
+                if (!activators[rand].IsBroken)
+                {
+                    // Found an broken activator, break out of the loop
+                    targetPosition = activators[rand].transform.position;
+                    return true;
+                }
             }
         }
-        Vector3 targetPosition = GameManager.Instance.activators[rand].transform.position;
+        return false;
+    }
 
-        projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity, this.transform);
-        // Instantiate the growing projectile prefab
+    void PrepareCast()
+    {
+        if (GetRandomActivatorPosition())
+        {
+            projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity, this.transform);
+            // Instantiate the growing projectile prefab
 
-        // Calculate the direction towards the target position
-        Vector3 direction = (targetPosition - projectile.transform.position).normalized;
+            // Calculate the direction towards the target position
+            Vector3 direction = (targetPosition - projectile.transform.position).normalized;
 
-        // Set the rotation of the growing projectile to face the target position
-        projectile.transform.rotation = Quaternion.LookRotation(direction);
+            // Set the rotation of the growing projectile to face the target position
+            projectile.transform.rotation = Quaternion.LookRotation(direction);
 
-        // Set the initial scale to be very small
-        projectile.transform.localScale = Vector3.one * 0.01f;
+            // Set the initial scale to be very small
+            projectile.transform.localScale = Vector3.one * 0.01f;
 
-        m_Animator.SetTrigger("Cast");
+            m_Animator.SetTrigger("Cast");
 
-        // Start the growth coroutine
-        StartCoroutine(CastProjectile(projectile, targetPosition));
+            // Start the growth coroutine
+            StartCoroutine(CastProjectile(projectile, targetPosition));
+        }
+        else
+        {
+            Debug.LogWarning("No activator was found");
+        }
     }
 
 
@@ -133,7 +158,7 @@ public class Boss : MonoBehaviour
 
     private void StartNewWave()
     {
-        m_Animator.SetTrigger("StarWave");
+        m_Animator.SetTrigger("StartWave");
 
         foreach (Weakness weakness in weaknesses)
         {
