@@ -38,14 +38,14 @@ public class Weakness : MonoBehaviour
     public void TakeDamage()
     {
         health -= bossData.damagePerHit;
-        bossData.CancelAction();
+        bossData.CancelCast();
     }
 
     public void OnWeaknessDown()
     {
         isDown = true;
         bossData.UpdateWeaknessCount();
-        bossData.CancelAction();
+        bossData.CancelCast();
 
     }
 }

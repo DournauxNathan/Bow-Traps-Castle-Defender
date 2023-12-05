@@ -39,12 +39,18 @@ public class Boss : MonoBehaviour
         
     }
 
-    public void CancelAction()
+    public void CancelCast()
     {
-        StopAllCoroutines();
+        projectile = null;
+        ResetAction();
+        projectile.GetComponent<Projectile>().TooglePhysics(true);
+    }
+
+    public void ResetAction()
+    {
         phase = 0;
         m_Animator.SetTrigger("Reset");
-        Destroy(projectile);
+        StopAllCoroutines();
     }
 
     // Update is called once per frame
@@ -68,12 +74,18 @@ public class Boss : MonoBehaviour
     void PrepareCast()
     {
         int rand = UnityEngine.Random.Range(0, GameManager.Instance.activators.Count);
+        foreach (BreakableActivator activator in GameManager.Instance.activators)
+        {
+            if (!activator.IsBroken)
+            {
+
+            }
+        }
         Vector3 targetPosition = GameManager.Instance.activators[rand].transform.position;
 
+        projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity, this.transform);
         // Instantiate the growing projectile prefab
-        projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
 
-        projectile.transform.parent = null;
         // Calculate the direction towards the target position
         Vector3 direction = (targetPosition - projectile.transform.position).normalized;
 
@@ -101,14 +113,17 @@ public class Boss : MonoBehaviour
             yield return null;
         }
 
+        projectile.transform.parent = null;
         m_Animator.SetTrigger("Release");
 
         while (Vector3.Distance(projectile.transform.position, position) >= .5f)
         {
-            projectile.transform.position = Vector3.Lerp(projectile.transform.position, position, projectileSpeed * Time.deltaTime);
-
+            projectile.transform.position = Vector3.MoveTowards(projectile.transform.position, position, projectileSpeed * Time.deltaTime);
             yield return null;
         }
+
+        Destroy(projectile);
+        projectile = null;
     }
 
     internal void UpdateWeaknessCount()
@@ -118,6 +133,8 @@ public class Boss : MonoBehaviour
 
     private void StartNewWave()
     {
+        m_Animator.SetTrigger("StarWave");
+
         foreach (Weakness weakness in weaknesses)
         {
             weakness.isEnable = false;
