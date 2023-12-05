@@ -62,6 +62,22 @@ public class WaveManager : MonoBehaviour
         yield return new WaitForSeconds(onWaveEndSFX.length);
         StartWave();
     }
+
+    public void StartWave(int maxWave, int numberOfCritter)
+    {
+        if (!isSpawning)
+        {
+            waveNumberCrittersKilled = 0;
+            critterSpawned = 0;
+
+            StartCoroutine(SpawnWave(maxWave, numberOfCritter));
+
+        }
+        else
+        {
+            Debug.LogWarning("Can't start Wave ! Wave already started");
+        }
+    }
     
     public void StartWave()
     {
@@ -123,6 +139,36 @@ public class WaveManager : MonoBehaviour
             m_AudioSource.PlayOneShot(onWaveEndSFX);
         }
     }
+
+    IEnumerator SpawnWave(int numberOfWave, int numberOfCritter)
+    {
+        if (currentFactory != null)
+        {
+            while (critterSpawned != waveNumber)
+            {
+                if (waveNumber >= numberOfWave)
+                {
+                    // Decide whether to spawn middlingCritter or a regular Critter
+                    if (Random.Range(0f, 1f) < 0.5f)
+                    {
+                        SpawnCritter(middlingFactory);
+                        yield return new WaitForSeconds(2f);
+                    }
+                    else
+                    {
+                        SpawnCritter(weaklingFactory);
+                    }
+                }
+                else
+                {
+                    // Spawn regular Critter
+                    SpawnCritter(weaklingFactory);
+                }
+                yield return new WaitForSeconds(1f); // Time between spawning critters in a wave
+            }
+        }
+    }
+
 
     IEnumerator SpawnWave()
     {
@@ -190,8 +236,7 @@ public class WaveManager : MonoBehaviour
             if (bossComponent != null)
             {
                 //Initialize Critter Data to Critter
-                bossComponent.Init(currentFactory.bossData);
-                bossComponent.waveManager = this;
+                bossComponent.Init(currentFactory.bossData, this);
             }
             currentBoss = bossComponent;
         }

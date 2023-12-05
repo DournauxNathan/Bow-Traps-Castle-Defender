@@ -4,7 +4,9 @@ using UnityEngine;
 public class BossData : ScriptableObject
 {
     public string BossName;
-    public int health;
+    public int maxHealth;
+    public int damagePerHit;
+    public float timeBeforeReleaseCast;
 
     public int maxCritterWaves;
     public int critterToSpawn;

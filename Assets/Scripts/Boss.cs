@@ -5,50 +5,60 @@ using UnityEngine;
 
 public class Boss : MonoBehaviour
 {
-    [Header("PROPERTIES")]
-    public CritterType type; 
-    public int health = 1; 
-    public int maxHealth = 1;
-    public int phase;
+    [Header("REFS")]
+    [SerializeField] private Animator m_Animator;
+    private WaveManager waveManager;
 
-    public bool hasPhaseBegin = false;
+    [Header("PROPERTIES")]
+    public CritterType type;
+    public int maxHealth;
     public int damagePerHit;
+    public float timeBeforeReleaseCast;
+    public int maxCritterWaves;
+    public int critterToSpawn;
+
+    [Header("PHASE")]
+    public int phase;
+    public bool hasPhaseBegin = false;
 
     public List<Weakness> weaknesses;
 
-    private Vector3 targetPosition;
-
-    public Animator m_Animator;
-    internal WaveManager waveManager;
-
+    [Header("PROJECTILE PROPERTIES")]
     public GameObject projectilePrefab;
     private GameObject projectile;
     public Transform firePoint; // The position where the projectile will be spawned
     public float projectileSpeed = 10f;
     public float growthSpeed;
+   
+    private int health = 1; 
+    private Vector3 targetPosition;
 
-    public void Init(BossData data)
+    public void Init(BossData data, WaveManager waveManager)
     {
         this.type = CritterType.Boss;
-        this.maxHealth = data.health;
+        this.maxHealth = data.maxHealth;
         this.health = maxHealth;
-        this.phase = data.phase;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
+        this.maxCritterWaves = data.maxCritterWaves;
+        this.critterToSpawn = data.critterToSpawn;
         
+        this.phase = data.phase;
+        this.timeBeforeReleaseCast = data.timeBeforeReleaseCast;
+
+        m_Animator = GetComponent<Animator>();
+        this.waveManager = waveManager;
     }
 
     public void CancelCast()
     {
+        if (projectile != null)
+        {
+            projectile.GetComponent<Projectile>().TooglePhysics(true);
+            ResetPhase();
+        }
         projectile = null;
-        ResetAction();
-        projectile.GetComponent<Projectile>().TooglePhysics(true);
     }
 
-    public void ResetAction()
+    public void ResetPhase()
     {
         phase = 0;
         m_Animator.SetTrigger("Reset");
@@ -139,6 +149,9 @@ public class Boss : MonoBehaviour
         }
 
         projectile.transform.parent = null;
+        
+        yield return new WaitForSeconds(timeBeforeReleaseCast);
+        
         m_Animator.SetTrigger("Release");
 
         while (Vector3.Distance(projectile.transform.position, position) >= .5f)
@@ -165,7 +178,7 @@ public class Boss : MonoBehaviour
             weakness.isEnable = false;
         }
 
-        //waveManager.StartWave();
+        waveManager.StartWave();
 
         //Call Wave Manager
     }
