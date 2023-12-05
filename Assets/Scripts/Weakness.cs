@@ -6,7 +6,7 @@ public class Weakness : MonoBehaviour
 {
     public ArrowType arrowWeakness;
     private int health = 0;
-    private  bool isDown;
+    public  bool isDown;
     private Boss bossData;
 
     internal bool isEnable;
@@ -30,6 +30,7 @@ public class Weakness : MonoBehaviour
         // Check if the critter is defeated
         if (health <= 0 || isDown)
         {
+            isDown = false;
             OnWeaknessDown();
         }
     }
@@ -37,11 +38,14 @@ public class Weakness : MonoBehaviour
     public void TakeDamage()
     {
         health -= bossData.damagePerHit;
+        bossData.CancelAction();
     }
 
     public void OnWeaknessDown()
     {
         isDown = true;
         bossData.UpdateWeaknessCount();
+        bossData.CancelAction();
+
     }
 }

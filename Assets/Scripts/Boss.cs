@@ -9,8 +9,9 @@ public class Boss : MonoBehaviour
     public CritterType type; 
     public int health = 1; 
     public int maxHealth = 1;
-    private int phase;
+    public int phase;
 
+    public bool hasPhaseBegin = false;
     public int damagePerHit;
 
     public List<Weakness> weaknesses;
@@ -19,9 +20,10 @@ public class Boss : MonoBehaviour
     internal WaveManager waveManager;
 
     public GameObject projectilePrefab;
+    private GameObject projectile;
     public Transform firePoint; // The position where the projectile will be spawned
     public float projectileSpeed = 10f;
-    private float growthSpeed;
+    public float growthSpeed;
 
     public void Init(BossData data)
     {
@@ -37,17 +39,29 @@ public class Boss : MonoBehaviour
         
     }
 
+    public void CancelAction()
+    {
+        StopAllCoroutines();
+        phase = 0;
+        m_Animator.SetTrigger("Reset");
+        Destroy(projectile);
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
-        switch (phase)
+        if (hasPhaseBegin)
         {
-            case 1:
-
-                break;
-            case 2:
-                StartNewWave();
-                break;
+            hasPhaseBegin = false;
+            switch (phase)
+            {
+                case 1:
+                    PrepareCast();
+                    break;
+                case 2:
+                    StartNewWave();
+                    break;
+            }
         }
     }
 
@@ -57,10 +71,11 @@ public class Boss : MonoBehaviour
         Vector3 targetPosition = GameManager.Instance.activators[rand].transform.position;
 
         // Instantiate the growing projectile prefab
-        GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
 
+        projectile.transform.parent = null;
         // Calculate the direction towards the target position
-        Vector3 direction = (targetPosition - firePoint.position).normalized;
+        Vector3 direction = (targetPosition - projectile.transform.position).normalized;
 
         // Set the rotation of the growing projectile to face the target position
         projectile.transform.rotation = Quaternion.LookRotation(direction);
@@ -71,14 +86,14 @@ public class Boss : MonoBehaviour
         m_Animator.SetTrigger("Cast");
 
         // Start the growth coroutine
-        StartCoroutine(CastProjectile(projectile));
+        StartCoroutine(CastProjectile(projectile, targetPosition));
     }
 
 
-    IEnumerator CastProjectile(GameObject projectile)
+    IEnumerator CastProjectile(GameObject projectile, Vector3 position)
     {
         // Continue growing the projectile until it reaches its maximum scale
-        while (projectile.transform.localScale.x < 1.5f)
+        while (projectile.transform.localScale.x <= 1.5f)
         {
             float growthAmount = growthSpeed * Time.deltaTime;
             projectile.transform.localScale += Vector3.one * growthAmount;
@@ -86,14 +101,13 @@ public class Boss : MonoBehaviour
             yield return null;
         }
 
-
         m_Animator.SetTrigger("Release");
 
-        // Once the projectile has grown, throw it
-        Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
-        if (projectileRb != null)
+        while (Vector3.Distance(projectile.transform.position, position) >= .5f)
         {
-            projectileRb.velocity = projectile.transform.forward * projectileSpeed;
+            projectile.transform.position = Vector3.Lerp(projectile.transform.position, position, projectileSpeed * Time.deltaTime);
+
+            yield return null;
         }
     }
 
