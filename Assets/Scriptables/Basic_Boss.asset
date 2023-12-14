@@ -13,8 +13,13 @@ MonoBehaviour:
   m_Name: Basic_Boss
   m_EditorClassIdentifier: 
   BossName: 
-  health: 50
-  maxCritterWaves: 2
-  critterToSpawn: 50
+  maxHealth: 50
+  damagePerHit: 10
+  timeBeforeReleaseCast: 3
   prefab: {fileID: 3004480842227857765, guid: a11b36ca843202d4fadb7aed64e9dfeb, type: 3}
-  phase: 2
+  phase: 0
+  waves:
+  - waveId: 1
+    critterToSpawn: 10
+  - waveId: 2
+    critterToSpawn: 15

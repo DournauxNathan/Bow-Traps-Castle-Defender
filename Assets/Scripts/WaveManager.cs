@@ -19,11 +19,11 @@ public class WaveManager : MonoBehaviour
     public int baseWaveCompletionBonus = 10; // Base bonus amount
     public float waveCompletionMultiplier = 1.2f; // Multiplier for each completed wave
 
-    private bool isSpawning = false;
+    public bool isSpawning { get; private set; }
     private bool bossSpawned = false;
 
     private CritterFactory currentFactory;
-    private Boss currentBoss;
+    public Boss currentBoss { get; private set; }
     
     private int critterSpawned;
     private int waveNumberCrittersKilled;
@@ -39,6 +39,8 @@ public class WaveManager : MonoBehaviour
 
         // Set the initial factory (Weakling)
         SetFactory(weaklingFactory);
+        
+        bossSpawned = true;
     }
 
     public void StartTimer()
@@ -63,22 +65,6 @@ public class WaveManager : MonoBehaviour
         StartWave();
     }
 
-    public void StartWave(int maxWave, int numberOfCritter)
-    {
-        if (!isSpawning)
-        {
-            waveNumberCrittersKilled = 0;
-            critterSpawned = 0;
-
-            StartCoroutine(SpawnWave(maxWave, numberOfCritter));
-
-        }
-        else
-        {
-            Debug.LogWarning("Can't start Wave ! Wave already started");
-        }
-    }
-    
     public void StartWave()
     {
         if (!isSpawning)
@@ -101,26 +87,23 @@ public class WaveManager : MonoBehaviour
         }
     }
 
-
-    void Update()
+    public void StartWave(int numberOfCritter)
     {
-        /*if (bossSpawned)
+        if (!isSpawning)
         {
-            if (countdown <= 0f)
-            {
-                StopCoroutine(SpawnWave());
-                // Start a new wave
-                countdown = timeBetweenWaves;
-            }
+            waveNumberCrittersKilled = 0;
+            critterSpawned = 0;
 
-            countdown -= Time.deltaTime;
+            isSpawning = true;
+            StartCoroutine(SpawnWave(numberOfCritter));
+
         }
         else
         {
-            StopCoroutine(SpawnWave());
-        }*/
+            Debug.LogWarning("Can't start Wave ! Wave already started");
+        }
     }
-
+    
     public void StopWave()
     {
         // Stop spawning
@@ -137,35 +120,6 @@ public class WaveManager : MonoBehaviour
         if (!m_AudioSource.isPlaying)
         {
             m_AudioSource.PlayOneShot(onWaveEndSFX);
-        }
-    }
-
-    IEnumerator SpawnWave(int numberOfWave, int numberOfCritter)
-    {
-        if (currentFactory != null)
-        {
-            while (critterSpawned != waveNumber)
-            {
-                if (waveNumber >= numberOfWave)
-                {
-                    // Decide whether to spawn middlingCritter or a regular Critter
-                    if (Random.Range(0f, 1f) < 0.5f)
-                    {
-                        SpawnCritter(middlingFactory);
-                        yield return new WaitForSeconds(2f);
-                    }
-                    else
-                    {
-                        SpawnCritter(weaklingFactory);
-                    }
-                }
-                else
-                {
-                    // Spawn regular Critter
-                    SpawnCritter(weaklingFactory);
-                }
-                yield return new WaitForSeconds(1f); // Time between spawning critters in a wave
-            }
         }
     }
 
@@ -193,6 +147,28 @@ public class WaveManager : MonoBehaviour
                 {
                     // Spawn regular Critter
                     SpawnCritter(weaklingFactory);
+                }
+                yield return new WaitForSeconds(1f); // Time between spawning critters in a wave
+            }
+        }
+    }
+    IEnumerator SpawnWave(int numberOfCritter)
+    {
+        if (currentFactory != null)
+        {
+            while (critterSpawned != numberOfCritter)
+            {
+                // Decide whether to spawn middlingCritter or a regular Critter
+                if (Random.Range(0f, 1f) < 0.5f)
+                {
+                    SpawnCritter(middlingFactory);
+                    yield return new WaitForSeconds(1f);
+                }
+                else
+                {
+                    SpawnCritter(weaklingFactory);
+
+                    currentBoss.NewPhase(1);
                 }
                 yield return new WaitForSeconds(1f); // Time between spawning critters in a wave
             }
@@ -238,12 +214,16 @@ public class WaveManager : MonoBehaviour
                 //Initialize Critter Data to Critter
                 bossComponent.Init(currentFactory.bossData, this);
             }
-            currentBoss = bossComponent;
+            SetBoss(bossComponent);
         }
         
         currentFactory = null;
     }
 
+    public void SetBoss(Boss boss)
+    {
+        currentBoss = boss;
+    }
 
     void OnCritterKilled()
     {
@@ -273,14 +253,18 @@ public class WaveManager : MonoBehaviour
             }
             else
             {
-                // Spawn boss After Killing the all critter
-                SetFactory(bossFactory);
-                SpawnBoss();
                 isSpawning = false;
-
-                //Enter Boss Made + Manage Wave from it
-                // Update Boss Phase
-                //currentBoss.UpdatePhase(2);
+                // Spawn boss After Killing all critter from last waves
+                if (currentBoss == null)
+                {
+                    SetFactory(bossFactory);
+                    SpawnBoss();
+                }
+                else // Boss is already spawned
+                {
+                    currentBoss.UpdatePhase(1);
+                    currentBoss.hasPhaseBegin = true;
+                }
             }
         }
     }

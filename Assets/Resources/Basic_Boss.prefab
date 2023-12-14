@@ -208,6 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowWeakness: 0
+  isDown: 0
 --- !u!54 &3004480841330061562
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -337,6 +338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowWeakness: 0
+  isDown: 0
 --- !u!54 &3004480841537541664
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5825,18 +5827,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce303dac2d9afad46ad6a79df35a7d20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Animator: {fileID: 1235907057}
   type: 2
-  health: 0
   maxHealth: 0
   damagePerHit: 0
+  phase: 0
   weaknesses:
   - {fileID: 3004480841537541667}
   - {fileID: 3004480842692721431}
   - {fileID: 3004480841330061557}
-  m_Animator: {fileID: 1235907057}
+  hasPhaseBegin: 0
   projectilePrefab: {fileID: 2859780738494929621, guid: 1f77d2797b4455746849ccc9aacb5e6c, type: 3}
   firePoint: {fileID: 2874669076890413665}
-  projectileSpeed: 10
+  projectileSpeed: 20
+  growthSpeed: 0.2
+  data: {fileID: 0}
 --- !u!95 &1235907057
 Animator:
   serializedVersion: 5
@@ -5972,6 +5977,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowWeakness: 0
+  isDown: 0
 --- !u!54 &3004480842692721428
 Rigidbody:
   m_ObjectHideFlags: 0

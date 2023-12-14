@@ -13,40 +13,60 @@ public class Boss : MonoBehaviour
     public CritterType type;
     public int maxHealth;
     public int damagePerHit;
-    public float timeBeforeReleaseCast;
-    public int maxCritterWaves;
-    public int critterToSpawn;
+    private float timeBeforeReleaseCast;
+    private int critterToSpawn;
+    private int currentWave;
 
     [Header("PHASE")]
     public int phase;
+    public List<Weakness> weaknesses;
     public bool hasPhaseBegin = false;
 
-    public List<Weakness> weaknesses;
-
     [Header("PROJECTILE PROPERTIES")]
-    public GameObject projectilePrefab;
-    private GameObject projectile;
-    public Transform firePoint; // The position where the projectile will be spawned
-    public float projectileSpeed = 10f;
-    public float growthSpeed;
+    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private Transform firePoint; // The position where the projectile will be spawned
+    [SerializeField] private float projectileSpeed = 10f;
+    [SerializeField] private float growthSpeed;
    
     private int health = 1; 
+    private GameObject projectile;
     private Vector3 targetPosition;
+
+    [Header("Load Data")]
+    [SerializeField] private BossData data;
 
     public void Init(BossData data, WaveManager waveManager)
     {
         this.type = CritterType.Boss;
         this.maxHealth = data.maxHealth;
         this.health = maxHealth;
-        this.maxCritterWaves = data.maxCritterWaves;
-        this.critterToSpawn = data.critterToSpawn;
-        
+        this.damagePerHit = data.damagePerHit;
+        this.critterToSpawn = data.waves[0].critterToSpawn;
+        this.currentWave = data.waves[0].waveId;
+
         this.phase = data.phase;
         this.timeBeforeReleaseCast = data.timeBeforeReleaseCast;
 
         m_Animator = GetComponent<Animator>();
         this.waveManager = waveManager;
+
+        if (waveManager.currentBoss == null)
+        {
+            waveManager.SetBoss(this);
+        }
+
+        foreach (Weakness weakness in weaknesses)
+        {
+            weakness.bossData = this;
+        }
     }
+
+#if UNITY_EDITOR
+    private void Start()
+    {
+        Init(data, GameObject.Find("Wave Manager").GetComponent<WaveManager>());
+    }
+#endif
 
     public void CancelCast()
     {
@@ -54,6 +74,7 @@ public class Boss : MonoBehaviour
         {
             projectile.GetComponent<Projectile>().TooglePhysics(true);
             ResetPhase();
+            Invoke("StartNewWave", 3f);
         }
         projectile = null;
     }
@@ -74,7 +95,10 @@ public class Boss : MonoBehaviour
             switch (phase)
             {
                 case 1:
-                    PrepareCast();                    
+                    if (projectile == null)
+                    {
+                        PrepareCast();                    
+                    }
                     break;
                 case 2:
                     StartNewWave();
@@ -136,7 +160,6 @@ public class Boss : MonoBehaviour
         }
     }
 
-
     IEnumerator CastProjectile(GameObject projectile, Vector3 position)
     {
         // Continue growing the projectile until it reaches its maximum scale
@@ -162,29 +185,58 @@ public class Boss : MonoBehaviour
 
         Destroy(projectile);
         projectile = null;
+
+        yield return new WaitForSeconds(timeBeforeReleaseCast);
+
+        float rand = UnityEngine.Random.Range(0f, 1f);
+        Debug.Log(rand);
+        
+        if (rand < 0.5f)
+        {
+            NewPhase(1);
+        }
+        else
+        {
+            if (!waveManager.isSpawning)
+            {
+                NewPhase(2);
+            }
+        }
+
+        yield return null;
     }
 
     internal void UpdateWeaknessCount()
     {
-        
+        if (phase == 1)
+        {
+            UpdatePhase(2); 
+            
+            this.critterToSpawn = data.waves[0].critterToSpawn;
+            this.currentWave = data.waves[0].waveId;
+        }     
     }
 
     private void StartNewWave()
     {
         m_Animator.SetTrigger("StartWave");
+       
+        waveManager.StartWave(critterToSpawn);
+    }
 
-        foreach (Weakness weakness in weaknesses)
-        {
-            weakness.isEnable = false;
-        }
-
-        waveManager.StartWave();
-
-        //Call Wave Manager
+    public void TakeDamage()
+    {
+        health -= damagePerHit;
     }
 
     internal void UpdatePhase(int phase)
     {
         this.phase = phase;
+    }
+
+    internal void NewPhase(int phase)
+    {
+        this.phase = phase;
+        hasPhaseBegin = true;
     }
 }

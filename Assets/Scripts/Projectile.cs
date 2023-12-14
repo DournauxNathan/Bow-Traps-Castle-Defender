@@ -21,7 +21,8 @@ public class Projectile : MonoBehaviour
 
         if (other.TryGetComponent<Weakness>(out Weakness boss))
         {
-            boss.TakeDamage();
+            boss.OnWeaknessDown();
+            other.GetComponent<SimpleFlash>().Flash();
 
             // Destroy the projectile on collision
             Destroy(gameObject);
