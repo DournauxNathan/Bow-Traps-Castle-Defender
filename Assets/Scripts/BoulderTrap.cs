@@ -19,7 +19,6 @@ public class BoulderTrap : BreakableTrap
         boulders.Add(boulder);
     }
 
-
     public override void Activate()
     {
         base.Activate();
@@ -41,7 +40,7 @@ public class BoulderTrap : BreakableTrap
         m_Animator.SetTrigger("Up");
 
         yield return new WaitForSeconds(spawnBoulderDuration);
-
+        Debug.Log("A");
         boulders[0].gameObject.SetActive(true);
     }
 
@@ -54,7 +53,7 @@ public class BoulderTrap : BreakableTrap
         m_Animator.SetTrigger("Up");
 
         yield return new WaitForSeconds(spawnBoulderDuration);
-
+        Debug.Log("B");
         boulders[0].gameObject.SetActive(true);
     }
 }

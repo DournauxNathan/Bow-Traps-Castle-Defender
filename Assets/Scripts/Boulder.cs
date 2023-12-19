@@ -45,7 +45,7 @@ public class Boulder : MonoBehaviour
         m_Rigibody.isKinematic = true;
         m_Rigibody.useGravity = false;
 
-        this.gameObject.SetActive(false);
+        //this.gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -60,6 +60,5 @@ public class Boulder : MonoBehaviour
             Destroy(_critter.gameObject);
             _critter.TakeDamage(-999);
         }
-
     }
 }

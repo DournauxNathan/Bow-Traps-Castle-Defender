@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEditor;
@@ -6,16 +7,20 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class Lever : XRBaseInteractable
 {
-    public Transform leverHandle, leverCap;
+    [Header("REFS")]
+    public Transform leverHandle;
+    public Transform leverCap;
+
+    [Header("PROPERTIES")]
     public float rotationThreshold;
     public float minThreshold;
     public float maxThreshold;
+    public float smoothFactor = 5f; // Maximum distance for the lever interaction
+    public bool isPulled;
 
     public UnityEvent onPulled, onReleased;
 
     private float maxDistance = 0.5f; // Maximum distance for the lever interaction
-    public float smoothFactor = 5f; // Maximum distance for the lever interaction
-
     private Vector3 initialToInteractor;
     private IXRSelectInteractor pullingInteractor = null;
 
@@ -61,17 +66,7 @@ public class Lever : XRBaseInteractable
 
                     float angle = GetLeverAngle(pullingInteractor);
                     angle = Mathf.Clamp(angle, -rotationThreshold, rotationThreshold);
-
-                    Debug.Log(angle);
-
-                    /* Joytsick movement
-                   // Get the rotation of the controller
-                   Quaternion controllerRotation = pullingInteractor.transform.rotation;
-
-                   // Apply the controller rotation to the lever with the initial rotation offset
-                   leverHandle.rotation = Quaternion.Euler(Vector3.forward) * controllerRotation * initialRotation;
-                   */
-
+                                       
                     ActionBasedController controller = pullingInteractor.transform.gameObject.GetComponent<ActionBasedController>();
                     
                     Quaternion.Euler(angle, 0f, 0f);
@@ -91,22 +86,26 @@ public class Lever : XRBaseInteractable
                     // Haptic Feedback
                     if (normalizedLeverPosition <= 0.55f && normalizedLeverPosition >= 0.45f)
                     {
-                        controller.SendHapticImpulse(angle, 0.1f);
+                        controller.SendHapticImpulse(1f, 0.1f);
                     }
 
-                    if (normalizedLeverPosition >= maxThreshold)
+                    if (!isPulled)
                     {
-                        onPulled?.Invoke();
-                    }
-                    else if (normalizedLeverPosition <= minThreshold)
-                    {
-                        onReleased?.Invoke();
+                        isPulled = true;
+                        
+                        if (normalizedLeverPosition >= maxThreshold)
+                        {
+                            onPulled?.Invoke();
+                        }
+                        else if (normalizedLeverPosition <= minThreshold)
+                        {
+                            onReleased?.Invoke();
+                        }
                     }
                 }
             }
         }
     }
-
 
     private float GetLeverAngle(IXRSelectInteractor interactor)
     {
@@ -117,6 +116,33 @@ public class Lever : XRBaseInteractable
         float angle = Vector3.Angle(interactor.transform.position, localPosition) * Mathf.Sign(Vector3.Dot(interactor.transform.position, localPosition));
 
         return angle * smoothFactor;
+    }
+
+    public void IsPulled(bool pulled)
+    {
+        isPulled = pulled;
+    }
+
+    public void ResetPosition()
+    {
+        StartCoroutine(SmoothRotation());
+    }
+
+    IEnumerator SmoothRotation()
+    {
+        while (leverHandle.localRotation.x >= 0f)
+        {
+            // Calculate the target rotation based on the desired angle
+            Quaternion targetRotation = Quaternion.Euler(0f, 0f, 0f);
+
+            // Use Quaternion.Lerp to smoothly interpolate between the current rotation and the target rotation
+            Quaternion newRotation = Quaternion.Slerp(leverHandle.localRotation, targetRotation, Time.deltaTime * 2f);
+
+            // Assign the interpolated rotation to the leverHandle
+            leverHandle.localRotation = newRotation;
+
+            yield return null;
+        }
     }
 
     private void OnDrawGizmosSelected()

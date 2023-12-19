@@ -47,9 +47,9 @@ MonoBehaviour:
   onActivate:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 3004480842692721431}
         m_TargetAssemblyTypeName: Weakness, Assembly-CSharp
-        m_MethodName: TakeDamage
+        m_MethodName: OnWeaknessDown
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -87,7 +87,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2931519227312879688}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 13.499999, z: 4.6000004}
+  m_LocalPosition: {x: 0, y: 13.499999, z: -1.29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: 3004480841330061561}
   - component: {fileID: 3004480841330061557}
   - component: {fileID: 3004480841330061562}
+  - component: {fileID: 829724904}
   m_Layer: 0
   m_Name: Right Hand
   m_TagString: Critter
@@ -122,8 +123,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3004480841330061567}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.61, y: -3.35, z: 3.54}
+  m_LocalRotation: {x: 0.70710677, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 5.6100006, y: -3.340045, z: 3.5499563}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -131,7 +132,7 @@ Transform:
   - {fileID: 2582747498112335229}
   m_Father: {fileID: 3004480842227857767}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!33 &3004480841330061563
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -208,7 +209,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowWeakness: 0
-  isDown: 0
 --- !u!54 &3004480841330061562
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -225,6 +225,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &829724904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3004480841330061567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25962a0ef1444494086f5a3fc99f11e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashMaterial: {fileID: 2100000, guid: 237b3972d920f2b4da596253dfc00ff5, type: 2}
+  duration: 0.2
 --- !u!1 &3004480841537541669
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,6 +253,7 @@ GameObject:
   - component: {fileID: 3004480841537541671}
   - component: {fileID: 3004480841537541667}
   - component: {fileID: 3004480841537541664}
+  - component: {fileID: 1260997662}
   m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
@@ -338,7 +353,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowWeakness: 0
-  isDown: 0
 --- !u!54 &3004480841537541664
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -355,6 +369,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1260997662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3004480841537541669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25962a0ef1444494086f5a3fc99f11e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashMaterial: {fileID: 2100000, guid: 237b3972d920f2b4da596253dfc00ff5, type: 2}
+  duration: 0.2
 --- !u!1 &3004480842009401552
 GameObject:
   m_ObjectHideFlags: 0
@@ -5679,7 +5707,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 34001
+  m_VersionIndex: 34064
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -5841,7 +5869,7 @@ MonoBehaviour:
   firePoint: {fileID: 2874669076890413665}
   projectileSpeed: 20
   growthSpeed: 0.2
-  data: {fileID: 0}
+  data: {fileID: 11400000, guid: 68593976aa9a5bf4a9758bac5a4d50f9, type: 2}
 --- !u!95 &1235907057
 Animator:
   serializedVersion: 5
@@ -5877,6 +5905,7 @@ GameObject:
   - component: {fileID: 3004480842692721435}
   - component: {fileID: 3004480842692721431}
   - component: {fileID: 3004480842692721428}
+  - component: {fileID: 1424681229}
   m_Layer: 0
   m_Name: Left Hand
   m_TagString: Untagged
@@ -5891,8 +5920,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3004480842692721433}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.74, y: 4.78, z: 4.27}
+  m_LocalRotation: {x: 0.70710707, y: -0, z: -0, w: 0.7071066}
+  m_LocalPosition: {x: -7.138992, y: 4.22, z: 2.84}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5900,7 +5929,7 @@ Transform:
   - {fileID: 2145959821211999826}
   m_Father: {fileID: 3004480842227857767}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!33 &3004480842692721429
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -5977,7 +6006,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowWeakness: 0
-  isDown: 0
 --- !u!54 &3004480842692721428
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5994,6 +6022,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1424681229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3004480842692721433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25962a0ef1444494086f5a3fc99f11e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashMaterial: {fileID: 2100000, guid: 237b3972d920f2b4da596253dfc00ff5, type: 2}
+  duration: 0.2
 --- !u!1 &3095905356555264219
 GameObject:
   m_ObjectHideFlags: 0
@@ -6208,7 +6250,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3004480841330061557}
         m_TargetAssemblyTypeName: Weakness, Assembly-CSharp
-        m_MethodName: TakeDamage
+        m_MethodName: OnWeaknessDown
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

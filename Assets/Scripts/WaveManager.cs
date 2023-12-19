@@ -4,34 +4,53 @@ using System.Collections;
 
 public class WaveManager : MonoBehaviour
 {
+    #region Public Variables
+
+    [Header("Spawn Settings")]
     public Transform spawnPoint; // Where critters will spawn
-    public Transform bossSpawnPoint; // Where critters will spawn
+    public Transform bossSpawnPoint; // Where the boss will spawn
+
+    [Header("Wave Settings")]
     public float timeBetweenWaves = 10f; // Time between waves
-    public int startTimer = 3;
-    private float countdown = 2f; // Initial countdown before the first wave
+    public int startTimer = 3; // Countdown before the first wave
 
-    private int waveNumber = 1; // Current wave number
-
+    [Header("Critter Factories")]
     public CritterFactory weaklingFactory;
     public CritterFactory middlingFactory;
     public CritterFactory bossFactory;
 
+    [Header("Wave Completion")]
     public int baseWaveCompletionBonus = 10; // Base bonus amount
     public float waveCompletionMultiplier = 1.2f; // Multiplier for each completed wave
 
-    public bool isSpawning { get; private set; }
+    [Header("Wave Control")]
+    public UnityEvent onWaveStart;
+    public UnityEvent onWaveEnd;
+    public UnityEvent onFinalWave;
+    public UnityEvent onBossAppear;
+    public UnityEvent OnBossDead;
+
+    public bool isSpawning { get; private set; } // Indicates whether spawning is in progress
+
+    #endregion
+
+    #region Private Variables
+    
+    private int waveNumber = 1; // Current wave number
     private bool bossSpawned = false;
 
     private CritterFactory currentFactory;
     public Boss currentBoss { get; private set; }
-    
+
     private int critterSpawned;
     private int waveNumberCrittersKilled;
 
     public AudioSource m_AudioSource;
     public AudioClip onWaveStartSFX, onWaveEndSFX;
 
-    public UnityEvent onWaveStart, onWaveEnd,onFinalWave, onBossAppear, OnBossDead;
+    #endregion
+
+    #region Initialization
 
     void Start()
     {
@@ -39,9 +58,13 @@ public class WaveManager : MonoBehaviour
 
         // Set the initial factory (Weakling)
         SetFactory(weaklingFactory);
-        
+
         bossSpawned = true;
     }
+
+    #endregion
+
+    #region Wave Management
 
     public void StartTimer()
     {
@@ -103,7 +126,7 @@ public class WaveManager : MonoBehaviour
             Debug.LogWarning("Can't start Wave ! Wave already started");
         }
     }
-    
+
     public void StopWave()
     {
         // Stop spawning
@@ -123,6 +146,9 @@ public class WaveManager : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Coroutine Methods
 
     IEnumerator SpawnWave()
     {
@@ -152,6 +178,7 @@ public class WaveManager : MonoBehaviour
             }
         }
     }
+
     IEnumerator SpawnWave(int numberOfCritter)
     {
         if (currentFactory != null)
@@ -175,6 +202,10 @@ public class WaveManager : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Critter and Boss Spawning
+
     void SpawnCritter(CritterFactory factory)
     {
         critterSpawned++;
@@ -183,7 +214,6 @@ public class WaveManager : MonoBehaviour
         {
             GameObject critter = factory.CreateCritter(spawnPoint);
 
-            // Set the PlayerController reference for the critter
             Critter critterComponent = critter.GetComponent<Critter>();
             if (critterComponent != null)
             {
@@ -200,13 +230,11 @@ public class WaveManager : MonoBehaviour
     void SpawnBoss()
     {
         bossSpawned = true;
-        //Debug.Log("The boss has appeared");
-        
+
         if (currentFactory != null)
         {
             GameObject boss = currentFactory.SpawnBoss(bossSpawnPoint);
 
-            // Set the PlayerController reference for the critter
             Boss bossComponent = boss.GetComponent<Boss>();
 
             if (bossComponent != null)
@@ -216,21 +244,29 @@ public class WaveManager : MonoBehaviour
             }
             SetBoss(bossComponent);
         }
-        
+
         currentFactory = null;
     }
+
+    #endregion
+
+    #region Boss Handling
 
     public void SetBoss(Boss boss)
     {
         currentBoss = boss;
     }
 
+    #endregion
+
+    #region Event Handlers
+
     void OnCritterKilled()
     {
         waveNumberCrittersKilled++;
 
         // Check if all critters of the current wave are killed
-        if (waveNumberCrittersKilled >= critterSpawned )
+        if (waveNumberCrittersKilled >= critterSpawned)
         {
             if (!bossSpawned)
             {
@@ -254,7 +290,7 @@ public class WaveManager : MonoBehaviour
             else
             {
                 isSpawning = false;
-                // Spawn boss After Killing all critter from last waves
+                // Spawn boss After Killing all critters from last waves
                 if (currentBoss == null)
                 {
                     SetFactory(bossFactory);
@@ -286,6 +322,10 @@ public class WaveManager : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Utility Methods
+
     int GetTotalWaves()
     {
         // You can customize how the total number of waves is determined
@@ -296,4 +336,6 @@ public class WaveManager : MonoBehaviour
     {
         currentFactory = factory;
     }
+
+    #endregion
 }
