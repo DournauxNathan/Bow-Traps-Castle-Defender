@@ -24,11 +24,10 @@ public class BodySocketInventory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _currentHMDPosition = HMD.transform.position;
-        _currentHMDRotation = HMD.transform.rotation;
+        _currentHMDPosition = HMD.transform.localPosition;
+        _currentHMDRotation = HMD.transform.localRotation;
 
         
-
         foreach (var bodySocket in bodySockets)
         {
             UpdateBodySocketHeight(bodySocket);
@@ -40,24 +39,24 @@ public class BodySocketInventory : MonoBehaviour
     {
         float interpolation = speed * Time.deltaTime;
 
-        Vector3 position = HMD.transform.position;
-        position.y = Mathf.Lerp(HMD.transform.position.y, secondCamera.transform.position.y, interpolation);
-        position.x = Mathf.Lerp(HMD.transform.position.x, secondCamera.transform.position.x, interpolation);
+        Vector3 position = HMD.transform.localPosition;
+        position.y = Mathf.Lerp(HMD.transform.localPosition.y, secondCamera.transform.localPosition.y, interpolation);
+        position.x = Mathf.Lerp(HMD.transform.localPosition.x, secondCamera.transform.localPosition.x, interpolation);
 
-        transform.position = position;
+        transform.localPosition = position;
 
-        transform.rotation = Quaternion.Slerp(transform.rotation, secondCamera.transform.rotation, interpolation);
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, secondCamera.transform.localRotation, interpolation);
     }
 
     private void UpdateBodySocketHeight(BodySocket bodySocket)
     {
-        bodySocket.gameObject.transform.position = new Vector3(bodySocket.gameObject.transform.position.x, 
+        bodySocket.gameObject.transform.localPosition = new Vector3(bodySocket.gameObject.transform.localPosition.x, 
             _currentHMDPosition.y * bodySocket.heightRatio, 
-            bodySocket.gameObject.transform.position.z);
+            bodySocket.gameObject.transform.localPosition.z);
     }
     private void UpdateSocketinventory()
     {
-        transform.position = new Vector3(_currentHMDPosition.x, 0f, _currentHMDPosition.z);
-        transform.rotation = new Quaternion(transform.rotation.x, _currentHMDRotation.y, transform.rotation.z, _currentHMDRotation.w);
+        transform.localPosition = new Vector3(_currentHMDPosition.x, 0f, _currentHMDPosition.z);
+        transform.localRotation = new Quaternion(transform.localRotation.x, _currentHMDRotation.y, transform.localRotation.z, _currentHMDRotation.w);
     }
 }

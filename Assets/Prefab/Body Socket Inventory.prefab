@@ -55,6 +55,8 @@ MonoBehaviour:
     heightRatio: 0.55
   - gameObject: {fileID: 3653451380026738712}
     heightRatio: 0.55
+  - gameObject: {fileID: 3270472489806949826}
+    heightRatio: 0.75
 --- !u!1001 &40806142070257023
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -357,5 +359,10 @@ PrefabInstance:
 --- !u!4 &2389951075896414120 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4099363635297098715, guid: 6d6b13b94d675c143a9e8186cc6a06e5, type: 3}
+  m_PrefabInstance: {fileID: 1858036484164539507}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3270472489806949826 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3794879928390302129, guid: 6d6b13b94d675c143a9e8186cc6a06e5, type: 3}
   m_PrefabInstance: {fileID: 1858036484164539507}
   m_PrefabAsset: {fileID: 0}
