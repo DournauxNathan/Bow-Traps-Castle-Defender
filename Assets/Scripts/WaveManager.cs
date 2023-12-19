@@ -58,8 +58,6 @@ public class WaveManager : MonoBehaviour
 
         // Set the initial factory (Weakling)
         SetFactory(weaklingFactory);
-
-        bossSpawned = true;
     }
 
     #endregion
@@ -329,7 +327,7 @@ public class WaveManager : MonoBehaviour
     int GetTotalWaves()
     {
         // You can customize how the total number of waves is determined
-        return 2; // Example: 10 waves in total
+        return 3; // Example: 10 waves in total
     }
 
     void SetFactory(CritterFactory factory)

@@ -7,7 +7,6 @@ public class ExplosiveArrow : Arrow
     public float explosionRadius = 5f;
     public int explosionDamage = 15;
 
-
     protected override void DealDamage(Collision collision)
     {
         base.DealDamage(collision);

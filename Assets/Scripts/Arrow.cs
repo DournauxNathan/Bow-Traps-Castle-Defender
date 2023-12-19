@@ -16,11 +16,11 @@ public enum ArrowType
 public class Arrow : MonoBehaviour
 {
     [Header("REFERENCES")]
-    [SerializeField] protected Transform tip;
-    [SerializeField] protected Rigidbody m_Rigidbody;
-    [SerializeField] protected ParticleSystem m_ParticleSystem;
-    [SerializeField] protected TrailRenderer m_TrailRenderer;
-    [SerializeField] protected AudioSource m_AudioSource;
+    [SerializeField] internal Transform tip;
+    [SerializeField] internal Rigidbody m_Rigidbody;
+    [SerializeField] internal ParticleSystem m_ParticleSystem;
+    [SerializeField] internal TrailRenderer m_TrailRenderer;
+    [SerializeField] internal AudioSource m_AudioSource;
     
     [Header("PROPERTIES")]
     public LayerMask layerMask;
@@ -30,13 +30,11 @@ public class Arrow : MonoBehaviour
     [Tooltip("Duration of damage over time effect")] public float effectDuration = 3f;
 
     [Header("SFX")]
-    [SerializeField] protected AudioClip onShootSound;
-    [SerializeField] protected AudioClip onHitSound;
+    [SerializeField] internal AudioClip onShootSound;
+    [SerializeField] internal AudioClip onHitSound;
 
-    [Header("SFX")]
-
-    protected bool isInAir = false;
-    protected Vector3 lastPos = Vector3.zero;
+    private bool isInAir = false;
+    private Vector3 lastPos = Vector3.zero;
 
     private void Awake()
     {
@@ -59,6 +57,8 @@ public class Arrow : MonoBehaviour
     {
         PullInteraction.PullActionReleased -= Release;
         gameObject.transform.parent = null;
+        
+
         isInAir = true;
         SetPhysics(true);
 
@@ -76,6 +76,8 @@ public class Arrow : MonoBehaviour
 
     protected virtual void OnCollisionEnter(Collision collision)
     {
+        Debug.Log(collision.collider, collision.collider.gameObject);
+        
         // Common collision logic for all arrows
         Stop();
 
@@ -94,11 +96,6 @@ public class Arrow : MonoBehaviour
                 
                 transform.parent = critter.transform;
                 critter.transform.eulerAngles = Vector3.zero;
-            }
-
-            if (collision.collider.TryGetComponent<Target>(out Target weakness))
-            {
-                transform.parent = critter.transform;
             }
         }
 
