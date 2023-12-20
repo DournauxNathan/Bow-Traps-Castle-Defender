@@ -76,6 +76,10 @@ public class UpgradeStation : MonoBehaviour
                     SetNewArrowPosition("Lightning Arrow");
                     Debug.Log("You've made a Lightning Arrow !");
                     break;
+                case "Ice Shard":
+                    SetNewArrowPosition("Ice Arrow");
+                    Debug.Log("You've made an Ice Arrow !");
+                    break;
             }
             return true;
         }
