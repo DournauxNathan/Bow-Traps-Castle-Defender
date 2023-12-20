@@ -69,7 +69,6 @@ public class Critter : MonoBehaviour
         // Check if the critter is defeated
         if (health <= 0 || transform.position.y >= 30f || isKilled)
         {
-            isKilled = false;
             Defeat();
         }
 
@@ -167,6 +166,8 @@ public class Critter : MonoBehaviour
 
     void Defeat()
     {
+        isKilled = true;
+
         StopMovement();
 
         // Handle defeat based on critter type
@@ -185,7 +186,16 @@ public class Critter : MonoBehaviour
         m_Animator.SetTrigger("Die");
 
         GameManager.Instance.AddCurency(currencyValue);
-        OnKilled?.Invoke();
+        
+        if (isKilled)
+        {
+            isKilled = false;
+            OnKilled?.Invoke();
+        }
+
+
+        GetComponent<BoxCollider>().enabled = false;
+        UsePhysics(false);
         Destroy(this.gameObject, 3f);
     }
 
@@ -203,5 +213,11 @@ public class Critter : MonoBehaviour
                 SetDestination(startPosition);
             }
         }
+    }
+
+    public void UsePhysics(bool usePhysics)
+    {
+        m_Rigidbody.useGravity = usePhysics;
+        m_Rigidbody.isKinematic= !usePhysics;
     }
 }

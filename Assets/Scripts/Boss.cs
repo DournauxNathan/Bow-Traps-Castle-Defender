@@ -59,7 +59,11 @@ public class Boss : MonoBehaviour
         {
             weakness.bossData = this;
         }
+
+        Invoke("OnBeginPhase", 5f);
     }
+
+
 
 #if UNITY_EDITOR
     private void Start()
@@ -73,13 +77,21 @@ public class Boss : MonoBehaviour
         if (projectile != null)
         {
             projectile.GetComponent<Projectile>().TooglePhysics(true);
-            ResetPhase();
+            OnEndPhase();
             Invoke("StartNewWave", 3f);
         }
         projectile = null;
     }
 
-    public void ResetPhase()
+    public void OnBeginPhase()
+    {
+        if (phase == 0)
+        {
+            NewPhase(1);
+        }
+    }
+
+    public void OnEndPhase()
     {
         phase = 0;
         m_Animator.SetTrigger("Reset");
@@ -189,7 +201,6 @@ public class Boss : MonoBehaviour
         yield return new WaitForSeconds(timeBeforeReleaseCast);
 
         float rand = UnityEngine.Random.Range(0f, 1f);
-        Debug.Log(rand);
         
         if (rand < 0.5f)
         {
@@ -210,10 +221,18 @@ public class Boss : MonoBehaviour
     {
         if (phase == 1)
         {
-            UpdatePhase(2); 
-            
-            this.critterToSpawn = data.waves[0].critterToSpawn;
-            this.currentWave = data.waves[0].waveId;
+            UpdatePhase(2);
+
+            if (health == (maxHealth / 2) )
+            {
+                this.critterToSpawn = data.waves[1].critterToSpawn;
+                this.currentWave = data.waves[1].waveId;
+            }
+            else
+            {
+                this.critterToSpawn = data.waves[0].critterToSpawn;
+                this.currentWave = data.waves[0].waveId;
+            }
         }     
     }
 

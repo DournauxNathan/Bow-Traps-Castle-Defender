@@ -74,7 +74,7 @@ public class WaveManager : MonoBehaviour
         int counter = seconds;
         while (counter > 0)
         {
-            Debug.Log("Wave begin : " + counter);
+            //Debug.Log("Wave begin : " + counter);
             yield return new WaitForSeconds(1);
             counter--;
         }
@@ -179,24 +179,21 @@ public class WaveManager : MonoBehaviour
 
     IEnumerator SpawnWave(int numberOfCritter)
     {
-        if (currentFactory != null)
+        while (critterSpawned <= numberOfCritter)
         {
-            while (critterSpawned != numberOfCritter)
+            // Decide whether to spawn middlingCritter or a regular Critter
+            if (Random.Range(0f, 1f) < 0.5f)
             {
-                // Decide whether to spawn middlingCritter or a regular Critter
-                if (Random.Range(0f, 1f) < 0.5f)
-                {
-                    SpawnCritter(middlingFactory);
-                    yield return new WaitForSeconds(1f);
-                }
-                else
-                {
-                    SpawnCritter(weaklingFactory);
-
-                    currentBoss.NewPhase(1);
-                }
-                yield return new WaitForSeconds(1f); // Time between spawning critters in a wave
+                SpawnCritter(middlingFactory);
+                yield return new WaitForSeconds(1f);
             }
+            else
+            {
+                SpawnCritter(weaklingFactory);
+
+                currentBoss.NewPhase(1);
+            }
+            yield return new WaitForSeconds(1f); // Time between spawning critters in a wave
         }
     }
 
@@ -269,7 +266,7 @@ public class WaveManager : MonoBehaviour
             if (!bossSpawned)
             {
                 StopWave();
-
+                
                 // Calculate wave completion bonus based on the multiplier and the number of completed waves
                 int waveBonus = Mathf.RoundToInt(baseWaveCompletionBonus * Mathf.Pow(waveCompletionMultiplier, waveNumber - 1));
 
@@ -281,13 +278,13 @@ public class WaveManager : MonoBehaviour
                 //Spawn Boss at the final Wave
                 if (waveNumber == GetTotalWaves())
                 {
-                    Debug.Log("Active boss");
                     bossSpawned = true;
                 }
             }
             else
             {
                 isSpawning = false;
+
                 // Spawn boss After Killing all critters from last waves
                 if (currentBoss == null)
                 {
@@ -327,7 +324,7 @@ public class WaveManager : MonoBehaviour
     int GetTotalWaves()
     {
         // You can customize how the total number of waves is determined
-        return 3; // Example: 10 waves in total
+        return 2; // Example: 10 waves in total
     }
 
     void SetFactory(CritterFactory factory)

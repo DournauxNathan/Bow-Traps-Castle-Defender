@@ -15,7 +15,7 @@ MonoBehaviour:
   BossName: 
   maxHealth: 50
   damagePerHit: 10
-  timeBeforeReleaseCast: 3
+  timeBeforeReleaseCast: 6
   prefab: {fileID: 3004480842227857765, guid: a11b36ca843202d4fadb7aed64e9dfeb, type: 3}
   phase: 0
   waves:
