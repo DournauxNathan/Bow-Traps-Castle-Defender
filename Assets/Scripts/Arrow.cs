@@ -21,8 +21,10 @@ public class Arrow : MonoBehaviour
     [SerializeField] internal ParticleSystem m_ParticleSystem;
     [SerializeField] internal TrailRenderer m_TrailRenderer;
     [SerializeField] internal AudioSource m_AudioSource;
-    
+    [SerializeField] internal Sprite m_sprite;
+
     [Header("PROPERTIES")]
+    public ArrowType type;
     public LayerMask layerMask;
     public float speed = 10f;
     [Tooltip("Base damage of the arrow")] public float damage = 1; 
@@ -75,9 +77,7 @@ public class Arrow : MonoBehaviour
     }
 
     protected virtual void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log(collision.collider, collision.collider.gameObject);
-        
+    {        
         // Common collision logic for all arrows
         Stop();
 

@@ -56,6 +56,10 @@ MonoBehaviour:
   m_ParticleSystem: {fileID: 2262844333746262942}
   m_TrailRenderer: {fileID: 8729613411870003894}
   m_AudioSource: {fileID: -186369532834339837}
+  type: 2
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
   speed: 30
   damage: 2
   damageOverEffectDuration: 3

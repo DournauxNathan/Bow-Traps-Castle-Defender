@@ -185,18 +185,19 @@ public class Critter : MonoBehaviour
 
         m_Animator.SetTrigger("Die");
 
-        GameManager.Instance.AddCurency(currencyValue);
         
         if (isKilled)
         {
+            GameManager.Instance.AddCurency(currencyValue);
             isKilled = false;
             OnKilled?.Invoke();
+            
+            GetComponent<BoxCollider>().enabled = false;
+            UsePhysics(false);
+            Destroy(this.gameObject, 3f);
         }
 
 
-        GetComponent<BoxCollider>().enabled = false;
-        UsePhysics(false);
-        Destroy(this.gameObject, 3f);
     }
 
     private void OnCollisionEnter(Collision collision)

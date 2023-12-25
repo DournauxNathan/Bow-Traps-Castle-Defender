@@ -66,19 +66,19 @@ public class UpgradeStation : MonoBehaviour
             {
                 case "Bomb":
                     SetNewArrowPosition("Explosive Arrow");
-                    Debug.Log("You've made a Explosive Arrow !");
+                    //Debug.Log("You've made a Explosive Arrow !");
                     break;
                 case "Fire Shard":
                     SetNewArrowPosition("Fire Arrow");
-                    Debug.Log("You've made a Fire Arrow !");
+                    //Debug.Log("You've made a Fire Arrow !");
                     break;
                 case "Electric Shard":
                     SetNewArrowPosition("Lightning Arrow");
-                    Debug.Log("You've made a Lightning Arrow !");
+                    //Debug.Log("You've made a Lightning Arrow !");
                     break;
                 case "Ice Shard":
                     SetNewArrowPosition("Ice Arrow");
-                    Debug.Log("You've made an Ice Arrow !");
+                    //Debug.Log("You've made an Ice Arrow !");
                     break;
             }
             return true;
@@ -91,14 +91,18 @@ public class UpgradeStation : MonoBehaviour
     {
         baseArrow.SetActive(false);
         currentUpgrade.gameObject.SetActive(false);
+        Invoke("ResetStation", 5f);
+    }
+
+    void ResetStation()
+    {
+        baseArrow.SetActive(true);
     }
 
     public void SetNewArrowPosition(string arrowName)
     {
         // Your logic when the arrow is in the list
         GameObject foundArrow = upgrades.Find(a => a.name == arrowName);
-
-        Debug.Log("", foundArrow);
 
         if (foundArrow != null)
         {

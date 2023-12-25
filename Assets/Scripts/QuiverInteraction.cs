@@ -7,7 +7,11 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class QuiverInteraction : XRBaseInteractable
 {
+    public static Action<Arrow> AddNewArrow;
+
+
     public GameObject canvas;
+    public Image icon;
     
     private IXRHoverInteractor hoverInteractor = null;
 
@@ -19,7 +23,7 @@ public class QuiverInteraction : XRBaseInteractable
     float timeSinceLastSelection = 0f;
 
     private int currentArrowIndex = 0; // Assuming 0 is the default arrow type
-    public List<Image> arrows;
+    public List<Slot> arrows;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +34,7 @@ public class QuiverInteraction : XRBaseInteractable
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (isActive)
+        if (arrows.Count != 0 && isActive)
         {
             ActionBasedController controller = hoverInteractor.transform.gameObject.GetComponent<ActionBasedController>();
 
@@ -50,17 +54,20 @@ public class QuiverInteraction : XRBaseInteractable
         // Check if enough time has passed since the last selection
         if (Time.time - timeSinceLastSelection > arrowSelectionCooldown)
         {
+            int direction = 0;
+
             // Determine the direction of arrow selection based on joystick input
             if (horizontalInput == 1)
             {
-                // Update the current arrow index
-                currentArrowIndex = (currentArrowIndex + 1 + arrows.Count) % arrows.Count;
-
+                direction = 1;
             }
             else if (horizontalInput == -1)
             {
-                currentArrowIndex = (currentArrowIndex + -1 + arrows.Count) % arrows.Count;
+                direction = -1;
             }
+
+            // Update the current arrow index
+            currentArrowIndex = (currentArrowIndex + direction + arrows.Count) % arrows.Count;
 
             // Update the time of the last selection
             timeSinceLastSelection = Time.time;
@@ -72,17 +79,8 @@ public class QuiverInteraction : XRBaseInteractable
 
     void UpdateSelectedArrowImage()
     {
-        for (int i = 0; i < arrows.Count; i++)
-        {
-            if (i == currentArrowIndex)
-            {
-                arrows[currentArrowIndex].enabled = true;
-            }
-            else
-            {
-                arrows[i].enabled = false;
-            }
-        }
+
+        icon.sprite = arrows[currentArrowIndex].icon;
     }
        
 
@@ -109,4 +107,36 @@ public class QuiverInteraction : XRBaseInteractable
         isActive = active;
         canvas.SetActive(active);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent<UIArrow>(out UIArrow arrow))
+        {
+            Unlock(arrow);
+        }
+    }
+
+    private void Unlock(UIArrow newArrow)
+    {
+        Slot newSlot = new Slot{
+            type = newArrow.type,
+            icon = newArrow.m_Sprite,
+            isUnlock = true
+        };
+
+        if (!arrows.Contains(newSlot))
+        {
+            arrows.Add(newSlot);
+        }
+
+        Destroy(newArrow.gameObject);
+    }
+}
+
+[System.Serializable]
+public class Slot
+{
+    public ArrowType type;
+    public Sprite icon;
+    public bool isUnlock;
 }

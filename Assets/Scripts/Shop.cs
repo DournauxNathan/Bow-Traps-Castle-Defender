@@ -35,13 +35,9 @@ public class Shop : MonoBehaviour
 
         if (isPouchPutDown)
         {
-            Debug.Log(currentPrice +","+ GameManager.Instance.currentCurrency);
-
             // Check if player has enough currency to buy the item
             if (GameManager.Instance.SpendCurrency(currentPrice))
             {
-                Debug.Log("SOLD !");
-
                 //Update the Panel at current item
                 slots[iD].itemNameText.text = $"SOLD";
                 slots[iD].itemPriceText.text = string.Empty;

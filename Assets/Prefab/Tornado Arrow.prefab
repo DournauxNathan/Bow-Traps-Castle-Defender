@@ -56,6 +56,10 @@ MonoBehaviour:
   m_ParticleSystem: {fileID: 2262844333746262942}
   m_TrailRenderer: {fileID: 8729613411870003894}
   m_AudioSource: {fileID: -186369532834339837}
+  type: 6
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
   speed: 30
   damage: 1
   damageOverEffectDuration: 3
@@ -64,7 +68,6 @@ MonoBehaviour:
   onHitSound: {fileID: 0}
   tornadoRadius: 5
   tornadoForce: 10
-  effectDuration: 5
   critterLayer:
     serializedVersion: 2
     m_Bits: 256
