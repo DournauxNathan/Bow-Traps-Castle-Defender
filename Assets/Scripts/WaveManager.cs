@@ -324,7 +324,7 @@ public class WaveManager : MonoBehaviour
     int GetTotalWaves()
     {
         // You can customize how the total number of waves is determined
-        return 2; // Example: 10 waves in total
+        return 5; // Example: 10 waves in total
     }
 
     void SetFactory(CritterFactory factory)

@@ -37044,7 +37044,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goal: {fileID: 1662568808}
   gate: {fileID: 266630901}
-  currentCurrency: 190
+  currentCurrency: 0
   availableContracts: []
   activeContractIndex: -1
   XRRig: {fileID: 2137809291}

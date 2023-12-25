@@ -133,6 +133,7 @@ public class QuiverInteraction : XRBaseInteractable
         }
 
         newArrow.gameObject.SetActive(false);
+        
     }
 
     public void SelectArrow()
