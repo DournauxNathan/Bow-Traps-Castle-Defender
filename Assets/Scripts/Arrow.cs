@@ -21,7 +21,6 @@ public class Arrow : MonoBehaviour
     [SerializeField] internal ParticleSystem m_ParticleSystem;
     [SerializeField] internal TrailRenderer m_TrailRenderer;
     [SerializeField] internal AudioSource m_AudioSource;
-    [SerializeField] internal Sprite m_sprite;
 
     [Header("PROPERTIES")]
     public ArrowType type;

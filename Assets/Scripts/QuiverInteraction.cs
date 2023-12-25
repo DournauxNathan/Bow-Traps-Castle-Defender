@@ -9,6 +9,7 @@ public class QuiverInteraction : XRBaseInteractable
 {
     public static Action<Arrow> AddNewArrow;
 
+    public ArrowSpawner spawner;
 
     public GameObject canvas;
     public Image icon;
@@ -24,6 +25,7 @@ public class QuiverInteraction : XRBaseInteractable
 
     private int currentArrowIndex = 0; // Assuming 0 is the default arrow type
     public List<Slot> arrows;
+    private Slot currentArrowSelected;
 
     // Start is called before the first frame update
     void Start()
@@ -79,8 +81,8 @@ public class QuiverInteraction : XRBaseInteractable
 
     void UpdateSelectedArrowImage()
     {
-
         icon.sprite = arrows[currentArrowIndex].icon;
+        currentArrowSelected = arrows[currentArrowIndex];
     }
        
 
@@ -118,7 +120,8 @@ public class QuiverInteraction : XRBaseInteractable
 
     private void Unlock(UIArrow newArrow)
     {
-        Slot newSlot = new Slot{
+        Slot newSlot = new Slot {
+            name = newArrow.gameObject.name,
             type = newArrow.type,
             icon = newArrow.m_Sprite,
             isUnlock = true
@@ -129,13 +132,19 @@ public class QuiverInteraction : XRBaseInteractable
             arrows.Add(newSlot);
         }
 
-        Destroy(newArrow.gameObject);
+        newArrow.gameObject.SetActive(false);
+    }
+
+    public void SelectArrow()
+    {
+        spawner.UpdateArrowPrefab(currentArrowSelected.name);
     }
 }
 
 [System.Serializable]
 public class Slot
 {
+    public string name;
     public ArrowType type;
     public Sprite icon;
     public bool isUnlock;

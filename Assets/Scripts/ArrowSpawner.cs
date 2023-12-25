@@ -50,8 +50,13 @@ public class ArrowSpawner : MonoBehaviour
         currentArrow = Instantiate(arrow, notch.transform);
     }
 
-    public void UpdateArrowPregav(GameObject newArrow)
+    public void UpdateArrowPrefab(GameObject newArrow)
     {
         arrow = newArrow;
+    }
+
+    public void UpdateArrowPrefab(string arrowName)
+    {
+        arrow = Resources.Load<GameObject>(arrowName);
     }
 }
