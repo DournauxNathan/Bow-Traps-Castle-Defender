@@ -17,8 +17,6 @@ public class QuiverInteraction : XRBaseInteractable
     private IXRHoverInteractor hoverInteractor = null;
 
     private bool isActive = false;
-    private bool isHovering = false;
-
 
     public float arrowSelectionCooldown = 0.5f; // Set your desired cooldown time
     float timeSinceLastSelection = 0f;

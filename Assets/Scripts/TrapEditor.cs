@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
+#if UNITY_EDITOR    
 [CustomEditor(typeof(TrapData), true)] // The 'true' parameter enables inspecting children
 public class TrapEditor : Editor
 {
@@ -21,3 +22,4 @@ public class TrapEditor : Editor
         }
     }
 }
+#endif

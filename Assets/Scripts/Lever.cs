@@ -145,6 +145,7 @@ public class Lever : XRBaseInteractable
         }
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
         Handles.color = Color.yellow;
@@ -163,4 +164,5 @@ public class Lever : XRBaseInteractable
 
         Handles.ArrowHandleCap(0, arrowStart, Quaternion.LookRotation(direction), 0.2f, EventType.Repaint);
     }
+#endif
 }
