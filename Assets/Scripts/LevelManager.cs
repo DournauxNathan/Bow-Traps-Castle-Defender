@@ -46,7 +46,6 @@ public class LevelManager : MonoBehaviour
         FadeIn?.Invoke(fadeDuration);
         yield return new WaitForSeconds(fadeDuration);
 
-
         AsyncOperation loadOperation = SceneManager.LoadSceneAsync(sceneName);
 
         while (!loadOperation.isDone)
@@ -59,12 +58,15 @@ public class LevelManager : MonoBehaviour
             yield return null;
         }
         _isLoading = false;
-
-
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         FadeOut?.Invoke(fadeDuration);
+    }
+
+    public int GetCurrentScene()
+    {
+        return SceneManager.GetActiveScene().buildIndex;
     }
 }
