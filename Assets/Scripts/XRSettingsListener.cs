@@ -12,6 +12,7 @@ public class XRSettingsListener : MonoBehaviour
 
     [Header("Providers")]
     public SnapTurnProviderBase snapTurnProvider;
+    public DynamicMoveProvider moveProvider;
 
     private void Awake()
     {
@@ -34,7 +35,9 @@ public class XRSettingsListener : MonoBehaviour
         {
             vignetteApplier.enabled = XRSettingsManager.Instance.isVignetteActive();
             controllerManager.smoothTurnEnabled = XRSettingsManager.Instance.isContinuousTurnActive();
+
             snapTurnProvider.turnAmount = XRSettingsManager.Instance.turnAmount();
+            moveProvider.moveSpeed = XRSettingsManager.Instance.moveSpeed();
         }
         else
         {

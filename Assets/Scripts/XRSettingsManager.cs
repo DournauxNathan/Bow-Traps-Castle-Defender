@@ -10,8 +10,10 @@ public class XRSettingsManager : MonoBehaviour
     public static XRSettingsManager Instance;
 
     private bool _continuousTurnActive = false;
-    private int _turnAmount;
+    private float _moveSpeed = 1f;
+    private int _turnAmount = 45;
     private bool _vignetteActive = false;
+
     private void Awake()
     {
         if(Instance == null)
@@ -54,6 +56,11 @@ public class XRSettingsManager : MonoBehaviour
         XRSettingsChange?.Invoke();
     }
 
+    public void setSpeed(float speed)
+    {
+        _moveSpeed = speed;
+        XRSettingsChange?.Invoke();
+    }
 
     public void setVignette(bool vignetteValue)
     {
@@ -64,6 +71,11 @@ public class XRSettingsManager : MonoBehaviour
     public int turnAmount()
     {
         return _turnAmount;
+    }
+
+    public float moveSpeed()
+    {
+        return _moveSpeed;
     }
     
     public bool isContinuousTurnActive()

@@ -59,14 +59,11 @@ public class OptionsMenu : MonoBehaviour
 
         previous.onClick.AddListener(() => UpdateControlMode(-1));
         next.onClick.AddListener(() => UpdateControlMode(1));
-        
-        // Display information based on the current index
         currentMode.text = modes[0].id;
         info.text = modes[0].infoText;
 
-
-        slow.onClick.AddListener(() => SetSpeed());
-        fast.onClick.AddListener(() => SetSpeed());
+        slow.onClick.AddListener(() => SetSpeed(1f));
+        fast.onClick.AddListener(() => SetSpeed(2f));
 
         SnapOff.onClick.AddListener(() => SnapTurning(0));
         thirtyDegree.onClick.AddListener(() => SnapTurning(30));
@@ -119,9 +116,9 @@ public class OptionsMenu : MonoBehaviour
         info.text = modes[index].infoText;
     }
 
-    private void SetSpeed()
+    private void SetSpeed(float speed)
     {
-        
+        XRSettingsManager.Instance.setSpeed(speed);
     }
 
     private void SnapTurning(int degree)
