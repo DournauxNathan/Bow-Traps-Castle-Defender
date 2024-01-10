@@ -98,11 +98,6 @@ public class OptionsMenu : MonoBehaviour
         SoundManager.Instance.SetSFXVolume(volume);
     }
 
-    private void TurnChange(int dropdownValue)
-    {
-        XRSettingsManager.Instance.setContinuousTurn(dropdownValue);
-    }
-
     private void ToggleScreenShake(bool toggle)
     {
 
@@ -131,7 +126,8 @@ public class OptionsMenu : MonoBehaviour
 
     private void SnapTurning(int degree)
     {
-        
+
+        XRSettingsManager.Instance.setTurn(degree);
     }
 
     private void Recalibrate()

@@ -7,16 +7,22 @@ using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
 public class XRSettingsListener : MonoBehaviour
 {
-    public TunnelingVignetteController tunnelingVignetteController;
+    public VignetteApplier vignetteApplier;
     public ActionBasedControllerManager controllerManager;
+
+    [Header("Providers")]
+    public SnapTurnProviderBase snapTurnProvider;
+
     private void Awake()
     {
         XRSettingsManager.XRSettingsChange += UpdateXRSettings;
     }
+
     private void Start()
     {
         UpdateXRSettings();
     }
+
     private void OnDestroy()
     {
         XRSettingsManager.XRSettingsChange -= UpdateXRSettings;
@@ -26,8 +32,9 @@ public class XRSettingsListener : MonoBehaviour
     {
         if(XRSettingsManager.Instance != null)
         {
-            tunnelingVignetteController.gameObject.SetActive(XRSettingsManager.Instance.isVignetteActive());
+            vignetteApplier.enabled = XRSettingsManager.Instance.isVignetteActive();
             controllerManager.smoothTurnEnabled = XRSettingsManager.Instance.isContinuousTurnActive();
+            snapTurnProvider.turnAmount = XRSettingsManager.Instance.turnAmount();
         }
         else
         {

@@ -10,6 +10,7 @@ public class XRSettingsManager : MonoBehaviour
     public static XRSettingsManager Instance;
 
     private bool _continuousTurnActive = false;
+    private int _turnAmount;
     private bool _vignetteActive = false;
     private void Awake()
     {
@@ -26,28 +27,50 @@ public class XRSettingsManager : MonoBehaviour
 
 
     //Yeah... I hate this too
-    public void setContinuousTurn(int dropdownSetting)
+    public void setTurn(int degree)
     {
-        if(dropdownSetting == 0)
-        {
-            _continuousTurnActive = false;
-        }
-        else
+        if (degree == 0)
         {
             _continuousTurnActive = true;
         }
+        else
+        {
+            _continuousTurnActive = false; 
+            
+            if (degree == 30)
+            {
+                _turnAmount = 30;
+            }
+            else if (degree == 45)
+            {
+                _turnAmount = 45;
+            }
+            else if (degree == 60)
+            {
+                _turnAmount = 60;
+            }
+        }
+
         XRSettingsChange?.Invoke();
     }
+
 
     public void setVignette(bool vignetteValue)
     {
         _vignetteActive = vignetteValue;
         XRSettingsChange?.Invoke();
     }
+    
+    public int turnAmount()
+    {
+        return _turnAmount;
+    }
+    
     public bool isContinuousTurnActive()
     {
         return _continuousTurnActive;
     }
+    
     public bool isVignetteActive()
     {
         return _vignetteActive;
