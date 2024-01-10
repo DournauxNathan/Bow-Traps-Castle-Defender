@@ -10,6 +10,8 @@ public class XRSettingsListener : MonoBehaviour
     public VignetteApplier vignetteApplier;
     public ActionBasedControllerManager controllerManager;
 
+    public AutoScaler autoScaler;
+
     [Header("Providers")]
     public SnapTurnProviderBase snapTurnProvider;
     public DynamicMoveProvider moveProvider;
@@ -17,11 +19,13 @@ public class XRSettingsListener : MonoBehaviour
     private void Awake()
     {
         XRSettingsManager.XRSettingsChange += UpdateXRSettings;
+        XRSettingsManager.XRRecalibrate += UpdateHeadSetHeight;
     }
 
     private void Start()
     {
         UpdateXRSettings();
+        //UpdateHeadSetHeight();
     }
 
     private void OnDestroy()
@@ -43,6 +47,10 @@ public class XRSettingsListener : MonoBehaviour
         {
             Debug.Log("No XRSettingsManager was found. XR Rig will use default settings");
         }
+    }
 
+    private void UpdateHeadSetHeight()
+    {
+        autoScaler.Resize();
     }
 }

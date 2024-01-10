@@ -123,12 +123,11 @@ public class OptionsMenu : MonoBehaviour
 
     private void SnapTurning(int degree)
     {
-
         XRSettingsManager.Instance.setTurn(degree);
     }
 
     private void Recalibrate()
     {
-
+        XRSettingsManager.Instance.recalibrate();
     }
 }

@@ -7,6 +7,7 @@ using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 public class XRSettingsManager : MonoBehaviour
 {
     public static event Action XRSettingsChange;
+    public static event Action XRRecalibrate;
     public static XRSettingsManager Instance;
 
     private bool _continuousTurnActive = false;
@@ -86,5 +87,10 @@ public class XRSettingsManager : MonoBehaviour
     public bool isVignetteActive()
     {
         return _vignetteActive;
+    }
+
+    public void recalibrate()
+    {
+        XRRecalibrate?.Invoke();
     }
 }
