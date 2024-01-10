@@ -19,6 +19,9 @@ public class OptionsMenu : MonoBehaviour
     public Slider musicSlider;
     public Slider sfxSlider;
 
+    [Header("Teleport")]
+    public Toggle toggle;
+
     [Header("Mode")]
     public Button previous;
     public Text currentMode;
@@ -56,6 +59,8 @@ public class OptionsMenu : MonoBehaviour
 
         vignetteOff.onClick.AddListener(() => ToggleVignette(false));
         vignetteOn.onClick.AddListener(() => ToggleVignette(true));
+
+        toggle.onValueChanged.AddListener(ToggleTeleport);
 
         previous.onClick.AddListener(() => UpdateControlMode(-1));
         next.onClick.AddListener(() => UpdateControlMode(1));
@@ -103,6 +108,11 @@ public class OptionsMenu : MonoBehaviour
     private void ToggleVignette(bool toggle)
     {
         XRSettingsManager.Instance.setVignette(toggle);
+    }
+
+    private void ToggleTeleport(bool toggle)
+    {
+        XRSettingsManager.Instance.setTeleport(toggle);
     }
 
     private int index = 0;

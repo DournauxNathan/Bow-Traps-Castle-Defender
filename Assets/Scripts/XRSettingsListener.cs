@@ -8,13 +8,15 @@ using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 public class XRSettingsListener : MonoBehaviour
 {
     public VignetteApplier vignetteApplier;
-    public ActionBasedControllerManager controllerManager;
+    public ActionBasedControllerManager RightControllerManager;
+    public ActionBasedControllerManager LeftControllerManager;
 
     public AutoScaler autoScaler;
 
     [Header("Providers")]
     public SnapTurnProviderBase snapTurnProvider;
     public DynamicMoveProvider moveProvider;
+    public TeleportationProvider teleportProvider;
 
     private void Awake()
     {
@@ -38,7 +40,9 @@ public class XRSettingsListener : MonoBehaviour
         if(XRSettingsManager.Instance != null)
         {
             vignetteApplier.enabled = XRSettingsManager.Instance.isVignetteActive();
-            controllerManager.smoothTurnEnabled = XRSettingsManager.Instance.isContinuousTurnActive();
+            RightControllerManager.smoothTurnEnabled = XRSettingsManager.Instance.isContinuousTurnActive();
+            teleportProvider.enabled = XRSettingsManager.Instance.isTeleportActive();
+
 
             snapTurnProvider.turnAmount = XRSettingsManager.Instance.turnAmount();
             moveProvider.moveSpeed = XRSettingsManager.Instance.moveSpeed();
