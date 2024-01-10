@@ -56,7 +56,6 @@ public class VignetteApplier : MonoBehaviour
 
     public void FadeIn(LocomotionSystem locomotionSystem)
     {
-        Debug.Log(locomotionSystem.busy);
         // Tween to intensity
         StartCoroutine(Fade(0, intensity));
     }
@@ -80,6 +79,16 @@ public class VignetteApplier : MonoBehaviour
             // Appply intensity
             float intensity = Mathf.Lerp(startValue, endValue, blend);
             ApplyValue(intensity);
+
+            if (moveProvider.locomotionPhase == LocomotionPhase.Moving || XRSettingsManager.Instance.isContinuousTurnActive())
+            {
+                ApplyValue(.60f);
+            }
+            else
+            {
+                intensity = Mathf.Lerp(.60f, 0, blend);
+                ApplyValue(intensity);
+            }
 
             yield return null;
         }
