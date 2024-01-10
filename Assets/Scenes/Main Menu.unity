@@ -3761,7 +3761,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vignetteApplier: {fileID: 518462559}
   controllerManager: {fileID: 202300268}
-  snapTurnProvider: {fileID: 0}
+  snapTurnProvider: {fileID: 518462555}
 --- !u!114 &518462559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3791,7 +3791,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_System: {fileID: 518462554}
-  m_MoveSpeed: 1
+  m_MoveSpeed: 50
   m_EnableStrafe: 1
   m_EnableFly: 0
   m_UseGravity: 1
