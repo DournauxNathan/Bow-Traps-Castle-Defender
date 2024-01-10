@@ -12,13 +12,15 @@ public class VignetteApplier : MonoBehaviour
     public Volume volume = null;
 
     // References
-    [SerializeField] private LocomotionProvider locomotionProvider = null;
+    [SerializeField] private LocomotionProvider snapProvider = null;
+    [SerializeField] private LocomotionProvider moveProvider = null;
+    [SerializeField] private LocomotionProvider snapContinuousProvider = null;
     private Vignette vignette = null;
 
     private void Awake()
     {
         // GetComponent the provider
-        locomotionProvider = GetComponent<LocomotionProvider>();
+        //locomotionProvider = GetComponent<LocomotionProvider>();
 
         // Get the vignette
         if (volume.profile.TryGet(out Vignette vignette))
@@ -27,20 +29,29 @@ public class VignetteApplier : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-    }
 
     private void OnEnable()
     {
-        locomotionProvider.beginLocomotion += FadeIn;
-        locomotionProvider.endLocomotion += FadeOut;
+        snapProvider.beginLocomotion += FadeIn;
+        snapProvider.endLocomotion += FadeOut;
+
+        moveProvider.beginLocomotion += FadeIn;
+        moveProvider.endLocomotion += FadeOut;
+
+        snapContinuousProvider.beginLocomotion += FadeIn;
+        snapContinuousProvider.endLocomotion += FadeOut;
     }
 
     private void OnDisable()
     {
-        locomotionProvider.beginLocomotion -= FadeIn;
-        locomotionProvider.endLocomotion -= FadeOut;
+        snapProvider.beginLocomotion -= FadeIn;
+        snapProvider.endLocomotion -= FadeOut;
+
+        moveProvider.beginLocomotion -= FadeIn;
+        moveProvider.endLocomotion -= FadeOut;
+
+        snapContinuousProvider.beginLocomotion -= FadeIn;
+        snapContinuousProvider.endLocomotion -= FadeOut;
     }
 
     public void FadeIn(LocomotionSystem locomotionSystem)

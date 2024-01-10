@@ -3775,10 +3775,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49356d04bccf31d43b59445bdc0ab352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  intensity: 0.75
+  intensity: 0.8
   duration: 0.5
   volume: {fileID: 1456461950}
-  locomotionProvider: {fileID: 518462562}
+  snapProvider: {fileID: 518462555}
+  moveProvider: {fileID: 518462560}
+  snapContinuousProvider: {fileID: 518462562}
 --- !u!114 &518462560
 MonoBehaviour:
   m_ObjectHideFlags: 0
