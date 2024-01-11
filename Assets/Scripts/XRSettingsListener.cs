@@ -26,8 +26,8 @@ public class XRSettingsListener : MonoBehaviour
 
     private void Start()
     {
+        UpdateHeadSetHeight();
         UpdateXRSettings();
-        //UpdateHeadSetHeight();
     }
 
     private void OnDestroy()
@@ -41,11 +41,26 @@ public class XRSettingsListener : MonoBehaviour
         {
             vignetteApplier.enabled = XRSettingsManager.Instance.isVignetteActive();
             RightControllerManager.smoothTurnEnabled = XRSettingsManager.Instance.isContinuousTurnActive();
-            teleportProvider.enabled = XRSettingsManager.Instance.isTeleportActive();
 
+            teleportProvider.enabled = XRSettingsManager.Instance.isTeleportActive();
+            moveProvider.enabled = !XRSettingsManager.Instance.isTeleportActive();
+            LeftControllerManager.smoothMotionEnabled = !XRSettingsManager.Instance.isTeleportActive();
 
             snapTurnProvider.turnAmount = XRSettingsManager.Instance.turnAmount();
             moveProvider.moveSpeed = XRSettingsManager.Instance.moveSpeed();
+
+            switch (XRSettingsManager.Instance.mode())
+            {
+                case "A": // Standing Play 
+                    moveProvider.enableStrafe = true;
+                    break;
+                case "B": // Seated Play
+                    moveProvider.enableStrafe = true;
+                    break;
+                case "C": // Motion Sensibility
+                    moveProvider.enableStrafe = false;
+                    break;
+            }
         }
         else
         {

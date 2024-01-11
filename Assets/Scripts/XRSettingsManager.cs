@@ -13,6 +13,7 @@ public class XRSettingsManager : MonoBehaviour
     private bool _continuousTurnActive = false;
     private float _moveSpeed = 1f;
     private int _turnAmount = 45;
+    private string _mode;
     private bool _vignetteActive = false;
     private bool _teleportActive = false;
 
@@ -58,6 +59,12 @@ public class XRSettingsManager : MonoBehaviour
         XRSettingsChange?.Invoke();
     }
 
+    public void setMode(string mode)
+    {
+        _mode = mode;
+        XRSettingsChange?.Invoke();
+    }
+
     public void setSpeed(float speed)
     {
         _moveSpeed = speed;
@@ -85,6 +92,11 @@ public class XRSettingsManager : MonoBehaviour
     {
         return _moveSpeed;
     }
+
+    public string mode()
+    {
+        return _mode;
+    }
     
     public bool isContinuousTurnActive()
     {
@@ -98,6 +110,7 @@ public class XRSettingsManager : MonoBehaviour
 
     public bool isTeleportActive()
     {
+
         return _teleportActive;
     }
 

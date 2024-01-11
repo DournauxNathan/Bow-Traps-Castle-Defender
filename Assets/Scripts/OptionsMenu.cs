@@ -124,6 +124,8 @@ public class OptionsMenu : MonoBehaviour
         // Display information based on the current index
         currentMode.text = modes[index].id;
         info.text = modes[index].infoText;
+
+        XRSettingsManager.Instance.setMode(modes[index].id);
     }
 
     private void SetSpeed(float speed)

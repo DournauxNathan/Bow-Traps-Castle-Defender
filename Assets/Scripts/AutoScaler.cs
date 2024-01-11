@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class AutoScaler : MonoBehaviour
 {
-    public static event Action Recalibrate;
-
     public Camera mainCam;
     public float defaultHeight = 1.75f;
     
