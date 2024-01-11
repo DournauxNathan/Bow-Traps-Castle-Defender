@@ -82,6 +82,4 @@ public class SoundManager : MonoBehaviour
             audioMixer.SetFloat(sfxVolumeParameter, sfxVolume);
         }
     }
-
-
 }

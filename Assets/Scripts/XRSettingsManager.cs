@@ -28,6 +28,8 @@ public class XRSettingsManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        XRSettingsChange?.Invoke();
+        XRRecalibrate?.Invoke();
     }
 
 

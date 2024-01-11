@@ -26,7 +26,6 @@ public class XRSettingsListener : MonoBehaviour
 
     private void Start()
     {
-        UpdateHeadSetHeight();
         UpdateXRSettings();
     }
 
