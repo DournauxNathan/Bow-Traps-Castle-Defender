@@ -22,6 +22,7 @@ public class Item : MonoBehaviour
 
     public enum Type
     {
+        Weapon,
         Consumable,
         Upgrade
     }

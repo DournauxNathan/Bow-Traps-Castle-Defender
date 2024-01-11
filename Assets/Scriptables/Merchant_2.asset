@@ -10,7 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4fffd230a57d84748ac9897b1bfa8502, type: 3}
-  m_Name: Merchant
+  m_Name: Merchant_2
   m_EditorClassIdentifier: 
-  id: 0
-  dialogueLines: []
+  id: 1
+  dialogueLines:
+  - Fantastic! Hand over your pouch on the plate, and the bow is yours !
+  - Thanks you! The bow is yours, you can take it!

@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR;
 using UnityEngine.UI;
@@ -22,6 +24,9 @@ public class DialogueManager : MonoBehaviour
     [Header("Activation Delay")]
     public float activationDelay = 2.0f;
 
+    public UnityEvent onDialogueEnd;
+
+    private int eventID = 0; 
     private InputData _inputData;
 
     void Start()
@@ -36,7 +41,7 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(ActivateInfoTextAfterDelay());
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         // Check button press with cooldown
         CheckButtonPress();
@@ -54,17 +59,8 @@ public class DialogueManager : MonoBehaviour
     {
         // Move to the next dialogue line
         currentDialogueIndex++;
-
-        if (currentDialogueIndex < dialogue.dialogueLines.Length)
-        {
-            // If there are more dialogues, show the next one
-            ShowDialogue();
-        }
-        else
-        {
-            // End of dialogue, close UI or perform other actions.
-            Debug.Log("End of dialogue");
-        }
+        ShowDialogue();
+        
     }
     #endregion
 
@@ -77,7 +73,7 @@ public class DialogueManager : MonoBehaviour
         {
             if (_inputData._rightController.TryGetFeatureValue(CommonUsages.primaryButton, out bool Abutton))
             {
-                if (Abutton)
+                if (Abutton && currentDialogueIndex < dialogue.dialogueLines.Length)
                 {
                     // If A button is pressed, continue dialogue and activate info text
                     ContinueDialogue();
@@ -85,9 +81,16 @@ public class DialogueManager : MonoBehaviour
                     lastButtonPressTime = Time.time; // Update the last button press time
                     StartCoroutine(ActivateInfoTextAfterDelay());
                 }
-                Debug.Log("A button: " + Abutton);
+                
+                if (currentDialogueIndex == dialogue.dialogueLines.Length - 1)
+                {
+                    infoText.SetActive(false);
+                    onDialogueEnd?.Invoke();
+                }
             }
         }
+
+        Debug.Log(currentDialogueIndex + "," + (dialogue.dialogueLines.Length-1));
     }
     #endregion
 
@@ -101,4 +104,16 @@ public class DialogueManager : MonoBehaviour
     }
 
     #endregion
+
+    public void LoadNewDialogue(DialogueData data)
+    {
+        if (this.dialogue != data)
+        {
+            currentDialogueIndex = 0;
+        
+            this.dialogue = data;
+
+            ShowDialogue();
+        }
+    }
 }
