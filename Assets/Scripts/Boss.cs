@@ -122,7 +122,7 @@ public class Boss : MonoBehaviour
     public bool GetRandomActivatorPosition()
     {
         // Pick a random active activator
-        List<BreakableActivator> activators = GameManager.Instance.activators;
+        List<BreakableActivator> activators = GameManager.Instance.GetActivators();
 
         if (activators.Count > 0)
         {

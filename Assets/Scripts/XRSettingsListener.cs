@@ -7,6 +7,7 @@ using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
 public class XRSettingsListener : MonoBehaviour
 {
+
     public VignetteApplier vignetteApplier;
     public ActionBasedControllerManager RightControllerManager;
     public ActionBasedControllerManager LeftControllerManager;

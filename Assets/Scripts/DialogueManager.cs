@@ -26,7 +26,6 @@ public class DialogueManager : MonoBehaviour
 
     public UnityEvent onDialogueEnd;
 
-    private int eventID = 0; 
     private InputData _inputData;
 
     void Start()
@@ -89,8 +88,6 @@ public class DialogueManager : MonoBehaviour
                 }
             }
         }
-
-        Debug.Log(currentDialogueIndex + "," + (dialogue.dialogueLines.Length-1));
     }
     #endregion
 

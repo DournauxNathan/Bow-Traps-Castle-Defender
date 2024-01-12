@@ -30,7 +30,11 @@ public class Item : MonoBehaviour
     private void Awake()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
-        m_Collider = GetComponent<MeshCollider>();
+        
+        if (GetComponent<MeshCollider>())
+        {
+            m_Collider = GetComponent<MeshCollider>();
+        }
         /*XRSimple.colliders[0] = m_Collider;
         XRGrab.colliders[0] = m_Collider;*/
     }
@@ -54,6 +58,9 @@ public class Item : MonoBehaviour
     {
         m_Rigidbody.useGravity = usePhysics;
         m_Rigidbody.isKinematic = !usePhysics;
-        m_Collider.isTrigger = !usePhysics;
+        if (m_Collider != null)
+        {
+            m_Collider.isTrigger = !usePhysics;
+        }
     }
 }

@@ -6,86 +6,46 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public Transform goal;
-    public Gate gate;
+    public Transform goal { get; private set; }
+    public Gate gate { get; private set; }
+    public Pouch pouch { get; private set; }
+    public Transform XRRig { get; private set; }
 
-    public int currentCurrency = 0;
-
-    public Contract[] availableContracts; // List of available contracts
-    public int activeContractIndex = -1; // Index of the active contract
-
-    public Transform XRRig;
-
-    public List<BreakableActivator> activators;
+    private List<BreakableActivator> activators = new List<BreakableActivator>();
 
     private void Awake()
     {
-        Instance = this;
-    }
-
-    #region Pouch & Currency System
-    public void AddCurency(int amount)
-    {
-        currentCurrency += amount;
-    }
-
-    public bool SpendCurrency(int amount)
-    {
-        if (amount <= currentCurrency)
+        if (Instance == null)
         {
-            currentCurrency -= amount;
-            return true; // Successfully spent currency
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            return false; // Insufficient funds
+            Destroy(gameObject);
         }
     }
-    #endregion
 
-    #region Guild & Contract System
-    public void InitializeContracts()
+    public void InitilazeLevel(Transform goal, Gate gate)
     {
-        // Load contracts from the "Contracts" folder
-        availableContracts = Resources.LoadAll<Contract>("Contracts");
-
-        if (availableContracts.Length == 0)
-        {
-            Debug.LogError("No contracts found. Make sure to create contracts in the 'Contracts' folder.");
-        }
+        this.goal = goal;
+        this.gate = gate;
+        pouch.currentCurrency = 0;
     }
 
-    public void StartContract()
+    public void GetPouchInfo(Pouch pouch)
     {
-        if (activeContractIndex == -1)
-        {
-            // Randomly select a contract
-            activeContractIndex = Random.Range(0, availableContracts.Length);
-
-            // Inform the player about the active contract
-            Debug.Log("New Contract: " + availableContracts[activeContractIndex].description);
-        }
+        this.pouch = pouch;
     }
-
-    public void CompleteContract()
-    {
-        if (activeContractIndex != -1)
-        {
-            // Award currency based on the completed contract
-            currentCurrency += availableContracts[activeContractIndex].reward;
-
-            // Reset the active contract
-            activeContractIndex = -1;
-
-            // Inform the player about completing the contract
-            Debug.Log("Contract Completed!");
-        }
-    }
-
-    #endregion
 
     public void SubscribeActivators(BreakableActivator activator)
     {
         activators.Add(activator);
+    }
+
+    // Accessor method for getting the list
+    public List<BreakableActivator> GetActivators()
+    {
+        return activators;
     }
 }

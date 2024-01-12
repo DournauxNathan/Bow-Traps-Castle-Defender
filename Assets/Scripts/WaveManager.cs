@@ -271,7 +271,7 @@ public class WaveManager : MonoBehaviour
                 int waveBonus = Mathf.RoundToInt(baseWaveCompletionBonus * Mathf.Pow(waveCompletionMultiplier, waveNumber - 1));
 
                 // Award wave completion bonus
-                GameManager.Instance.currentCurrency += waveBonus;
+                GameManager.Instance.pouch.currentCurrency += waveBonus;
 
                 waveNumber++;
 

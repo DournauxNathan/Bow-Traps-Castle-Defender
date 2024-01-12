@@ -188,7 +188,7 @@ public class Critter : MonoBehaviour
         
         if (isKilled)
         {
-            GameManager.Instance.AddCurency(currencyValue);
+            GameManager.Instance.pouch.AddCurency(currencyValue);
             isKilled = false;
             OnKilled?.Invoke();
             

@@ -25,7 +25,7 @@ public class Shop : MonoBehaviour
 
     public void DisplayPouchValue()
     {
-        pouchValue.text = GameManager.Instance.currentCurrency.ToString();
+        pouchValue.text = GameManager.Instance.pouch.currentCurrency.ToString();
     }
 
     // Function to buy the currently displayed item
@@ -36,7 +36,7 @@ public class Shop : MonoBehaviour
         if (isPouchPutDown)
         {
             // Check if player has enough currency to buy the item
-            if (GameManager.Instance.SpendCurrency(currentPrice))
+            if (GameManager.Instance.pouch.SpendCurrency(currentPrice))
             {
                 //Update the Panel at current item
                 slots[iD].itemNameText.text = $"SOLD";
@@ -85,7 +85,7 @@ public class Shop : MonoBehaviour
         {
             if (!itemsToDisplay[slotIndex].isSold)
             {
-                if (GameManager.Instance.currentCurrency >= itemsToDisplay[slotIndex].value)
+                if (GameManager.Instance.pouch.currentCurrency >= itemsToDisplay[slotIndex].value)
                 {
                     slots[slotIndex].background.color = ShowItemBuyable(true);
                 }
