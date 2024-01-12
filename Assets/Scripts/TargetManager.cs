@@ -10,6 +10,16 @@ public class TargetManager : Activator
     public void SubscribeTarget(Target target)
     {
         targets.Add(target);
+
+        if (LevelManager.Instance.GetCurrentScene() == 1) 
+        {
+            Debug.Log("Add listener");
+            onActivate.AddListener(() => LevelManager.Instance.LoadSceneAsync("Tutorial_2"));
+        }
+        else
+        {
+            onActivate.RemoveAllListeners();
+        }
     }
 
     public void IsTargetsActivated()

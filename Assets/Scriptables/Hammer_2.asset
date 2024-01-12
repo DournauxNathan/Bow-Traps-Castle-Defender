@@ -15,5 +15,5 @@ MonoBehaviour:
   id: 1
   dialogueLines:
   - It seems broken...
-  - "I think I've let my hammer around !\xB2"
-  - Go take it if you want to repair hit
+  - I think I've let my hammer around !
+  - Go take it if you want to repair.

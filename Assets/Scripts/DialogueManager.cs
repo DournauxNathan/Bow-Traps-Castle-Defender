@@ -80,8 +80,7 @@ public class DialogueManager : MonoBehaviour
                     lastButtonPressTime = Time.time; // Update the last button press time
                     StartCoroutine(ActivateInfoTextAfterDelay());
                 }
-                
-                if (currentDialogueIndex == dialogue.dialogueLines.Length - 1)
+                else if (currentDialogueIndex == dialogue.dialogueLines.Length - 1)
                 {
                     infoText.SetActive(false);
                     onDialogueEnd?.Invoke();
@@ -110,7 +109,8 @@ public class DialogueManager : MonoBehaviour
         
             this.dialogue = data;
 
-            ShowDialogue();
+            ShowDialogue(); 
+            StartCoroutine(ActivateInfoTextAfterDelay());
         }
     }
 }

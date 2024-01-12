@@ -31,11 +31,16 @@ public class BreakableActivator : MonoBehaviour, IBreakable
         RepairTime = 3f; // Example: Time it takes to repair the trap
     }
 
+    public void SetBreakChance(float chance)
+    {
+        breakChance = chance;
+    }
+
     public void RandomChanceToBreak()
     {
         float randomProbability = Random.value;
 
-        if (breakChance != 1  && randomProbability < breakChance && Repairable)
+        if (breakChance == 1  || randomProbability < breakChance && Repairable)
         {
             Break();
         }
@@ -43,14 +48,17 @@ public class BreakableActivator : MonoBehaviour, IBreakable
 
     public void Break()
     {
-        IsBroken = true;
+        if (breakChance != 0)
+        {
+            IsBroken = true;
 
-        // Additional logic for when the trap is broken
-        onBreak?.Invoke();
+            // Additional logic for when the trap is broken
+            onBreak?.Invoke();
 
-        m_Collider.enabled = true;
-        m_particles?.Play();
-        m_audioSource?.Play();
+            m_Collider.enabled = true;
+            m_particles?.Play();
+            m_audioSource?.Play();
+        }
     }
 
     public void Repair(float amount)
