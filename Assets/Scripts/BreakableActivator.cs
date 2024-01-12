@@ -11,6 +11,8 @@ public class BreakableActivator : MonoBehaviour, IBreakable
 
     public float breakChance = 0.35f; // Chance of the trap breaking (e.g., 10%)
 
+    public bool alreadyBroken = false;
+
     public BoxCollider m_Collider;
     public ParticleSystem m_particles;
     public AudioSource m_audioSource;
@@ -20,12 +22,20 @@ public class BreakableActivator : MonoBehaviour, IBreakable
     // Start is called before the first frame update
     void Start()
     {
-        GameManager.Instance.SubscribeActivators(this);
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.SubscribeActivators(this);
+        }
 
         // Initialize properties and setup
         IsBroken = false;
         Repairable = true;
         RepairTime = 3f; // Example: Time it takes to repair the trap
+
+        if (alreadyBroken)
+        {
+            Break();
+        }
     }
 
     public void RandomChanceToBreak()
