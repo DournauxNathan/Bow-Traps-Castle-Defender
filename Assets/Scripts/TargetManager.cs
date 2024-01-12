@@ -16,10 +16,6 @@ public class TargetManager : Activator
             Debug.Log("Add listener");
             onActivate.AddListener(() => LevelManager.Instance.LoadSceneAsync("Tutorial_2"));
         }
-        else
-        {
-            onActivate.RemoveAllListeners();
-        }
     }
 
     public void IsTargetsActivated()
