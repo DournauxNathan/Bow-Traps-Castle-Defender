@@ -19,6 +19,7 @@ public class XRSettingsListener : MonoBehaviour
     public DynamicMoveProvider moveProvider;
     public TeleportationProvider teleportProvider;
 
+    public MainMenu menuManager;
     private InputData _inputData;
 
     private void Awake()
@@ -42,11 +43,11 @@ public class XRSettingsListener : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (_inputData._rightController.TryGetFeatureValue(CommonUsages.menuButton, out bool Menubutton))
+        if (_inputData._leftController.TryGetFeatureValue(CommonUsages.menuButton, out bool Menubutton))
         {
             if (Menubutton)
             {
-                Debug.Log("Open");
+                menuManager.OpenSettings();
             }
         }
     }
