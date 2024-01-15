@@ -70,9 +70,8 @@ public class Shop : MonoBehaviour
         }
         else
         {
-            Debug.Log("You need to put your purse down ! ");
+            Debug.LogWarning("Put the purse on plate! ");
         }
-        
     }
        
 

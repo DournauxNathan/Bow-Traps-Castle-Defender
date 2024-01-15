@@ -28,12 +28,12 @@ public class XRSettingsListener : MonoBehaviour
         _inputData = GetComponent<InputData>();
 
         XRSettingsManager.XRSettingsChange += UpdateXRSettings;
-        XRSettingsManager.XRRecalibrate += UpdateHeadSetHeight;
     }
 
     private void Start()
     {
         UpdateXRSettings();
+        XRSettingsManager.XRRecalibrate += UpdateHeadSetHeight;
     }
 
     private void OnDestroy()
