@@ -3137,6 +3137,66 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4899980983787841086, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4899980983787841086, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4899980983787841086, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4899980983787841086, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4899980983787841086, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632752652887771599, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632752652887771599, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632752652887771599, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632752652887771599, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632752652887771599, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632752653392070314, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632752653392070314, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632752653392070314, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632752653392070314, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632752653392070314, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5632752653487559361, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -3185,31 +3245,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: XR Rig
       objectReference: {fileID: 0}
-    - target: {fileID: 5632752653487559371, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+    - target: {fileID: 8308015083546240443, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
---- !u!1 &960880902 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5632752653487559371, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
-  m_PrefabInstance: {fileID: 960880901}
-  m_PrefabAsset: {fileID: 0}
---- !u!136 &960880903
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 960880902}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.15
-  m_Height: 1.17
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!1001 &1008930262
 PrefabInstance:
   m_ObjectHideFlags: 0

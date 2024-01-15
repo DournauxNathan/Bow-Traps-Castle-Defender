@@ -9,7 +9,7 @@ public class Pouch : MonoBehaviour
 
     public void Start()
     {
-        GameManager.Instance.GetPouchInfo(this);
+        GameManager.Instance?.GetPouchInfo(this);
     }
 
     public void AddCurency(int amount)

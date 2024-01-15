@@ -11,7 +11,7 @@ public class TargetManager : Activator
     {
         targets.Add(target);
 
-        if (LevelManager.Instance.GetCurrentScene() == 1) 
+        if (LevelManager.Instance != null && LevelManager.Instance.GetCurrentScene() == 1) 
         {
             Debug.Log("Add listener");
             onActivate.AddListener(() => LevelManager.Instance.LoadSceneAsync("Tutorial_2"));

@@ -1354,6 +1354,9 @@ MonoBehaviour:
   itemsToDisplay:
   - {fileID: 1204636385}
   onSoldSoundEffect: {fileID: 8300000, guid: 52c5326a6c033814889eb23cd35db8e1, type: 3}
+  onItemPurchase:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &367380847
 Transform:
   m_ObjectHideFlags: 0
@@ -4198,10 +4201,6 @@ PrefabInstance:
     - target: {fileID: 5632752653487559371, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
       propertyPath: m_Name
       value: XR Rig
-      objectReference: {fileID: 0}
-    - target: {fileID: 5632752653487559371, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}

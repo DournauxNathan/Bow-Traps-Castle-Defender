@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
 public class XRSettingsListener : MonoBehaviour
 {
-
     public VignetteApplier vignetteApplier;
     public ActionBasedControllerManager RightControllerManager;
     public ActionBasedControllerManager LeftControllerManager;
@@ -19,8 +19,13 @@ public class XRSettingsListener : MonoBehaviour
     public DynamicMoveProvider moveProvider;
     public TeleportationProvider teleportProvider;
 
+    private InputData _inputData;
+
     private void Awake()
     {
+        // Get reference to InputData component
+        _inputData = GetComponent<InputData>();
+
         XRSettingsManager.XRSettingsChange += UpdateXRSettings;
         XRSettingsManager.XRRecalibrate += UpdateHeadSetHeight;
     }
@@ -33,6 +38,17 @@ public class XRSettingsListener : MonoBehaviour
     private void OnDestroy()
     {
         XRSettingsManager.XRSettingsChange -= UpdateXRSettings;
+    }
+
+    private void LateUpdate()
+    {
+        if (_inputData._rightController.TryGetFeatureValue(CommonUsages.menuButton, out bool Menubutton))
+        {
+            if (Menubutton)
+            {
+                Debug.Log("Open");
+            }
+        }
     }
 
     private void UpdateXRSettings()

@@ -9,6 +9,6 @@ public class LevelInitializer : MonoBehaviour
 
     void Awake()
     {
-        GameManager.Instance.InitilazeLevel(goal, gate);
+        GameManager.Instance?.InitilazeLevel(goal, gate);
     }
 }

@@ -15,11 +15,11 @@ MonoBehaviour:
   id: 0
   dialogueLines:
   - Let me explain how it work!
-  - You see this big stone behing you ?
-  - It's upgrade station! Yeah, I know it is a bit primitive.
-  - But it's where the real magic unfolds
-  - All you need t odo is drop the item right at the start of the arrow on the station.
-    Easy-peasy, right? Now, here's where the fun kicks in.
-  - Grab your trusty hammer! Start pounding away at your item. Each hit is like giving
-    it a superpower. It's like your gear's way of saying, 'I'm ready for anything!'
-  - "And voil\xE0, new arrow in you quiver: "
+  - 'See that big stone behind you with the arrow? station. '
+  - "That's our spot \u2013 the upgrade. Okay, it's a bit old-school, but trust me,
+    it's where the real party happens."
+  - 'Time to grab your trusty hammer, give that arrow a solid whack, and bam! '
+  - Time to grab your trusty hammer, give that arrow a solid whack, and bam! New
+    arrow in your quiver. How cool is that?
+  - "Upgrade station, drop item, hammer magic, and voila\u2014new arrow ready to
+    rock. Now go on, show 'em what you got with those freshly minted arrows! "
