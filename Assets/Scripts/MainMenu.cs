@@ -49,16 +49,16 @@ public class MainMenu : MonoBehaviour
 
     public void CloseSettings()
     {
+        vrSettingsPanel.SetActive(false);
+
         if (LevelManager.Instance.GetCurrentScene() == 0)
         {
-            // Hide VR settings panel and show main menu panel
-            vrSettingsPanel.SetActive(false);
             mainMenu.SetActive(true);
         }
         else
         {
-            LevelManager.Instance.LoadSceneAsync("MainMennu");
-            vrSettingsPanel.SetActive(false);
+            // Hide VR settings panel and show main menu panel
+            mainMenu.SetActive(false);
         }
     }
 }

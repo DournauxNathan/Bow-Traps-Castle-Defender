@@ -13,7 +13,6 @@ public class TargetManager : Activator
 
         if (LevelManager.Instance != null && LevelManager.Instance.GetCurrentScene() == 1) 
         {
-            Debug.Log("Add listener");
             onActivate.AddListener(() => LevelManager.Instance.LoadSceneAsync("Tutorial_2"));
         }
     }
