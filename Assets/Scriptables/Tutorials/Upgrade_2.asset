@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fffd230a57d84748ac9897b1bfa8502, type: 3}
+  m_Name: Upgrade_2
+  m_EditorClassIdentifier: 
+  id: 0
+  dialogueLines:
+  - Let me explain how it work!
+  - You see this big stone behing you ?
+  - It's upgrade station! Yeah, I know it is a bit primitive.
+  - But it's where the real magic unfolds
+  - All you need t odo is drop the item right at the start of the arrow on the station.
+    Easy-peasy, right? Now, here's where the fun kicks in.
+  - Grab your trusty hammer! Start pounding away at your item. Each hit is like giving
+    it a superpower. It's like your gear's way of saying, 'I'm ready for anything!'
+  - "And voil\xE0, new arrow in you quiver: "

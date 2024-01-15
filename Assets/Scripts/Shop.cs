@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Events;
 
 public class Shop : MonoBehaviour
 {
@@ -16,6 +17,10 @@ public class Shop : MonoBehaviour
     
     private AudioSource m_audioSource;
     private bool isPouchPutDown = false;
+
+    public UnityEvent onItemPurchase;
+
+    private int itemPurchased;
 
     void Start()
     {
@@ -38,6 +43,8 @@ public class Shop : MonoBehaviour
             // Check if player has enough currency to buy the item
             if (GameManager.Instance.pouch.SpendCurrency(currentPrice))
             {
+                itemPurchased++;
+
                 //Update the Panel at current item
                 slots[iD].itemNameText.text = $"SOLD";
                 slots[iD].itemPriceText.text = string.Empty;
@@ -50,6 +57,11 @@ public class Shop : MonoBehaviour
                 UpdateItemBuyable();
 
                 itemsToDisplay[iD].transform.position = counter.position;
+
+                if (itemPurchased <= 1)
+                {
+                    onItemPurchase?.Invoke();
+                }
             }
             else
             {

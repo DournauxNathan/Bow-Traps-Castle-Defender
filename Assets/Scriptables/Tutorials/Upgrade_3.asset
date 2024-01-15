@@ -10,9 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4fffd230a57d84748ac9897b1bfa8502, type: 3}
-  m_Name: Upgrade_1
+  m_Name: Upgrade_3
   m_EditorClassIdentifier: 
   id: 0
   dialogueLines:
-  - Hey there, champ! Ready to level up your gear? Cool, here's the deal.
-  - You buy one of this upgrade and you can create new arrows !
+  - Thank you!
