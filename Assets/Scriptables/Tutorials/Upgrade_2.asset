@@ -15,11 +15,9 @@ MonoBehaviour:
   id: 0
   dialogueLines:
   - Let me explain how it work!
-  - 'See that big stone behind you with the arrow? station. '
-  - "That's our spot \u2013 the upgrade. Okay, it's a bit old-school, but trust me,
-    it's where the real party happens."
+  - 'See that big stone behind you with the arrow? '
+  - "That's our spot \u2013 the upgrade station. Okay, it's a bit old-school, but
+    trust me, it's where the real party happens."
   - 'Time to grab your trusty hammer, give that arrow a solid whack, and bam! '
-  - Time to grab your trusty hammer, give that arrow a solid whack, and bam! New
-    arrow in your quiver. How cool is that?
   - "Upgrade station, drop item, hammer magic, and voila\u2014new arrow ready to
     rock. Now go on, show 'em what you got with those freshly minted arrows! "

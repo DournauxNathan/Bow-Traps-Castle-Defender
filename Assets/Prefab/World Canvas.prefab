@@ -269,6 +269,9 @@ MonoBehaviour:
   dialogue: {fileID: 0}
   buttonCooldown: 1
   activationDelay: 2
+  onDialogueEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &895213385666431802
 GameObject:
   m_ObjectHideFlags: 0
