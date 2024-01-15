@@ -20,6 +20,17 @@ public class BodySocketInventory : MonoBehaviour
 
     private Vector3 _currentHMDPosition;
     private Quaternion _currentHMDRotation;
+        
+    public void UpdateWithHeigthCalibration()
+    {
+        Debug.Log("");
+        foreach (var bodySocket in bodySockets)
+        {
+            UpdateBodySocketHeight(bodySocket);
+        }
+        UpdateSocketinventory();
+    }
+
 
     // Update is called once per frame
     void Update()

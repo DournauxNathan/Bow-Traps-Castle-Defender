@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
 public class GameManager : MonoBehaviour
 {
@@ -36,6 +39,11 @@ public class GameManager : MonoBehaviour
     public void GetPouchInfo(Pouch pouch)
     {
         this.pouch = pouch;
+    }
+
+    public void setRig(Transform transform)
+    {
+        XRRig = transform;
     }
 
     public void SubscribeActivators(BreakableActivator activator)

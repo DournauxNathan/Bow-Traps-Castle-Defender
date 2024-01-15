@@ -9,6 +9,8 @@ public class LevelInitializer : MonoBehaviour
 
     void Awake()
     {
+        XRSettingsManager.Instance.enableBodyInventory(true);
+
         GameManager.Instance?.InitilazeLevel(goal, gate);
     }
 }

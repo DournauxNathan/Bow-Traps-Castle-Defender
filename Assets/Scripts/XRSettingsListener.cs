@@ -20,6 +20,9 @@ public class XRSettingsListener : MonoBehaviour
     public TeleportationProvider teleportProvider;
 
     public MainMenu menuManager;
+
+    public GameObject bodySocketInventory;
+
     private InputData _inputData;
 
     private void Awake()
@@ -32,8 +35,13 @@ public class XRSettingsListener : MonoBehaviour
 
     private void Start()
     {
-        UpdateXRSettings();
         XRSettingsManager.XRRecalibrate += UpdateHeadSetHeight;
+        XRSettingsManager.XRInventoryUpdate += EnableInventory;
+        
+        UpdateXRSettings();
+        EnableInventory();
+        
+        GameManager.Instance.setRig(transform);
     }
 
     private void OnDestroy()
@@ -49,6 +57,14 @@ public class XRSettingsListener : MonoBehaviour
             {
                 menuManager.OpenSettings();
             }
+        }
+    }
+
+    private void EnableInventory()
+    {
+        if (XRSettingsManager.Instance != null)
+        {
+            bodySocketInventory.SetActive(XRSettingsManager.Instance.isInventoryActive());
         }
     }
 

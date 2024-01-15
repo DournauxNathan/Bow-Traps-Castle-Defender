@@ -8,6 +8,7 @@ public class XRSettingsManager : MonoBehaviour
 {
     public static event Action XRSettingsChange;
     public static event Action XRRecalibrate;
+    public static event Action XRInventoryUpdate;
     public static XRSettingsManager Instance;
 
     private bool _continuousTurnActive = false;
@@ -16,6 +17,7 @@ public class XRSettingsManager : MonoBehaviour
     private string _mode;
     private bool _vignetteActive = false;
     private bool _teleportActive = false;
+    private bool _inventoryActive = false;
 
     private void Awake()
     {
@@ -28,8 +30,10 @@ public class XRSettingsManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
         XRSettingsChange?.Invoke();
         XRRecalibrate?.Invoke();
+        XRInventoryUpdate?.Invoke();
     }
 
 
@@ -119,5 +123,16 @@ public class XRSettingsManager : MonoBehaviour
     public void recalibrate()
     {
         XRRecalibrate?.Invoke();
+    }
+
+    public void enableBodyInventory(bool isActive)
+    {
+        _inventoryActive = isActive;
+        XRInventoryUpdate?.Invoke();
+    }
+
+    public bool isInventoryActive()
+    {
+        return _inventoryActive;
     }
 }
