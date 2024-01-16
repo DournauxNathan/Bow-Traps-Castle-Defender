@@ -39,7 +39,6 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
-
     public void OpenSettings()
     {
         // Show VR settings panel and hide main menu panel
