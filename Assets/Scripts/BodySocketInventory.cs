@@ -35,6 +35,8 @@ public class BodySocketInventory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        SmoothCameraFollow();
+
         _currentHMDPosition = HMD.transform.localPosition;
         _currentHMDRotation = HMD.transform.localRotation;
 

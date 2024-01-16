@@ -60,6 +60,9 @@ public class OptionsMenu : MonoBehaviour
         vignetteOff.onClick.AddListener(() => ToggleVignette(false));
         vignetteOn.onClick.AddListener(() => ToggleVignette(true));
 
+        sfxSlider.onValueChanged.AddListener(SFXVolumeChange);
+        musicSlider.onValueChanged.AddListener(MusicVolumeChange);
+
         toggle.onValueChanged.AddListener(ToggleTeleport);
 
         previous.onClick.AddListener(() => UpdateControlMode(-1));
