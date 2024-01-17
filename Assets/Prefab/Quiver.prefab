@@ -424,26 +424,33 @@ MonoBehaviour:
   m_OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
+  spawner: {fileID: 0}
   canvas: {fileID: 6467606226102454491}
   icon: {fileID: 6467606226965107894}
   arrowSelectionCooldown: 0.1
   arrows:
-  - type: 0
+  - name: 
+    type: 0
     icon: {fileID: 0}
     isUnlock: 0
-  - type: 0
+  - name: 
+    type: 0
     icon: {fileID: 0}
     isUnlock: 0
-  - type: 0
+  - name: 
+    type: 0
     icon: {fileID: 0}
     isUnlock: 0
-  - type: 0
+  - name: 
+    type: 0
     icon: {fileID: 0}
     isUnlock: 0
-  - type: 0
+  - name: 
+    type: 0
     icon: {fileID: 0}
     isUnlock: 0
-  - type: 0
+  - name: 
+    type: 0
     icon: {fileID: 0}
     isUnlock: 0
 --- !u!54 &2844263838147095854
