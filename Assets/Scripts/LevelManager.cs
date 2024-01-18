@@ -16,15 +16,8 @@ public class LevelManager : MonoBehaviour
    // [SerializeField] private Slider loadingSlider;
     private void Awake()
     {
-        if(Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        Instance = this;
+        
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
