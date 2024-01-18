@@ -10,6 +10,8 @@ public class Target : MonoBehaviour
 
     private Rigidbody m_Rigidbody;
 
+    public bool debug = false;
+
     private void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
@@ -18,7 +20,7 @@ public class Target : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (IsActivate)
+        if (debug && IsActivate)
         {
             manager.IsTargetsActivated(); 
             IsActivate = false;

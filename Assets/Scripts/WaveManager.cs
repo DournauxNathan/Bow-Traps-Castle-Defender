@@ -258,20 +258,29 @@ public class WaveManager : MonoBehaviour
 
     void OnCritterKilled()
     {
+        Debug.Log("OnCritterKilled");
+
         waveNumberCrittersKilled++;
 
         // Check if all critters of the current wave are killed
         if (waveNumberCrittersKilled >= critterSpawned)
         {
+            Debug.Log("OnCritterKilled 2 ");
             if (!bossSpawned)
             {
+                Debug.Log("OnCritterKilled 3");
+
+
                 StopWave();
                 
                 // Calculate wave completion bonus based on the multiplier and the number of completed waves
-                int waveBonus = Mathf.RoundToInt(baseWaveCompletionBonus * Mathf.Pow(waveCompletionMultiplier, waveNumber - 1));
+                //int waveBonus = Mathf.RoundToInt(baseWaveCompletionBonus * Mathf.Pow(waveCompletionMultiplier, waveNumber - 1));
+
+                Debug.Log(GameManager.Instance.pouch.currentCurrency, GameManager.Instance.pouch);
+                //Debug.Log(waveBonus);
 
                 // Award wave completion bonus
-                GameManager.Instance.pouch.currentCurrency += waveBonus;
+                //GameManager.Instance.pouch.currentCurrency += waveBonus;
 
                 waveNumber++;
 

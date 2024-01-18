@@ -67,10 +67,10 @@ public class Critter : MonoBehaviour
     void FixedUpdate()
     {
         // Check if the critter is defeated
-        if (health <= 0 || transform.position.y >= 30f || isKilled)
+        /*if (*//*health <= 0 ||*//* transform.position.y >= 30f || isKilled)
         {
             Defeat();
-        }
+        }*/
 
         if (m_NavMeshAgent.isActiveAndEnabled && m_NavMeshAgent != null && m_NavMeshAgent.remainingDistance < 1f)
         {
@@ -162,11 +162,17 @@ public class Critter : MonoBehaviour
     {
         m_Animator.SetTrigger("Take Damage");
         health -= damage;
+
+        if (health <= 0)
+        {
+            Defeat();
+        }
     }
 
     void Defeat()
     {
-        isKilled = true;
+        Debug.Log("Defeat");
+        isKilled = false;
 
         StopMovement();
 
@@ -185,19 +191,19 @@ public class Critter : MonoBehaviour
 
         m_Animator.SetTrigger("Die");
 
-        
-        if (isKilled)
-        {
-            GameManager.Instance.pouch.AddCurency(currencyValue);
-            isKilled = false;
-            OnKilled?.Invoke();
-            
-            GetComponent<BoxCollider>().enabled = false;
-            UsePhysics(false);
-            Destroy(this.gameObject, 3f);
-        }
+        Invoke("KillCritter", 0f);
+    }
 
+    public void KillCritter()
+    {
+        Debug.Log("KillCritter");
 
+        GameManager.Instance.pouch.AddCurency(currencyValue);
+        OnKilled?.Invoke();
+
+        GetComponent<BoxCollider>().enabled = false;
+        UsePhysics(false);
+        Destroy(this.gameObject, 3f);
     }
 
     private void OnCollisionEnter(Collision collision)

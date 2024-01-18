@@ -56,6 +56,7 @@ MonoBehaviour:
   m_ParticleSystem: {fileID: 2262844333746262942}
   m_TrailRenderer: {fileID: 8729613411870003894}
   m_AudioSource: {fileID: -186369532834339837}
+  type: 0
   layerMask:
     serializedVersion: 2
     m_Bits: 1
@@ -92,8 +93,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.03386847, y: 0.033868473, z: 0.09}
-  m_Center: {x: 0, y: 0, z: 0.31}
+  m_Size: {x: 0.09988453, y: 0.13292125, z: 0.083357245}
+  m_Center: {x: -0.00097151473, y: 0.009573817, z: 0.3133214}
 --- !u!82 &-186369532834339837
 AudioSource:
   m_ObjectHideFlags: 0

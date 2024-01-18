@@ -69,4 +69,9 @@ public class LevelManager : MonoBehaviour
     {
         return SceneManager.GetActiveScene().buildIndex;
     }
+
+    public string GetCurrentSceneByName()
+    {
+        return SceneManager.GetActiveScene().name;
+    }
 }

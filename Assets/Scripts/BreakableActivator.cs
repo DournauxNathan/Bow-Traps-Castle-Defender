@@ -20,9 +20,9 @@ public class BreakableActivator : MonoBehaviour, IBreakable
     // Start is called before the first frame update
     void Start()
     {
-        if (GameManager.Instance != null)
+        if (LevelManager.Instance.GetCurrentSceneByName() == "Level")
         {
-            GameManager.Instance.SubscribeActivators(this);
+            GameManager.Instance?.SubscribeActivators(this);
         }
 
         // Initialize properties and setup
