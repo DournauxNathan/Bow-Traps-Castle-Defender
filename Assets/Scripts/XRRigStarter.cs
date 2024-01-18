@@ -7,9 +7,6 @@ public class XRRigStarter : MonoBehaviour
 {
     private void Awake()
     {
-#if UNITY_EDITOR
-        SceneManager.LoadSceneAsync("AutoLoad", LoadSceneMode.Additive);
-#endif
         GameManager.Instance.XRRig.position = this.transform.position;
     }
 }
