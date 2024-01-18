@@ -24,15 +24,8 @@ public class TargetManager : Activator
             if (target.IsActivate)
             {
                 onActivate?.Invoke();
+                target.IsActivate = false;
             }            
-        }
-    }
-
-    public void Reset()
-    {
-        foreach (Target target in targets)
-        {
-            target.IsActivate = false;
         }
     }
 }
