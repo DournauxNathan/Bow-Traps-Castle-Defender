@@ -30,6 +30,7 @@ public class PullInteraction : XRBaseInteractable
     public void Release()
     {
         PullActionReleased?.Invoke(pullAmount);
+
         pullingInteractor = null;
         pullAmount = 0;
         notch.transform.localPosition = new Vector3(notch.transform.localPosition.x, notch.transform.localPosition.y, 0f);
