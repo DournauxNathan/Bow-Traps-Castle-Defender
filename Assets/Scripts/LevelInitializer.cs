@@ -10,7 +10,7 @@ public class LevelInitializer : MonoBehaviour
 
     public UnityEvent onStart;
 
-    void Awake()
+    void Start()
     {
         XRSettingsManager.Instance?.enableBodyInventory(true);
         GameManager.Instance?.InitilazeLevel(goal, gate);

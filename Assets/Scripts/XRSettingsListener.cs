@@ -12,12 +12,15 @@ public class XRSettingsListener : MonoBehaviour
     public ActionBasedControllerManager RightControllerManager;
     public ActionBasedControllerManager LeftControllerManager;
 
+    [Header("Interactors")]
+    public GameObject rightTeleportInteractor;
+    public GameObject leftTeleportInteractor;
+
     public AutoScaler autoScaler;
 
     [Header("Providers")]
     public SnapTurnProviderBase snapTurnProvider;
     public DynamicMoveProvider moveProvider;
-    public TeleportationProvider teleportProvider;
 
     public MainMenu menuManager;
 
@@ -75,7 +78,10 @@ public class XRSettingsListener : MonoBehaviour
             vignetteApplier.enabled = XRSettingsManager.Instance.isVignetteActive();
             RightControllerManager.smoothTurnEnabled = XRSettingsManager.Instance.isContinuousTurnActive();
 
-            teleportProvider.enabled = XRSettingsManager.Instance.isTeleportActive();
+            // Teleport Provider
+            rightTeleportInteractor.SetActive(XRSettingsManager.Instance.isTeleportActive());
+            leftTeleportInteractor.SetActive(XRSettingsManager.Instance.isTeleportActive());
+
             moveProvider.enabled = !XRSettingsManager.Instance.isTeleportActive();
             LeftControllerManager.smoothMotionEnabled = !XRSettingsManager.Instance.isTeleportActive();
 
