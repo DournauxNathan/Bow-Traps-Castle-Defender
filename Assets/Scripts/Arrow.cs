@@ -59,7 +59,6 @@ public class Arrow : MonoBehaviour
         PullInteraction.PullActionReleased -= Release;
         gameObject.transform.parent = null;
         
-
         isInAir = true;
         SetPhysics(true);
 

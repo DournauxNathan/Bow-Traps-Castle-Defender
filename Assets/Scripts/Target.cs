@@ -27,7 +27,6 @@ public class Target : MonoBehaviour
             debug = false;
         }
     }
-
     private void OnCollisionEnter(Collision collision)
     {
         if (!IsActivate && collision.collider.TryGetComponent<Arrow>(out Arrow arrow))
