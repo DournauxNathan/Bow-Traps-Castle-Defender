@@ -7,7 +7,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class QuiverInteraction : XRBaseInteractable
 {
-    public static Action<Arrow> AddNewArrow;
+    public static Action GetArrowSpawner;
 
     public ArrowSpawner spawner;
 
@@ -28,6 +28,8 @@ public class QuiverInteraction : XRBaseInteractable
     // Start is called before the first frame update
     void Start()
     {
+        spawner = ArrowSpawner.instance;
+
         ActivateUI(false);
     }
 
@@ -81,6 +83,7 @@ public class QuiverInteraction : XRBaseInteractable
     {
         icon.sprite = arrows[currentArrowIndex].icon;
         currentArrowSelected = arrows[currentArrowIndex];
+        SelectArrow();
     }
        
 
@@ -136,7 +139,7 @@ public class QuiverInteraction : XRBaseInteractable
 
     public void SelectArrow()
     {
-        spawner.UpdateArrowPrefab(currentArrowSelected.name);
+       spawner.UpdateArrowPrefab(currentArrowSelected.name);
     }
 }
 

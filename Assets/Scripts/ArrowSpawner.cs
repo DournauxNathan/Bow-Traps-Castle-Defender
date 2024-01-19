@@ -5,6 +5,8 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class ArrowSpawner : MonoBehaviour
 {
+    public static ArrowSpawner instance;
+
     public GameObject arrow;
     public GameObject notch;
 
@@ -13,8 +15,10 @@ public class ArrowSpawner : MonoBehaviour
     private GameObject currentArrow;
 
     // Start is called before the first frame update
+
     void Start()
     {
+        instance = this;
         _bow = GetComponentInParent<XRGrabInteractable>();
         PullInteraction.PullActionReleased += NotchEmpty;
     }
@@ -23,7 +27,6 @@ public class ArrowSpawner : MonoBehaviour
     {
         PullInteraction.PullActionReleased -= NotchEmpty;
     }
-
 
     // Update is called once per frame
     void Update()

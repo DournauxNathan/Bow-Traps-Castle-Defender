@@ -277,7 +277,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh369946
+  m_Name: pb_Mesh107736
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -8192,6 +8192,78 @@ PrefabInstance:
     - target: {fileID: 8308015083546240443, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8692196734803405956, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: arrows.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8692196734803405956, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: arrows.Array.data[0].icon
+      value: 
+      objectReference: {fileID: -257690019, guid: ec157967041a87e40a12598d3b43dd11, type: 3}
+    - target: {fileID: 8692196734803405956, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: arrows.Array.data[0].name
+      value: Arrow
+      objectReference: {fileID: 0}
+    - target: {fileID: 8692196734803405956, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: arrows.Array.data[0].type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8692196734803405956, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: arrows.Array.data[1].icon
+      value: 
+      objectReference: {fileID: 850902450, guid: ec157967041a87e40a12598d3b43dd11, type: 3}
+    - target: {fileID: 8692196734803405956, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: arrows.Array.data[1].name
+      value: Fire Arrow
+      objectReference: {fileID: 0}
+    - target: {fileID: 8692196734803405956, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: arrows.Array.data[1].type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8692196734803405956, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: arrows.Array.data[2].icon
+      value: 
+      objectReference: {fileID: -2122408922, guid: ec157967041a87e40a12598d3b43dd11, type: 3}
+    - target: {fileID: 8692196734803405956, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: arrows.Array.data[2].name
+      value: Explosive Arrow
+      objectReference: {fileID: 0}
+    - target: {fileID: 8692196734803405956, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: arrows.Array.data[2].type
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8692196734803405956, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: arrows.Array.data[3].icon
+      value: 
+      objectReference: {fileID: -1661646124, guid: ec157967041a87e40a12598d3b43dd11, type: 3}
+    - target: {fileID: 8692196734803405956, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: arrows.Array.data[3].name
+      value: Ice Arrow
+      objectReference: {fileID: 0}
+    - target: {fileID: 8692196734803405956, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: arrows.Array.data[3].type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8692196734803405956, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: arrows.Array.data[5].icon
+      value: 
+      objectReference: {fileID: -2122408922, guid: ec157967041a87e40a12598d3b43dd11, type: 3}
+    - target: {fileID: 8692196734803405956, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: arrows.Array.data[0].isUnlock
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8692196734803405956, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: arrows.Array.data[1].isUnlock
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8692196734803405956, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: arrows.Array.data[2].isUnlock
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8692196734803405956, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
+      propertyPath: arrows.Array.data[3].isUnlock
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8760371268491582292, guid: c162f35950fabe64abe85355e9e1ad23, type: 3}
       propertyPath: startButtonSceneName
@@ -28997,7 +29069,7 @@ GameObject:
   - component: {fileID: 1556845972}
   - component: {fileID: 1556845969}
   - component: {fileID: 1556845973}
-  m_Layer: 2
+  m_Layer: 10
   m_Name: Ice Shard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29019,7 +29091,7 @@ MonoBehaviour:
   shopManager: {fileID: 1132962974}
   XRSimple: {fileID: 1556845971}
   XRGrab: {fileID: 1556845970}
-  type: 1
+  type: 2
   iD: 0
   name: Ice Shard
   value: 25
@@ -34540,7 +34612,7 @@ GameObject:
   - component: {fileID: 1821876302}
   - component: {fileID: 1821876299}
   - component: {fileID: 1821876303}
-  m_Layer: 2
+  m_Layer: 10
   m_Name: Fire Shard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34562,7 +34634,7 @@ MonoBehaviour:
   shopManager: {fileID: 1132962974}
   XRSimple: {fileID: 1821876301}
   XRGrab: {fileID: 1821876300}
-  type: 1
+  type: 2
   iD: 1
   name: Fire Shard
   value: 35
@@ -34895,7 +34967,7 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1821876292}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
   m_Convex: 1
@@ -43543,7 +43615,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2139351358957200002, guid: 5a5d0937890e396419d6ef0e9aad1430, type: 3}
       propertyPath: currentCurrency
-      value: 0
+      value: 999
       objectReference: {fileID: 0}
     - target: {fileID: 2204102812733955109, guid: 5a5d0937890e396419d6ef0e9aad1430, type: 3}
       propertyPath: m_Layer
@@ -63509,7 +63581,7 @@ GameObject:
   - component: {fileID: 8837874464244778806}
   - component: {fileID: 8837874464244778803}
   - component: {fileID: 8837874464244778807}
-  m_Layer: 2
+  m_Layer: 10
   m_Name: Bomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63531,7 +63603,7 @@ MonoBehaviour:
   shopManager: {fileID: 1132962974}
   XRSimple: {fileID: 8837874464244778805}
   XRGrab: {fileID: 8837874464244778804}
-  type: 1
+  type: 2
   iD: 2
   name: Bomb
   value: 75
