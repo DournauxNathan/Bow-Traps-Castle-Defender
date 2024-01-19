@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2204102812733955110}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: AttachPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,7 +47,8 @@ GameObject:
   - component: {fileID: 2204102814001978358}
   - component: {fileID: 871288451856749699}
   - component: {fileID: 2139351358957200002}
-  m_Layer: 0
+  - component: {fileID: 2141846854208602991}
+  m_Layer: 10
   m_Name: Pouch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -430,3 +431,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentCurrency: 0
+--- !u!114 &2141846854208602991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2204102814001978255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aca93e4cb695aff488cb624aafe7413a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
