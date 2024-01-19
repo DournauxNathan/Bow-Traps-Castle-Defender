@@ -58,6 +58,7 @@ GameObject:
   - component: {fileID: 1869585308386615167}
   - component: {fileID: 1869585308386615166}
   - component: {fileID: 1869585308386615164}
+  - component: {fileID: 249625930873947008}
   m_Layer: 0
   m_Name: XRHammer
   m_TagString: Untagged
@@ -348,6 +349,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &249625930873947008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1869585308386615162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aca93e4cb695aff488cb624aafe7413a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1869585308695141183
 GameObject:
   m_ObjectHideFlags: 0

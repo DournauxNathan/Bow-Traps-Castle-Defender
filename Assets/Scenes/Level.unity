@@ -27896,6 +27896,7 @@ GameObject:
   - component: {fileID: 1556845970}
   - component: {fileID: 1556845972}
   - component: {fileID: 1556845969}
+  - component: {fileID: 1556845973}
   m_Layer: 2
   m_Name: Ice Shard
   m_TagString: Untagged
@@ -28257,6 +28258,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 1542057560879406965, guid: b281bafc26bcbb442b418bbca4fd8d54, type: 3}
+--- !u!114 &1556845973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1556845962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aca93e4cb695aff488cb624aafe7413a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1561962529 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 6583af6b944327444a15fb00a5eb10a2, type: 3}
@@ -33404,6 +33417,7 @@ GameObject:
   - component: {fileID: 1821876300}
   - component: {fileID: 1821876302}
   - component: {fileID: 1821876299}
+  - component: {fileID: 1821876303}
   m_Layer: 2
   m_Name: Fire Shard
   m_TagString: Untagged
@@ -33765,6 +33779,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 1542057560879406965, guid: b281bafc26bcbb442b418bbca4fd8d54, type: 3}
+--- !u!114 &1821876303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821876292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aca93e4cb695aff488cb624aafe7413a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1837260515 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3935493997478890222, guid: 0c49d14f67533cd46946f65d18bf9bd3, type: 3}
@@ -62459,6 +62485,7 @@ GameObject:
   - component: {fileID: 8837874464244778804}
   - component: {fileID: 8837874464244778806}
   - component: {fileID: 8837874464244778803}
+  - component: {fileID: 8837874464244778807}
   m_Layer: 2
   m_Name: Bomb
   m_TagString: Untagged
@@ -62755,6 +62782,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 1542057560879406965, guid: b281bafc26bcbb442b418bbca4fd8d54, type: 3}
+--- !u!114 &8837874464244778807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8837874464244778799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aca93e4cb695aff488cb624aafe7413a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8908833148425096130
 MonoBehaviour:
   m_ObjectHideFlags: 0
