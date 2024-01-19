@@ -14,6 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   dialogueLines:
-  - It seems broken...
-  - I think I've let my hammer around !
-  - Go take it if you want to repair.
+  - "Aah! \nOh It seems broken..."
+  - I think I've left my hammer somewhere! With it, we can repair it.

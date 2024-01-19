@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   dialogueLines:
-  - Hmm...I wonder what this button do ?
-  - Howdie! You surprised me! I want to push the button but I'm afraid of what will
-    happen...
-  - Maybe you can try!
+  - 'Hmm...
+
+    I wonder what this button does?'
+  - 'Howdy!
+
+    You surprised me! I''m trying to figure out what this button does...'
+  - Push it?! Well, I'm not such an idiot to push a button out of nowhere.

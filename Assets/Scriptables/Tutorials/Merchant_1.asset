@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   dialogueLines:
-  - ' Hey there, adventurer! Looking for a bow, eh? Got this beauty here for just
-    45 coins.'
-  - Great! But hold on, you left your pouch on the bench. Go grab it, I'll be here.
+  - "Hey there, adventurer!\n\nLooking for a bow, eh? \nGot this one here for just
+    45 coins."
+  - "Great !\nBut hold on, you left your pouch on the bench. \n"
+  - 'Go grab it, I''ll stay right here.
+
+'

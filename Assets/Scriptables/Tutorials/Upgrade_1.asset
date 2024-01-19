@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   dialogueLines:
-  - Hey there, champ! Ready to level up your gear? Cool, here's the deal.
+  - "Hey there, champ! \nReady to level up your gear? Cool, here's the deal."
   - You buy one of this upgrade and you can create new arrows !

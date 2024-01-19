@@ -262,6 +262,10 @@ PrefabInstance:
       propertyPath: m_fontSizeMin
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 895213385666431804, guid: 0424eb3e1c1a2dc47874bb9626a34e66, type: 3}
+      propertyPath: m_isRightToLeft
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 895213385666431805, guid: 0424eb3e1c1a2dc47874bb9626a34e66, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
