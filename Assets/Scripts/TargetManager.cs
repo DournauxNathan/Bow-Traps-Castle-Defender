@@ -20,8 +20,8 @@ public class TargetManager : Activator
 
     public void IsTargetsActivated(Target _target)
     {
-        _target.enabled = false;
         activatedTargets.Add(_target);
+        _target.enabled = false;
 
         if (activatedTargets.Count == targets.Count)
         {

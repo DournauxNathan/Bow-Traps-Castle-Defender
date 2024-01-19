@@ -10,14 +10,14 @@ public class Target : MonoBehaviour
 
     private Rigidbody m_Rigidbody;
 
-    public bool debug = false;
+    //public bool debug = false;
 
     private void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
         manager.SubscribeTarget(this);
     }
-
+/*
     private void LateUpdate()
     {
         if (debug && !IsActivate)
@@ -26,7 +26,8 @@ public class Target : MonoBehaviour
             IsActivate = true;
             debug = false;
         }
-    }
+    }*/
+
     private void OnCollisionEnter(Collision collision)
     {
         if (!IsActivate && collision.collider.TryGetComponent<Arrow>(out Arrow arrow))
