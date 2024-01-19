@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class TargetManager : Activator
 {
     public List<Target> targets;
+    private List<Target> activatedTargets = new List<Target>();
 
     public void SubscribeTarget(Target target)
     {
@@ -17,15 +18,16 @@ public class TargetManager : Activator
         }
     }
 
-    public void IsTargetsActivated()
+    public void IsTargetsActivated(Target _target)
     {
-        foreach (Target target in targets)
+        _target.enabled = false;
+        activatedTargets.Add(_target);
+
+        Debug.Log(activatedTargets.Count == targets.Count);
+
+        if (activatedTargets.Count == targets.Count)
         {
-            if (target.IsActivate)
-            {
-                onActivate?.Invoke();
-                target.IsActivate = false;
-            }            
+            onActivate?.Invoke();
         }
     }
 }

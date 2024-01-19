@@ -20,10 +20,11 @@ public class Target : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (debug && IsActivate)
+        if (debug && !IsActivate)
         {
-            manager.IsTargetsActivated(); 
-            IsActivate = false;
+            manager.IsTargetsActivated(this); 
+            IsActivate = true;
+            debug = false;
         }
     }
 
@@ -32,7 +33,7 @@ public class Target : MonoBehaviour
         if (!IsActivate && collision.collider.TryGetComponent<Arrow>(out Arrow arrow))
         {
             IsActivate = true;
-            manager.IsTargetsActivated();
+            manager.IsTargetsActivated(this);
         }
     }
 }
