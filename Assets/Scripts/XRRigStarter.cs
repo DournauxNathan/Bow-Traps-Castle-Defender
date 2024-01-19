@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class XRRigStarter : MonoBehaviour
 {
-    private void Awake()
+    private void Start()
     {
         GameManager.Instance.XRRig.position = this.transform.position;
     }

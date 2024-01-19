@@ -246,6 +246,18 @@ public class Boss : MonoBehaviour
     public void TakeDamage()
     {
         health -= damagePerHit;
+
+        if (health <= 0f)
+        {
+            m_Animator.SetBool("isDead", true);
+
+            Invoke("Defeat", 10f);
+        }
+    }
+
+    public void Defeat()
+    {
+        LevelManager.Instance?.LoadSceneAsync("Crédits");
     }
 
     internal void UpdatePhase(int phase)

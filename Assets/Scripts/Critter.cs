@@ -171,7 +171,6 @@ public class Critter : MonoBehaviour
 
     void Defeat()
     {
-        Debug.Log("Defeat");
         isKilled = false;
 
         StopMovement();
@@ -196,8 +195,6 @@ public class Critter : MonoBehaviour
 
     public void KillCritter()
     {
-        Debug.Log("KillCritter");
-
         GameManager.Instance.pouch.AddCurency(currencyValue);
         OnKilled?.Invoke();
 

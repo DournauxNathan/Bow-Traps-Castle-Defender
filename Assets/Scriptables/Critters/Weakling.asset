@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   critterName: Weakling
   health: 1
-  speed: 2
+  speed: 1.4
   currencyValue: 2
   prefab: {fileID: 5314122090689357588, guid: 93fa4000d732ba64e9b221e7a3d4ad63, type: 3}

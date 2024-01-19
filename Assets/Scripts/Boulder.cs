@@ -58,7 +58,7 @@ public class Boulder : MonoBehaviour
         if (other.TryGetComponent<Critter>(out Critter _critter))
         {
             //Destroy(_critter.gameObject);
-            _critter.TakeDamage(-999);
+            _critter.TakeDamage(100);
         }
     }
 }

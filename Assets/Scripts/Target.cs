@@ -35,4 +35,9 @@ public class Target : MonoBehaviour
             manager.IsTargetsActivated(this);
         }
     }
+
+    public void IsActive(bool active)
+    {
+        IsActivate = active;
+    }
 }

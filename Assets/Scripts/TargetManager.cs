@@ -23,11 +23,13 @@ public class TargetManager : Activator
         _target.enabled = false;
         activatedTargets.Add(_target);
 
-        Debug.Log(activatedTargets.Count == targets.Count);
-
         if (activatedTargets.Count == targets.Count)
         {
             onActivate?.Invoke();
+            activatedTargets.Clear();
+
+            _target.enabled = true;
+            _target.IsActivate = false;
         }
     }
 }

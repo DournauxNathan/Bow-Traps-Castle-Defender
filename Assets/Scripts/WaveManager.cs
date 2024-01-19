@@ -81,7 +81,6 @@ public class WaveManager : MonoBehaviour
 
         onWaveStart?.Invoke();
         m_AudioSource.PlayOneShot(onWaveStartSFX);
-        Debug.Log("Wave " + waveNumber + " Incoming!");
         yield return new WaitForSeconds(onWaveEndSFX.length);
         StartWave();
     }
@@ -93,14 +92,11 @@ public class WaveManager : MonoBehaviour
             waveNumberCrittersKilled = 0;
             critterSpawned = 0;
 
-            StartCoroutine(SpawnWave());
+            StartWave(Mathf.RoundToInt(5 / .85f) + waveNumber);
 
             isSpawning = true;
 
-            if (bossSpawned)
-            {
-                onBossAppear?.Invoke();
-            }
+            
         }
         else
         {
@@ -181,17 +177,29 @@ public class WaveManager : MonoBehaviour
     {
         while (critterSpawned <= numberOfCritter)
         {
-            // Decide whether to spawn middlingCritter or a regular Critter
-            if (Random.Range(0f, 1f) < 0.5f)
+            if (waveNumber >= 3)
             {
-                SpawnCritter(middlingFactory);
-                yield return new WaitForSeconds(1f);
+                // Decide whether to spawn middlingCritter or a regular Critter
+                if (Random.Range(0f, 1f) < 0.5f)
+                {
+                    SpawnCritter(middlingFactory);
+                    yield return new WaitForSeconds(1f);
+                }
+                else
+                {
+                    SpawnCritter(weaklingFactory);
+                
+                    if (bossSpawned)
+                    {
+                        currentBoss.NewPhase(1);
+                    }
+                }
+
             }
             else
             {
+                // Spawn regular Critter
                 SpawnCritter(weaklingFactory);
-
-                currentBoss.NewPhase(1);
             }
             yield return new WaitForSeconds(1f); // Time between spawning critters in a wave
         }
@@ -225,7 +233,7 @@ public class WaveManager : MonoBehaviour
     void SpawnBoss()
     {
         bossSpawned = true;
-
+        
         if (currentFactory != null)
         {
             GameObject boss = currentFactory.SpawnBoss(bossSpawnPoint);
@@ -240,6 +248,7 @@ public class WaveManager : MonoBehaviour
             SetBoss(bossComponent);
         }
 
+        onBossAppear?.Invoke();
         currentFactory = null;
     }
 
@@ -258,29 +267,20 @@ public class WaveManager : MonoBehaviour
 
     void OnCritterKilled()
     {
-        Debug.Log("OnCritterKilled");
-
         waveNumberCrittersKilled++;
 
         // Check if all critters of the current wave are killed
         if (waveNumberCrittersKilled >= critterSpawned)
         {
-            Debug.Log("OnCritterKilled 2 ");
             if (!bossSpawned)
             {
-                Debug.Log("OnCritterKilled 3");
-
-
                 StopWave();
                 
                 // Calculate wave completion bonus based on the multiplier and the number of completed waves
-                //int waveBonus = Mathf.RoundToInt(baseWaveCompletionBonus * Mathf.Pow(waveCompletionMultiplier, waveNumber - 1));
-
-                Debug.Log(GameManager.Instance.pouch.currentCurrency, GameManager.Instance.pouch);
-                //Debug.Log(waveBonus);
+                int waveBonus = Mathf.RoundToInt(baseWaveCompletionBonus * Mathf.Pow(waveCompletionMultiplier, waveNumber - 1));
 
                 // Award wave completion bonus
-                //GameManager.Instance.pouch.currentCurrency += waveBonus;
+                GameManager.Instance.pouch.currentCurrency += waveBonus;
 
                 waveNumber++;
 
@@ -333,7 +333,7 @@ public class WaveManager : MonoBehaviour
     int GetTotalWaves()
     {
         // You can customize how the total number of waves is determined
-        return 5; // Example: 10 waves in total
+        return 3; // Example: 10 waves in total
     }
 
     void SetFactory(CritterFactory factory)
