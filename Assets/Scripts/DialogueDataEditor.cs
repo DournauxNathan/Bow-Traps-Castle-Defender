@@ -1,6 +1,8 @@
 using UnityEditor;
 using UnityEngine;
 
+#if UNITY_EDITOR_64
+
 [CustomEditor(typeof(DialogueData))]
 public class DialogueDataEditor : Editor
 {
@@ -55,3 +57,4 @@ public class DialogueDataEditor : Editor
         serializedObject.ApplyModifiedProperties();
     }
 }
+#endif
