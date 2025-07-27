@@ -112,7 +112,7 @@ public class Arrow : MonoBehaviour
         yield return new WaitForFixedUpdate();
         while (isInAir)
         {
-            Quaternion newRotation = Quaternion.LookRotation(m_Rigidbody.velocity, transform.up);
+            Quaternion newRotation = Quaternion.LookRotation(m_Rigidbody.linearVelocity, transform.up);
             transform.rotation = newRotation;
             yield return null;
         }

@@ -20,7 +20,7 @@ public class ResetObjectPosition : MonoBehaviour
     void FixedUpdate()
     {
         // Check if the object is far from the player
-        if (m_Rigidbody.velocity.y < -10)
+        if (m_Rigidbody.linearVelocity.y < -10)
         {
             // If it's far, return it to the initial position
             ReturnToInitialPosition();
@@ -33,6 +33,6 @@ public class ResetObjectPosition : MonoBehaviour
         transform.position = initialPosition;
         transform.rotation = initialRotation;
 
-        m_Rigidbody.velocity = Vector3.zero;
+        m_Rigidbody.linearVelocity = Vector3.zero;
     }
 }

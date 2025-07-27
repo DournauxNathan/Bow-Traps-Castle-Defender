@@ -22,7 +22,7 @@ public class TimeSlowPotion : Potion
                 Rigidbody rb = obj.GetComponent<Rigidbody>();
                 if (rb != null)
                 {
-                    rb.velocity *= timeScale;
+                    rb.linearVelocity *= timeScale;
                 }
 
                 // Add any other components or properties that need adjustment based on time scale
